@@ -1,0 +1,74 @@
+[
+  {
+    "id": "eat_all",
+    "title": "Foods to Eat",
+    "trimester": "all",
+    "items": [
+      "Leafy greens for folate and iron",
+      "Lean proteins: chicken, fish, eggs, legumes",
+      "Whole grains: oats, brown rice, quinoa",
+      "Dairy or fortified alternatives for calcium",
+      "Colorful fruits and vegetables daily",
+      "Healthy fats: avocado, nuts, olive oil"
+    ]
+  },
+  {
+    "id": "avoid_all",
+    "title": "Foods to Avoid",
+    "trimester": "all",
+    "items": [
+      "Raw or undercooked meat, fish, and eggs",
+      "Unpasteurized dairy and soft cheeses",
+      "High-mercury fish: shark, swordfish",
+      "Excess caffeine (limit ~200mg/day)",
+      "Unwashed produce",
+      "Deli meats unless heated",
+      "Alcohol \u2014 no safe amount during pregnancy"
+    ]
+  },
+  {
+    "id": "cravings",
+    "title": "Cravings Guide",
+    "trimester": "all",
+    "items": [
+      "Sweet cravings: try fruit or yogurt with honey",
+      "Salty cravings: nuts, crackers, hummus",
+      "Ice cravings may signal iron needs",
+      "Spicy food is generally safe if tolerated",
+      "Non-food cravings should be discussed with your doctor"
+    ]
+  },
+  {
+    "id": "t1_focus",
+    "title": "First Trimester Focus",
+    "trimester": "1",
+    "items": [
+      "Prioritize folate from leafy greens",
+      "Small, frequent meals for nausea",
+      "Ginger tea may ease morning sickness",
+      "Stay hydrated even when appetite is low"
+    ]
+  },
+  {
+    "id": "t2_focus",
+    "title": "Second Trimester Focus",
+    "trimester": "2",
+    "items": [
+      "Increase protein as baby grows",
+      "Calcium-rich foods for bone development",
+      "Omega-3s from low-mercury fish",
+      "Fiber helps prevent constipation"
+    ]
+  },
+  {
+    "id": "t3_focus",
+    "title": "Third Trimester Focus",
+    "trimester": "3",
+    "items": [
+      "Smaller meals reduce heartburn",
+      "Continue iron and calcium",
+      "Magnesium-rich foods for leg cramps",
+      "Stay well-hydrated"
+    ]
+  }
+]

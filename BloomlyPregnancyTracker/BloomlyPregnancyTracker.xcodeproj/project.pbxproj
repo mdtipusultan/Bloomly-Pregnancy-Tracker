@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		CE2DC4092FE6F49D003A3AD6 /* Bloomly:PregnancyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bloomly:PregnancyTracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE2DC4092FE6F49D003A3AD6 /* BloomlyPregnancyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BloomlyPregnancyTracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CE2DC40B2FE6F49D003A3AD6 /* Bloomly:PregnancyTracker */ = {
+		CE2DC40B2FE6F49D003A3AD6 /* BloomlyPregnancyTracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Bloomly:PregnancyTracker";
+			path = "BloomlyPregnancyTracker";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		CE2DC4002FE6F49D003A3AD6 = {
 			isa = PBXGroup;
 			children = (
-				CE2DC40B2FE6F49D003A3AD6 /* Bloomly:PregnancyTracker */,
+				CE2DC40B2FE6F49D003A3AD6 /* BloomlyPregnancyTracker */,
 				CE2DC40A2FE6F49D003A3AD6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +40,7 @@
 		CE2DC40A2FE6F49D003A3AD6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE2DC4092FE6F49D003A3AD6 /* Bloomly:PregnancyTracker.app */,
+				CE2DC4092FE6F49D003A3AD6 /* BloomlyPregnancyTracker.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CE2DC4082FE6F49D003A3AD6 /* Bloomly:PregnancyTracker */ = {
+		CE2DC4082FE6F49D003A3AD6 /* BloomlyPregnancyTracker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE2DC4142FE6F49F003A3AD6 /* Build configuration list for PBXNativeTarget "Bloomly:PregnancyTracker" */;
+			buildConfigurationList = CE2DC4142FE6F49F003A3AD6 /* Build configuration list for PBXNativeTarget "BloomlyPregnancyTracker" */;
 			buildPhases = (
 				CE2DC4052FE6F49D003A3AD6 /* Sources */,
 				CE2DC4062FE6F49D003A3AD6 /* Frameworks */,
@@ -61,13 +61,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				CE2DC40B2FE6F49D003A3AD6 /* Bloomly:PregnancyTracker */,
+				CE2DC40B2FE6F49D003A3AD6 /* BloomlyPregnancyTracker */,
 			);
-			name = "Bloomly:PregnancyTracker";
+			name = "BloomlyPregnancyTracker";
 			packageProductDependencies = (
 			);
-			productName = "Bloomly:PregnancyTracker";
-			productReference = CE2DC4092FE6F49D003A3AD6 /* Bloomly:PregnancyTracker.app */;
+			productName = "BloomlyPregnancyTracker";
+			productReference = CE2DC4092FE6F49D003A3AD6 /* BloomlyPregnancyTracker.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CE2DC4042FE6F49D003A3AD6 /* Build configuration list for PBXProject "Bloomly:PregnancyTracker" */;
+			buildConfigurationList = CE2DC4042FE6F49D003A3AD6 /* Build configuration list for PBXProject "BloomlyPregnancyTracker" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CE2DC4082FE6F49D003A3AD6 /* Bloomly:PregnancyTracker */,
+				CE2DC4082FE6F49D003A3AD6 /* BloomlyPregnancyTracker */,
 			);
 		};
 /* End PBXProject section */
@@ -178,7 +178,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -236,7 +236,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -256,6 +256,7 @@
 				DEVELOPMENT_TEAM = 4NG5UXJYS8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Bloomly sends local reminders for upcoming appointments.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +289,7 @@
 				DEVELOPMENT_TEAM = 4NG5UXJYS8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Bloomly sends local reminders for upcoming appointments.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -313,7 +315,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CE2DC4042FE6F49D003A3AD6 /* Build configuration list for PBXProject "Bloomly:PregnancyTracker" */ = {
+		CE2DC4042FE6F49D003A3AD6 /* Build configuration list for PBXProject "BloomlyPregnancyTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE2DC4122FE6F49F003A3AD6 /* Debug */,
@@ -322,7 +324,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE2DC4142FE6F49F003A3AD6 /* Build configuration list for PBXNativeTarget "Bloomly:PregnancyTracker" */ = {
+		CE2DC4142FE6F49F003A3AD6 /* Build configuration list for PBXNativeTarget "BloomlyPregnancyTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE2DC4152FE6F49F003A3AD6 /* Debug */,

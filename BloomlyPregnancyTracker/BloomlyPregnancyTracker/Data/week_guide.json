@@ -1,0 +1,422 @@
+[
+  {
+    "week": 1,
+    "babySize": "Your baby is the size of a poppy seed",
+    "length": "0.5 cm",
+    "weight": "2g",
+    "development": "Week 1 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 1. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 2,
+    "babySize": "Your baby is the size of a sesame seed",
+    "length": "0.9 cm",
+    "weight": "4g",
+    "development": "Week 2 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 2. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 3,
+    "babySize": "Your baby is the size of a lentil",
+    "length": "1.3 cm",
+    "weight": "6g",
+    "development": "Week 3 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 3. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 4,
+    "babySize": "Your baby is the size of a blueberry",
+    "length": "1.7 cm",
+    "weight": "8g",
+    "development": "Week 4 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 4. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 5,
+    "babySize": "Your baby is the size of a raspberry",
+    "length": "2.1 cm",
+    "weight": "10g",
+    "development": "Week 5 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 5. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 6,
+    "babySize": "Your baby is the size of a grape",
+    "length": "2.5 cm",
+    "weight": "12g",
+    "development": "Week 6 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 6. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 7,
+    "babySize": "Your baby is the size of a cherry",
+    "length": "2.9 cm",
+    "weight": "14g",
+    "development": "Week 7 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 7. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 8,
+    "babySize": "Your baby is the size of a strawberry",
+    "length": "3.3 cm",
+    "weight": "16g",
+    "development": "Week 8 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 8. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": "First prenatal visit often scheduled around weeks 8\u201310"
+  },
+  {
+    "week": 9,
+    "babySize": "Your baby is the size of a fig",
+    "length": "3.7 cm",
+    "weight": "18g",
+    "development": "Week 9 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 9. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 10,
+    "babySize": "Your baby is the size of a lime",
+    "length": "4.1 cm",
+    "weight": "20g",
+    "development": "Week 10 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 10. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 11,
+    "babySize": "Your baby is the size of a peach",
+    "length": "4.5 cm",
+    "weight": "22g",
+    "development": "Week 11 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 11. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 12,
+    "babySize": "Your baby is the size of a plum",
+    "length": "4.9 cm",
+    "weight": "24g",
+    "development": "Week 12 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 12. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": "Nuchal translucency screening may be offered around week 12"
+  },
+  {
+    "week": 13,
+    "babySize": "Your baby is the size of a lemon",
+    "length": "5.3 cm",
+    "weight": "26g",
+    "development": "Week 13 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 13. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 14,
+    "babySize": "Your baby is the size of a nectarine",
+    "length": "5.7 cm",
+    "weight": "28g",
+    "development": "Week 14 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 14. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 15,
+    "babySize": "Your baby is the size of an apple",
+    "length": "6.1 cm",
+    "weight": "30g",
+    "development": "Week 15 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 15. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 16,
+    "babySize": "Your baby is the size of an avocado",
+    "length": "6.5 cm",
+    "weight": "32g",
+    "development": "Week 16 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 16. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 17,
+    "babySize": "Your baby is the size of a pear",
+    "length": "6.9 cm",
+    "weight": "34g",
+    "development": "Week 17 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 17. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 18,
+    "babySize": "Your baby is the size of a bell pepper",
+    "length": "7.3 cm",
+    "weight": "36g",
+    "development": "Week 18 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 18. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 19,
+    "babySize": "Your baby is the size of a mango",
+    "length": "7.7 cm",
+    "weight": "38g",
+    "development": "Week 19 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 19. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 20,
+    "babySize": "Your baby is the size of a banana",
+    "length": "20 cm",
+    "weight": "300g",
+    "development": "Week 20 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 20. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": "Anatomy ultrasound typically around week 20"
+  },
+  {
+    "week": 21,
+    "babySize": "Your baby is the size of a carrot",
+    "length": "22 cm",
+    "weight": "400g",
+    "development": "Week 21 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 21. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 22,
+    "babySize": "Your baby is the size of a papaya",
+    "length": "23 cm",
+    "weight": "500g",
+    "development": "Week 22 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 22. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 23,
+    "babySize": "Your baby is the size of a grapefruit",
+    "length": "24 cm",
+    "weight": "600g",
+    "development": "Week 23 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 23. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 24,
+    "babySize": "Your baby is the size of a cantaloupe",
+    "length": "26 cm",
+    "weight": "700g",
+    "development": "Week 24 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 24. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": "Glucose screening often recommended around weeks 24\u201328"
+  },
+  {
+    "week": 25,
+    "babySize": "Your baby is the size of a cauliflower",
+    "length": "28 cm",
+    "weight": "800g",
+    "development": "Week 25 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 25. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 26,
+    "babySize": "Your baby is the size of a head of lettuce",
+    "length": "29 cm",
+    "weight": "900g",
+    "development": "Week 26 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 26. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 27,
+    "babySize": "Your baby is the size of a rutabaga",
+    "length": "30 cm",
+    "weight": "1000g",
+    "development": "Week 27 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 27. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 28,
+    "babySize": "Your baby is the size of an eggplant",
+    "length": "32 cm",
+    "weight": "1100g",
+    "development": "Week 28 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 28. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": "Third-trimester checkups may increase in frequency"
+  },
+  {
+    "week": 29,
+    "babySize": "Your baby is the size of a butternut squash",
+    "length": "34 cm",
+    "weight": "1200g",
+    "development": "Week 29 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 29. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 30,
+    "babySize": "Your baby is the size of a cabbage",
+    "length": "35 cm",
+    "weight": "1300g",
+    "development": "Week 30 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 30. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 31,
+    "babySize": "Your baby is the size of a coconut",
+    "length": "36 cm",
+    "weight": "1400g",
+    "development": "Week 31 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 31. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 32,
+    "babySize": "Your baby is the size of a jicama",
+    "length": "38 cm",
+    "weight": "1500g",
+    "development": "Week 32 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 32. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 33,
+    "babySize": "Your baby is the size of a pineapple",
+    "length": "40 cm",
+    "weight": "1600g",
+    "development": "Week 33 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 33. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 34,
+    "babySize": "Your baby is the size of a cantaloupe",
+    "length": "41 cm",
+    "weight": "1700g",
+    "development": "Week 34 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 34. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 35,
+    "babySize": "Your baby is the size of a honeydew melon",
+    "length": "42 cm",
+    "weight": "1800g",
+    "development": "Week 35 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 35. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 36,
+    "babySize": "Your baby is the size of a romaine lettuce",
+    "length": "44 cm",
+    "weight": "1900g",
+    "development": "Week 36 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 36. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": "Weekly visits often begin around week 36"
+  },
+  {
+    "week": 37,
+    "babySize": "Your baby is the size of a bunch of Swiss chard",
+    "length": "46 cm",
+    "weight": "2000g",
+    "development": "Week 37 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 37. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 38,
+    "babySize": "Your baby is the size of a mini watermelon",
+    "length": "47 cm",
+    "weight": "2100g",
+    "development": "Week 38 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 38. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 39,
+    "babySize": "Your baby is the size of a pumpkin",
+    "length": "48 cm",
+    "weight": "2200g",
+    "development": "Week 39 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 39. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 40,
+    "babySize": "Your baby is the size of a watermelon",
+    "length": "50 cm",
+    "weight": "2300g",
+    "development": "Week 40 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 40. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 41,
+    "babySize": "Your baby is the size of a small pumpkin",
+    "length": "52 cm",
+    "weight": "2400g",
+    "development": "Week 41 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 41. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  },
+  {
+    "week": 42,
+    "babySize": "Your baby is the size of a full-term baby",
+    "length": "53 cm",
+    "weight": "2500g",
+    "development": "Week 42 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
+    "momFeeling": "You may notice changing energy levels and body sensations typical of week 42. Listen to your body and rest when needed.",
+    "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
+    "appointmentReminder": null
+  }
+]

@@ -1,0 +1,144 @@
+{
+  "identifier" : "BLOOMLY_PLUS",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "29.99",
+      "familyShareable" : false,
+      "internalID" : "6670000003",
+      "localizations" : [
+        {
+          "description" : "Lifetime access to all Bloomly Plus features",
+          "displayName" : "Bloomly Plus Lifetime",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.office.bloomly.plus.lifetime",
+      "referenceName" : "Bloomly Plus Lifetime",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "BloomlyPlus",
+      "localizations" : [
+
+      ],
+      "name" : "Bloomly Plus",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6670000001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Monthly access to Bloomly Plus",
+              "displayName" : "Bloomly Plus Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.office.bloomly.plus.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Bloomly Plus Monthly",
+          "subscriptionGroupID" : "BloomlyPlus",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "19.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6670000002",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Yearly access to Bloomly Plus — save 67%",
+              "displayName" : "Bloomly Plus Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.office.bloomly.plus.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Bloomly Plus Yearly",
+          "subscriptionGroupID" : "BloomlyPlus",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
