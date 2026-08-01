@@ -20,6 +20,9 @@ struct ToolsView: View {
                     NavigationLink { HydrationTrackerView() } label: {
                         toolRow("Hydration Tracker", icon: "drop.fill", subtitle: "Visual water counter")
                     }
+                    NavigationLink { WeightTrackerView() } label: {
+                        toolRow("Weight Tracker", icon: "scalemass.fill", subtitle: "Log weight & view trends")
+                    }
                 } else {
                     Section {
                         PremiumGateView(feature: "Wellness tools")

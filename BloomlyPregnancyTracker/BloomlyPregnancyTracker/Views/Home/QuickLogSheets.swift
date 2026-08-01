@@ -192,60 +192,6 @@ struct QuickSymptomLogSheet: View {
     }
 }
 
-struct QuickWeightLogSheet: View {
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var modelContext
-    @Query private var profiles: [UserProfile]
-    @Query(sort: \DailyLog.date, order: .reverse) private var logs: [DailyLog]
-    @State private var weightText = ""
-
-    var body: some View {
-        NavigationStack {
-            Group {
-                if profiles.first?.isPremium == true {
-                    VStack(spacing: 24) {
-                        TextField("Weight", text: $weightText)
-                            .keyboardType(.decimalPad)
-                            .font(.system(size: 48, weight: .bold, design: .rounded))
-                            .multilineTextAlignment(.center)
-                        Text(profiles.first?.weightUnit ?? "kg")
-                            .foregroundStyle(BloomlyTheme.textSecondary)
-                        Spacer()
-                    }
-                    .padding()
-                } else {
-                    PremiumGateView(feature: "Weight tracking")
-                }
-            }
-            .bloomlyScreenBackground()
-            .navigationTitle("Weight")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
-                if profiles.first?.isPremium == true {
-                    ToolbarItem(placement: .confirmationAction) { Button("Save") { save(); dismiss() } }
-                }
-            }
-            .onAppear {
-                if let w = todayLog?.weightValue { weightText = String(format: "%.1f", w) }
-            }
-        }
-    }
-
-    private var todayLog: DailyLog? {
-        let today = Calendar.current.startOfDay(for: .now)
-        return logs.first { Calendar.current.isDate($0.date, inSameDayAs: today) }
-    }
-
-    private func save() {
-        guard let value = Double(weightText) else { return }
-        if let log = todayLog {
-            log.weightValue = value
-        } else {
-            modelContext.insert(DailyLog(weightValue: value))
-        }
-    }
-}
 
 struct PremiumGateView: View {
     let feature: String

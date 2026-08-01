@@ -28,6 +28,7 @@ struct ProfileView: View {
                     NavigationLink("Baby Names") { BabyNamesView() }
                     if profile?.isPremium == true {
                         NavigationLink("Appointments") { AppointmentsView() }
+                        NavigationLink("Weight Tracker") { WeightTrackerView() }
                         NavigationLink("Nutrition Guide") { NutritionView() }
                         NavigationLink("Statistics") { StatisticsView() }
                     }
@@ -309,11 +310,10 @@ struct StatisticsView: View {
     @Query private var profiles: [UserProfile]
     @Query(sort: \DailyLog.date) private var logs: [DailyLog]
 
+    private var profile: UserProfile? { profiles.first }
+    private var unit: String { profile?.weightUnit ?? "kg" }
     private var weightData: [(date: Date, weight: Double)] {
-        logs.compactMap { log in
-            guard let w = log.weightValue else { return nil }
-            return (log.date, w)
-        }
+        WeightCalculator.entries(from: logs)
     }
 
     var body: some View {
@@ -331,19 +331,54 @@ struct StatisticsView: View {
     }
 
     private var weightChart: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Weight Over Time").font(.headline)
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Weight Over Time").font(.headline)
+                Spacer()
+                NavigationLink("Details") { WeightTrackerView() }
+                    .font(.caption)
+            }
+
             if weightData.isEmpty {
-                Text("No weight data yet").foregroundStyle(BloomlyTheme.textSecondary)
+                Text("No weight data yet. Log from Home or Weight Tracker.")
+                    .foregroundStyle(BloomlyTheme.textSecondary)
             } else {
-                Chart(weightData, id: \.date) { item in
-                    LineMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
-                        .foregroundStyle(BloomlyTheme.sage)
+                if let latest = weightData.last?.weight, let starting = profile?.startingWeight {
+                    HStack {
+                        summaryPill("Latest", WeightCalculator.format(latest, unit: unit))
+                        summaryPill("Gain", WeightCalculator.formatChange(latest - starting, unit: unit))
+                    }
                 }
+
+                Chart {
+                    if let starting = profile?.startingWeight {
+                        RuleMark(y: .value("Starting", starting))
+                            .foregroundStyle(BloomlyTheme.blushDark.opacity(0.4))
+                            .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 4]))
+                    }
+                    ForEach(weightData, id: \.date) { item in
+                        LineMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
+                            .foregroundStyle(BloomlyTheme.sage)
+                        PointMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
+                            .foregroundStyle(BloomlyTheme.sageDark)
+                    }
+                }
+                .chartYAxisLabel(unit)
                 .frame(height: 200)
             }
         }
         .bloomlyCard()
+    }
+
+    private func summaryPill(_ title: String, _ value: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title).font(.caption2).foregroundStyle(BloomlyTheme.textSecondary)
+            Text(value).font(.subheadline.bold())
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(10)
+        .background(BloomlyTheme.cream.opacity(0.8))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 
     private var symptomChart: some View {

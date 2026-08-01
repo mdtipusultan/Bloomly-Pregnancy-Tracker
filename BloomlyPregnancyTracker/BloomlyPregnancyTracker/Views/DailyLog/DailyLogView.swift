@@ -7,6 +7,7 @@ struct DailyLogView: View {
     @Query(sort: \DailyLog.date, order: .reverse) private var logs: [DailyLog]
     @State private var selectedDate = Date()
     @State private var notes = ""
+    @State private var showWeightLog = false
 
     private var profile: UserProfile? { profiles.first }
     private var logForDate: DailyLog? {
@@ -30,6 +31,9 @@ struct DailyLogView: View {
             .navigationTitle("Daily Log")
             .onChange(of: selectedDate) { _, _ in loadNotes() }
             .onAppear { loadNotes() }
+            .sheet(isPresented: $showWeightLog) {
+                WeightLogSheet(logDate: selectedDate)
+            }
         }
     }
 
@@ -43,7 +47,10 @@ struct DailyLogView: View {
             }
             if profile?.isPremium == true {
                 HStack {
-                    summaryItem("Weight", value: weightText)
+                    Button { showWeightLog = true } label: {
+                        summaryItem("Weight", value: weightText, showsChevron: true)
+                    }
+                    .buttonStyle(.plain)
                     summaryItem("Symptoms", value: "\(logForDate?.symptoms.count ?? 0)")
                 }
                 if let symptoms = logForDate?.symptoms, !symptoms.isEmpty {
@@ -75,10 +82,17 @@ struct DailyLogView: View {
         return String(format: "%.1f %@", w, profile?.weightUnit ?? "kg")
     }
 
-    private func summaryItem(_ title: String, value: String) -> some View {
+    private func summaryItem(_ title: String, value: String, showsChevron: Bool = false) -> some View {
         VStack {
             Text(title).font(.caption).foregroundStyle(BloomlyTheme.textSecondary)
-            Text(value).font(.headline)
+            HStack(spacing: 4) {
+                Text(value).font(.headline)
+                if showsChevron {
+                    Image(systemName: "chevron.right")
+                        .font(.caption2)
+                        .foregroundStyle(BloomlyTheme.textSecondary)
+                }
+            }
         }
         .frame(maxWidth: .infinity)
     }

@@ -6,6 +6,7 @@ final class UserProfile {
     var lastMenstrualPeriod: Date?
     var dueDate: Date?
     var weightUnit: String
+    var startingWeight: Double?
     var isFirstPregnancy: Bool
     var isPremium: Bool
     var hasCompletedOnboarding: Bool
@@ -19,6 +20,7 @@ final class UserProfile {
         lastMenstrualPeriod: Date? = nil,
         dueDate: Date? = nil,
         weightUnit: String = "kg",
+        startingWeight: Double? = nil,
         isFirstPregnancy: Bool = true,
         isPremium: Bool = false,
         hasCompletedOnboarding: Bool = false,
@@ -31,6 +33,7 @@ final class UserProfile {
         self.lastMenstrualPeriod = lastMenstrualPeriod
         self.dueDate = dueDate
         self.weightUnit = weightUnit
+        self.startingWeight = startingWeight
         self.isFirstPregnancy = isFirstPregnancy
         self.isPremium = isPremium
         self.hasCompletedOnboarding = hasCompletedOnboarding

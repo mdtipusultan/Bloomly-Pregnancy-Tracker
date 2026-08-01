@@ -11,6 +11,7 @@ struct OnboardingView: View {
     @State private var selectedDate = Date()
     @State private var isFirstPregnancy = true
     @State private var weightUnit = "kg"
+    @State private var startingWeightText = ""
 
     var body: some View {
         ZStack {
@@ -165,6 +166,21 @@ struct OnboardingView: View {
                 Text("Pounds (lbs)").tag("lbs")
             }
             .pickerStyle(.segmented)
+            if trackingMode == "pregnant" {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Starting weight (optional)")
+                        .font(.subheadline.bold())
+                    HStack {
+                        TextField(weightUnit == "lbs" ? "e.g. 140" : "e.g. 65", text: $startingWeightText)
+                            .keyboardType(.decimalPad)
+                        Text(weightUnit)
+                            .foregroundStyle(BloomlyTheme.textSecondary)
+                    }
+                    Text("Pre-pregnancy weight helps track healthy gain.")
+                        .font(.caption)
+                        .foregroundStyle(BloomlyTheme.textSecondary)
+                }
+            }
             Spacer()
         }
         .bloomlyCard()
@@ -208,6 +224,7 @@ struct OnboardingView: View {
             lastMenstrualPeriod: lmp,
             dueDate: due,
             weightUnit: weightUnit,
+            startingWeight: Double(startingWeightText.trimmingCharacters(in: .whitespaces)),
             isFirstPregnancy: isFirstPregnancy,
             isPremium: StoreKitManager.unlockAllFeaturesForDevelopment,
             hasCompletedOnboarding: true,
