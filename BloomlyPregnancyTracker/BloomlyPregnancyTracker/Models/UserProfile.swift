@@ -11,6 +11,8 @@ final class UserProfile {
     var hasCompletedOnboarding: Bool
     var trackingMode: String // "pregnant" or "planning"
     var averageCycleLength: Int
+    var waterRemindersEnabled: Bool
+    var foodRemindersEnabled: Bool
     var createdAt: Date
 
     init(
@@ -22,6 +24,8 @@ final class UserProfile {
         hasCompletedOnboarding: Bool = false,
         trackingMode: String = "pregnant",
         averageCycleLength: Int = 28,
+        waterRemindersEnabled: Bool = true,
+        foodRemindersEnabled: Bool = true,
         createdAt: Date = .now
     ) {
         self.lastMenstrualPeriod = lastMenstrualPeriod
@@ -32,6 +36,8 @@ final class UserProfile {
         self.hasCompletedOnboarding = hasCompletedOnboarding
         self.trackingMode = trackingMode
         self.averageCycleLength = averageCycleLength
+        self.waterRemindersEnabled = waterRemindersEnabled
+        self.foodRemindersEnabled = foodRemindersEnabled
         self.createdAt = createdAt
     }
 }

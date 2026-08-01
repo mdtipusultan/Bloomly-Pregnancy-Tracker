@@ -10,8 +10,11 @@ final class StoreKitManager {
     static let yearlyID = "com.office.bloomly.plus.yearly"
     static let lifetimeID = "com.office.bloomly.plus.lifetime"
 
+    /// Set to `false` before App Store release.
+    static let unlockAllFeaturesForDevelopment = true
+
     var products: [Product] = []
-    var isPremium = false
+    var isPremium = unlockAllFeaturesForDevelopment
     var isLoading = false
 
     nonisolated(unsafe) private var updateTask: Task<Void, Never>?
@@ -56,6 +59,10 @@ final class StoreKitManager {
     }
 
     func refreshPremiumStatus() async {
+        if Self.unlockAllFeaturesForDevelopment {
+            isPremium = true
+            return
+        }
         var premium = false
         for await result in Transaction.currentEntitlements {
             if let transaction = try? checkVerified(result),

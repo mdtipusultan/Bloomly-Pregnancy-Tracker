@@ -209,10 +209,14 @@ struct OnboardingView: View {
             dueDate: due,
             weightUnit: weightUnit,
             isFirstPregnancy: isFirstPregnancy,
+            isPremium: StoreKitManager.unlockAllFeaturesForDevelopment,
             hasCompletedOnboarding: true,
             trackingMode: trackingMode
         )
         modelContext.insert(profile)
+        if StoreKitManager.unlockAllFeaturesForDevelopment {
+            return
+        }
         showPaywall = true
     }
 }

@@ -40,6 +40,7 @@ struct ProfileView: View {
                 }
 
                 Section("Settings") {
+                    NavigationLink("Daily Reminders") { ReminderSettingsView() }
                     NavigationLink("Privacy") { PrivacyView() }
                 }
             }

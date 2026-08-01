@@ -4,8 +4,27 @@ import SwiftData
 struct ContentView: View {
     @Query private var profiles: [UserProfile]
     @State private var showPaywall = false
+    @State private var showSplash = true
 
     var body: some View {
+        ZStack {
+            if showSplash {
+                SplashScreenView()
+                    .transition(.opacity)
+            } else {
+                mainContent
+                    .transition(.opacity)
+            }
+        }
+        .animation(.easeOut(duration: 0.4), value: showSplash)
+        .task {
+            try? await Task.sleep(for: .seconds(2))
+            showSplash = false
+        }
+    }
+
+    @ViewBuilder
+    private var mainContent: some View {
         Group {
             if let profile = profiles.first, profile.hasCompletedOnboarding {
                 MainTabView()

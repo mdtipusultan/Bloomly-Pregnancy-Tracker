@@ -28,9 +28,23 @@ struct Bloomly_PregnancyTrackerApp: App {
                     _ = await NotificationManager.requestAuthorization()
                     await StoreKitManager.shared.refreshPremiumStatus()
                     syncPremiumToProfile()
+                    await syncDailyReminders()
                 }
         }
         .modelContainer(sharedModelContainer)
+    }
+
+    @MainActor
+    private func syncDailyReminders() async {
+        guard let context = try? sharedModelContainer.mainContext,
+              let profile = try? context.fetch(FetchDescriptor<UserProfile>()).first else {
+            await NotificationManager.syncDailyReminders(waterEnabled: true, foodEnabled: true)
+            return
+        }
+        await NotificationManager.syncDailyReminders(
+            waterEnabled: profile.waterRemindersEnabled,
+            foodEnabled: profile.foodRemindersEnabled
+        )
     }
 
     @MainActor
@@ -39,6 +53,7 @@ struct Bloomly_PregnancyTrackerApp: App {
         if let context = try? sharedModelContainer.mainContext,
            let profile = try? context.fetch(FetchDescriptor<UserProfile>()).first {
             profile.isPremium = premium
+            try? context.save()
         }
     }
 }
