@@ -3,6 +3,7 @@ import Foundation
 struct WeekGuideEntry: Codable, Identifiable {
     let week: Int
     let babySize: String
+    let sizeImage: String
     let length: String
     let weight: String
     let development: String

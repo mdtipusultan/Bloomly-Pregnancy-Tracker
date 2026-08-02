@@ -7,7 +7,8 @@
     "development": "Week 1 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 1. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "poppy_seed"
   },
   {
     "week": 2,
@@ -17,7 +18,8 @@
     "development": "Week 2 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 2. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "sesame_seed"
   },
   {
     "week": 3,
@@ -27,7 +29,8 @@
     "development": "Week 3 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 3. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "lentil"
   },
   {
     "week": 4,
@@ -37,7 +40,8 @@
     "development": "Week 4 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 4. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "blueberry"
   },
   {
     "week": 5,
@@ -47,7 +51,8 @@
     "development": "Week 5 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 5. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "raspberry"
   },
   {
     "week": 6,
@@ -57,7 +62,8 @@
     "development": "Week 6 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 6. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "grape"
   },
   {
     "week": 7,
@@ -67,7 +73,8 @@
     "development": "Week 7 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 7. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "cherry"
   },
   {
     "week": 8,
@@ -77,7 +84,8 @@
     "development": "Week 8 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 8. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": "First prenatal visit often scheduled around weeks 8\u201310"
+    "appointmentReminder": "First prenatal visit often scheduled around weeks 8\u201310",
+    "sizeImage": "strawberry"
   },
   {
     "week": 9,
@@ -87,7 +95,8 @@
     "development": "Week 9 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 9. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "fig"
   },
   {
     "week": 10,
@@ -97,7 +106,8 @@
     "development": "Week 10 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 10. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "lime"
   },
   {
     "week": 11,
@@ -107,7 +117,8 @@
     "development": "Week 11 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 11. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "peach"
   },
   {
     "week": 12,
@@ -117,7 +128,8 @@
     "development": "Week 12 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 12. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": "Nuchal translucency screening may be offered around week 12"
+    "appointmentReminder": "Nuchal translucency screening may be offered around week 12",
+    "sizeImage": "plum"
   },
   {
     "week": 13,
@@ -127,7 +139,8 @@
     "development": "Week 13 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 13. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "lemon"
   },
   {
     "week": 14,
@@ -137,7 +150,8 @@
     "development": "Week 14 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 14. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "nectarine"
   },
   {
     "week": 15,
@@ -147,7 +161,8 @@
     "development": "Week 15 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 15. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "apple"
   },
   {
     "week": 16,
@@ -157,7 +172,8 @@
     "development": "Week 16 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 16. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "avocado"
   },
   {
     "week": 17,
@@ -167,7 +183,8 @@
     "development": "Week 17 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 17. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "pear"
   },
   {
     "week": 18,
@@ -177,7 +194,8 @@
     "development": "Week 18 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 18. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "bell_pepper"
   },
   {
     "week": 19,
@@ -187,7 +205,8 @@
     "development": "Week 19 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 19. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "mango"
   },
   {
     "week": 20,
@@ -197,7 +216,8 @@
     "development": "Week 20 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 20. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": "Anatomy ultrasound typically around week 20"
+    "appointmentReminder": "Anatomy ultrasound typically around week 20",
+    "sizeImage": "banana"
   },
   {
     "week": 21,
@@ -207,7 +227,8 @@
     "development": "Week 21 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 21. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "carrot"
   },
   {
     "week": 22,
@@ -217,7 +238,8 @@
     "development": "Week 22 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 22. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "papaya"
   },
   {
     "week": 23,
@@ -227,7 +249,8 @@
     "development": "Week 23 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 23. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "grapefruit"
   },
   {
     "week": 24,
@@ -237,7 +260,8 @@
     "development": "Week 24 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 24. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": "Glucose screening often recommended around weeks 24\u201328"
+    "appointmentReminder": "Glucose screening often recommended around weeks 24\u201328",
+    "sizeImage": "cantaloupe"
   },
   {
     "week": 25,
@@ -247,7 +271,8 @@
     "development": "Week 25 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 25. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "cauliflower"
   },
   {
     "week": 26,
@@ -257,7 +282,8 @@
     "development": "Week 26 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 26. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "head_of_lettuce"
   },
   {
     "week": 27,
@@ -267,7 +293,8 @@
     "development": "Week 27 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 27. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "rutabaga"
   },
   {
     "week": 28,
@@ -277,7 +304,8 @@
     "development": "Week 28 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 28. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": "Third-trimester checkups may increase in frequency"
+    "appointmentReminder": "Third-trimester checkups may increase in frequency",
+    "sizeImage": "eggplant"
   },
   {
     "week": 29,
@@ -287,7 +315,8 @@
     "development": "Week 29 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 29. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "butternut_squash"
   },
   {
     "week": 30,
@@ -297,7 +326,8 @@
     "development": "Week 30 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 30. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "cabbage"
   },
   {
     "week": 31,
@@ -307,7 +337,8 @@
     "development": "Week 31 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 31. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "coconut"
   },
   {
     "week": 32,
@@ -317,7 +348,8 @@
     "development": "Week 32 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 32. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "jicama"
   },
   {
     "week": 33,
@@ -327,7 +359,8 @@
     "development": "Week 33 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 33. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "pineapple"
   },
   {
     "week": 34,
@@ -337,7 +370,8 @@
     "development": "Week 34 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 34. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "cantaloupe"
   },
   {
     "week": 35,
@@ -347,7 +381,8 @@
     "development": "Week 35 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 35. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "honeydew_melon"
   },
   {
     "week": 36,
@@ -357,7 +392,8 @@
     "development": "Week 36 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 36. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": "Weekly visits often begin around week 36"
+    "appointmentReminder": "Weekly visits often begin around week 36",
+    "sizeImage": "romaine_lettuce"
   },
   {
     "week": 37,
@@ -367,7 +403,8 @@
     "development": "Week 37 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 37. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "bunch_of_swiss_chard"
   },
   {
     "week": 38,
@@ -377,7 +414,8 @@
     "development": "Week 38 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 38. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "mini_watermelon"
   },
   {
     "week": 39,
@@ -387,7 +425,8 @@
     "development": "Week 39 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 39. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "pumpkin"
   },
   {
     "week": 40,
@@ -397,7 +436,8 @@
     "development": "Week 40 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 40. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "watermelon"
   },
   {
     "week": 41,
@@ -407,7 +447,8 @@
     "development": "Week 41 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 41. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "small_pumpkin"
   },
   {
     "week": 42,
@@ -417,6 +458,7 @@
     "development": "Week 42 brings new growth milestones. Your baby's organs and systems continue developing rapidly during this stage of pregnancy.",
     "momFeeling": "You may notice changing energy levels and body sensations typical of week 42. Listen to your body and rest when needed.",
     "tip": "Stay hydrated and eat balanced meals this week. Small, frequent snacks can help with comfort.",
-    "appointmentReminder": null
+    "appointmentReminder": null,
+    "sizeImage": "full_term_baby"
   }
 ]

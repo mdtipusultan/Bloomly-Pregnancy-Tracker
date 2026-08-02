@@ -6,20 +6,66 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CE2DC4432FE6F49D003A3AD6 /* BloomlyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CE2DC4212FE6F49D003A3AD6 /* BloomlyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CE2DC4272FE6F49D003A3AD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE2DC4012FE6F49D003A3AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE2DC4202FE6F49D003A3AD6;
+			remoteInfo = BloomlyWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CE2DC4262FE6F49D003A3AD6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CE2DC4432FE6F49D003A3AD6 /* BloomlyWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		CE2DC4092FE6F49D003A3AD6 /* BloomlyPregnancyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BloomlyPregnancyTracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE2DC4092FE6F49D003A3AD6 /* BloomlyPregnancyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BloomlyPregnancyTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE2DC4212FE6F49D003A3AD6 /* BloomlyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BloomlyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CE2DC40B2FE6F49D003A3AD6 /* BloomlyPregnancyTracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "BloomlyPregnancyTracker";
+			path = BloomlyPregnancyTracker;
+			sourceTree = "<group>";
+		};
+		CE2DC4302FE6F49D003A3AD6 /* BloomlyShared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BloomlyShared;
+			sourceTree = "<group>";
+		};
+		CE2DC4312FE6F49D003A3AD6 /* BloomlyWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BloomlyWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		CE2DC4062FE6F49D003A3AD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE2DC4242FE6F49D003A3AD6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				CE2DC40B2FE6F49D003A3AD6 /* BloomlyPregnancyTracker */,
+				CE2DC4302FE6F49D003A3AD6 /* BloomlyShared */,
+				CE2DC4312FE6F49D003A3AD6 /* BloomlyWidget */,
 				CE2DC40A2FE6F49D003A3AD6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				CE2DC4092FE6F49D003A3AD6 /* BloomlyPregnancyTracker.app */,
+				CE2DC4212FE6F49D003A3AD6 /* BloomlyWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,20 +104,46 @@
 				CE2DC4052FE6F49D003A3AD6 /* Sources */,
 				CE2DC4062FE6F49D003A3AD6 /* Frameworks */,
 				CE2DC4072FE6F49D003A3AD6 /* Resources */,
+				CE2DC4262FE6F49D003A3AD6 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE2DC4282FE6F49D003A3AD6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CE2DC40B2FE6F49D003A3AD6 /* BloomlyPregnancyTracker */,
+				CE2DC4302FE6F49D003A3AD6 /* BloomlyShared */,
+			);
+			name = BloomlyPregnancyTracker;
+			packageProductDependencies = (
+			);
+			productName = BloomlyPregnancyTracker;
+			productReference = CE2DC4092FE6F49D003A3AD6 /* BloomlyPregnancyTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CE2DC4202FE6F49D003A3AD6 /* BloomlyWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE2DC42B2FE6F49F003A3AD6 /* Build configuration list for PBXNativeTarget "BloomlyWidgetExtension" */;
+			buildPhases = (
+				CE2DC4232FE6F49D003A3AD6 /* Sources */,
+				CE2DC4242FE6F49D003A3AD6 /* Frameworks */,
+				CE2DC4252FE6F49D003A3AD6 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				CE2DC40B2FE6F49D003A3AD6 /* BloomlyPregnancyTracker */,
+				CE2DC4302FE6F49D003A3AD6 /* BloomlyShared */,
+				CE2DC4312FE6F49D003A3AD6 /* BloomlyWidget */,
 			);
-			name = "BloomlyPregnancyTracker";
+			name = BloomlyWidgetExtension;
 			packageProductDependencies = (
 			);
-			productName = "BloomlyPregnancyTracker";
-			productReference = CE2DC4092FE6F49D003A3AD6 /* BloomlyPregnancyTracker.app */;
-			productType = "com.apple.product-type.application";
+			productName = BloomlyWidgetExtension;
+			productReference = CE2DC4212FE6F49D003A3AD6 /* BloomlyWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -81,6 +156,9 @@
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					CE2DC4082FE6F49D003A3AD6 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+					CE2DC4202FE6F49D003A3AD6 = {
 						CreatedOnToolsVersion = 26.4.1;
 					};
 				};
@@ -100,12 +178,20 @@
 			projectRoot = "";
 			targets = (
 				CE2DC4082FE6F49D003A3AD6 /* BloomlyPregnancyTracker */,
+				CE2DC4202FE6F49D003A3AD6 /* BloomlyWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		CE2DC4072FE6F49D003A3AD6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE2DC4252FE6F49D003A3AD6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +208,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE2DC4232FE6F49D003A3AD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CE2DC4282FE6F49D003A3AD6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE2DC4202FE6F49D003A3AD6 /* BloomlyWidgetExtension */;
+			targetProxy = CE2DC4272FE6F49D003A3AD6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CE2DC4122FE6F49F003A3AD6 /* Debug */ = {
@@ -251,11 +352,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BloomlyPregnancyTracker/BloomlyPregnancyTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4NG5UXJYS8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Bloomly uses the camera to capture bump photos for your pregnancy journal.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Bloomly accesses your photo library to add bump photos to your journal.";
 				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Bloomly sends local reminders for hydration, meals, and upcoming appointments.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -284,11 +388,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BloomlyPregnancyTracker/BloomlyPregnancyTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4NG5UXJYS8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Bloomly uses the camera to capture bump photos for your pregnancy journal.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Bloomly accesses your photo library to add bump photos to your journal.";
 				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Bloomly sends local reminders for hydration, meals, and upcoming appointments.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -312,6 +419,60 @@
 			};
 			name = Release;
 		};
+		CE2DC4292FE6F49F003A3AD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = BloomlyWidget/BloomlyWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4NG5UXJYS8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Bloomly;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.office.Bloomly-PregnancyTracker.BloomlyWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CE2DC42A2FE6F49F003A3AD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = BloomlyWidget/BloomlyWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4NG5UXJYS8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Bloomly;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.office.Bloomly-PregnancyTracker.BloomlyWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -329,6 +490,15 @@
 			buildConfigurations = (
 				CE2DC4152FE6F49F003A3AD6 /* Debug */,
 				CE2DC4162FE6F49F003A3AD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE2DC42B2FE6F49F003A3AD6 /* Build configuration list for PBXNativeTarget "BloomlyWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE2DC4292FE6F49F003A3AD6 /* Debug */,
+				CE2DC42A2FE6F49F003A3AD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

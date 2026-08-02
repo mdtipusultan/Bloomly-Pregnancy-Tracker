@@ -25,6 +25,18 @@ struct ProfileView: View {
                 }
 
                 Section("Features") {
+                    if profile?.trackingMode == "pregnant" {
+                        NavigationLink("Bump Journal") { BumpJournalView() }
+                        if let profile, let entry = PregnancyCalculator.weekEntry(for: profile) {
+                            NavigationLink("Share with Partner") {
+                                PartnerShareView(
+                                    profile: profile,
+                                    entry: entry,
+                                    week: PregnancyCalculator.currentWeek(profile: profile)
+                                )
+                            }
+                        }
+                    }
                     NavigationLink("Baby Names") { BabyNamesView() }
                     if profile?.isPremium == true {
                         NavigationLink("Appointments") { AppointmentsView() }
@@ -41,11 +53,17 @@ struct ProfileView: View {
                 }
 
                 Section("Settings") {
+                    if let profile {
+                        PartnerSettingsSection(profile: profile)
+                    }
                     NavigationLink("Daily Reminders") { ReminderSettingsView() }
                     NavigationLink("Privacy") { PrivacyView() }
                 }
             }
             .navigationTitle("Profile")
+            .onChange(of: profile?.partnerName) { _, _ in
+                WidgetDataSync.sync(profile: profile)
+            }
             .sheet(isPresented: $showPaywall) {
                 PaywallView(onComplete: {})
             }

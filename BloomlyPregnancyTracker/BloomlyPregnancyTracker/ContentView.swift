@@ -42,6 +42,7 @@ struct ContentView: View {
     ContentView()
         .modelContainer(for: [
             UserProfile.self, DailyLog.self, Appointment.self,
-            KickSession.self, ContractionSession.self, SavedName.self, PeriodLog.self
+            KickSession.self, ContractionSession.self, SavedName.self, PeriodLog.self,
+            BumpPhoto.self
         ], inMemory: true)
 }

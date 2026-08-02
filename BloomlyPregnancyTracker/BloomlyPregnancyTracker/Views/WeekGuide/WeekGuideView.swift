@@ -50,7 +50,8 @@ struct WeekGuideView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Week \(entry.week)")
                 .font(.title.bold())
-            detailCard("Baby Size", icon: "leaf.fill", text: entry.babySize)
+            BabySizeCard(entry: entry, week: entry.week)
+            BabySizeTimelineStrip(currentWeek: entry.week, entries: timelineEntries(around: entry.week))
             HStack {
                 detailCard("Length", icon: "ruler", text: entry.length)
                 detailCard("Weight", icon: "scalemass", text: entry.weight)
@@ -75,5 +76,11 @@ struct WeekGuideView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .bloomlyCard()
+    }
+
+    private func timelineEntries(around week: Int) -> [WeekGuideEntry] {
+        let lower = max(week - 4, 1)
+        let upper = min(week + 4, 42)
+        return weeks.filter { $0.week >= lower && $0.week <= upper }
     }
 }

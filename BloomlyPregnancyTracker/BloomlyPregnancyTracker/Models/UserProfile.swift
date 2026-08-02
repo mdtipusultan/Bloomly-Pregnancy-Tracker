@@ -14,6 +14,8 @@ final class UserProfile {
     var averageCycleLength: Int
     var waterRemindersEnabled: Bool
     var foodRemindersEnabled: Bool
+    var displayName: String?
+    var partnerName: String?
     var createdAt: Date
 
     init(
@@ -28,6 +30,8 @@ final class UserProfile {
         averageCycleLength: Int = 28,
         waterRemindersEnabled: Bool = true,
         foodRemindersEnabled: Bool = true,
+        displayName: String? = nil,
+        partnerName: String? = nil,
         createdAt: Date = .now
     ) {
         self.lastMenstrualPeriod = lastMenstrualPeriod
@@ -41,6 +45,8 @@ final class UserProfile {
         self.averageCycleLength = averageCycleLength
         self.waterRemindersEnabled = waterRemindersEnabled
         self.foodRemindersEnabled = foodRemindersEnabled
+        self.displayName = displayName
+        self.partnerName = partnerName
         self.createdAt = createdAt
     }
 }

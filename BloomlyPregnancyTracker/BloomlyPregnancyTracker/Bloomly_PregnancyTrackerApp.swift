@@ -11,7 +11,8 @@ struct Bloomly_PregnancyTrackerApp: App {
             KickSession.self,
             ContractionSession.self,
             SavedName.self,
-            PeriodLog.self
+            PeriodLog.self,
+            BumpPhoto.self
         ])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
@@ -29,9 +30,18 @@ struct Bloomly_PregnancyTrackerApp: App {
                     await StoreKitManager.shared.refreshPremiumStatus()
                     syncPremiumToProfile()
                     await syncDailyReminders()
+                    syncWidget()
                 }
         }
         .modelContainer(sharedModelContainer)
+    }
+
+    @MainActor
+    private func syncWidget() {
+        if let context = try? sharedModelContainer.mainContext,
+           let profile = try? context.fetch(FetchDescriptor<UserProfile>()).first {
+            WidgetDataSync.sync(profile: profile)
+        }
     }
 
     @MainActor

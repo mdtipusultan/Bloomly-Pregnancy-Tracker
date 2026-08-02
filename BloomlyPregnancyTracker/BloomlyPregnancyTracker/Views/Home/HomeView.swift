@@ -8,6 +8,7 @@ struct HomeView: View {
     @State private var showSymptomLog = false
     @State private var showMoodLog = false
     @State private var showWeightLog = false
+    @State private var showPartnerShare = false
 
     private var profile: UserProfile? { profiles.first }
     private var week: Int { profile.map { PregnancyCalculator.currentWeek(profile: $0) } ?? 1 }
@@ -40,6 +41,13 @@ struct HomeView: View {
             .sheet(isPresented: $showSymptomLog) { QuickSymptomLogSheet() }
             .sheet(isPresented: $showMoodLog) { QuickMoodLogSheet() }
             .sheet(isPresented: $showWeightLog) { QuickWeightLogSheet() }
+            .sheet(isPresented: $showPartnerShare) {
+                if let profile, let entry = weekEntry {
+                    PartnerShareView(profile: profile, entry: entry, week: week)
+                }
+            }
+            .onAppear { WidgetDataSync.sync(profile: profile) }
+            .onChange(of: week) { _, _ in WidgetDataSync.sync(profile: profile) }
         }
     }
 
@@ -62,19 +70,17 @@ struct HomeView: View {
             }
 
             if let entry = weekEntry {
-                VStack(alignment: .leading, spacing: 8) {
-                    Label(entry.babySize, systemImage: "leaf.fill")
-                        .font(.headline)
-                        .foregroundStyle(BloomlyTheme.sageDark)
-                    HStack {
-                        Label(entry.length, systemImage: "ruler")
-                        Spacer()
-                        Label(entry.weight, systemImage: "scalemass")
-                    }
-                    .font(.caption)
-                    .foregroundStyle(BloomlyTheme.textSecondary)
-                }
-                .bloomlyCard()
+                BabySizeCard(
+                    entry: entry,
+                    week: week,
+                    showShareButton: true,
+                    onShare: { showPartnerShare = true }
+                )
+
+                BabySizeTimelineStrip(
+                    currentWeek: week,
+                    entries: timelineEntries(around: week)
+                )
             }
         }
     }
@@ -178,6 +184,13 @@ struct HomeView: View {
                 .foregroundStyle(BloomlyTheme.textSecondary)
         }
         .bloomlyCard()
+    }
+
+    private func timelineEntries(around week: Int) -> [WeekGuideEntry] {
+        let all = ContentLoader.loadWeekGuide()
+        let lower = max(week - 2, 1)
+        let upper = min(week + 2, 42)
+        return all.filter { $0.week >= lower && $0.week <= upper }
     }
 }
 
