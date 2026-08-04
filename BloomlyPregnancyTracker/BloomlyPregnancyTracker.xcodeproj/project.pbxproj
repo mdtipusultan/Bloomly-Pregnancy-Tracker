@@ -52,8 +52,18 @@
 		};
 		CE2DC4312FE6F49D003A3AD6 /* BloomlyWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CE2DC4442FE6F49D003A3AD6 /* Exceptions for "BloomlyWidget" folder in "BloomlyWidgetExtension" target */,
+			);
 			path = BloomlyWidget;
 			sourceTree = "<group>";
+		};
+		CE2DC4442FE6F49D003A3AD6 /* Exceptions for "BloomlyWidget" folder in "BloomlyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CE2DC4202FE6F49D003A3AD6 /* BloomlyWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -428,6 +438,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4NG5UXJYS8;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BloomlyWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bloomly;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -455,6 +466,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4NG5UXJYS8;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BloomlyWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bloomly;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
