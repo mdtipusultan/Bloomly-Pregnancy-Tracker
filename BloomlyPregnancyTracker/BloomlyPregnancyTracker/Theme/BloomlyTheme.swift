@@ -17,6 +17,12 @@ enum BloomlyTheme {
         endPoint: .bottomTrailing
     )
 
+    static let primaryGradient = LinearGradient(
+        colors: [sageDark, sage],
+        startPoint: .leading,
+        endPoint: .trailing
+    )
+
     static func moodColor(for mood: Int) -> Color {
         switch mood {
         case 1: return Color(red: 0.45, green: 0.78, blue: 0.55)

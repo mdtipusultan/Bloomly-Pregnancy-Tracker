@@ -39,6 +39,16 @@
 		CE2DC4212FE6F49D003A3AD6 /* BloomlyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BloomlyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CE2DC4442FE6F49D003A3AD6 /* Exceptions for "BloomlyWidget" folder in "BloomlyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CE2DC4202FE6F49D003A3AD6 /* BloomlyWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CE2DC40B2FE6F49D003A3AD6 /* BloomlyPregnancyTracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -57,13 +67,6 @@
 			);
 			path = BloomlyWidget;
 			sourceTree = "<group>";
-		};
-		CE2DC4442FE6F49D003A3AD6 /* Exceptions for "BloomlyWidget" folder in "BloomlyWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = CE2DC4202FE6F49D003A3AD6 /* BloomlyWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 

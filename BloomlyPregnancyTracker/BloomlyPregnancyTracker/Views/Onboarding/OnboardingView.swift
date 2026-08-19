@@ -14,11 +14,19 @@ struct OnboardingView: View {
     @State private var startingWeightText = ""
     @FocusState private var isWeightFieldFocused: Bool
 
+    private let totalSteps = 4
+
+    private var stepTitles: [String] {
+        ["Welcome", "Your journey", "Key dates", "Preferences"]
+    }
+
     var body: some View {
         ZStack {
-            BloomlyTheme.backgroundGradient.ignoresSafeArea()
-            VStack(spacing: 24) {
+            OnboardingBackground()
+
+            VStack(spacing: 20) {
                 header
+
                 TabView(selection: $step) {
                     welcomeStep.tag(0)
                     modeStep.tag(1)
@@ -26,110 +34,349 @@ struct OnboardingView: View {
                     personalStep.tag(3)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeInOut, value: step)
+                .animation(.spring(response: 0.45, dampingFraction: 0.85), value: step)
                 .onChange(of: step) { _, newStep in
                     focusWeightFieldIfNeeded(for: newStep)
                 }
 
                 navigationButtons
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.bottom, 8)
         }
     }
+
+    // MARK: - Header
 
     private var header: some View {
-        VStack(spacing: 8) {
-            Text("Bloomly")
-                .font(.system(size: 36, weight: .bold, design: .rounded))
-                .foregroundStyle(BloomlyTheme.blushDark)
-            Text("Your pregnancy, beautifully tracked")
-                .font(.subheadline)
-                .foregroundStyle(BloomlyTheme.textSecondary)
-            ProgressView(value: Double(step + 1), total: 4)
-                .tint(BloomlyTheme.sage)
+        VStack(spacing: 16) {
+            HStack(spacing: 10) {
+                Image(systemName: "leaf.fill")
+                    .font(.title3)
+                    .foregroundStyle(BloomlyTheme.sageDark)
+                Text("Bloomly")
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundStyle(BloomlyTheme.textPrimary)
+                Spacer()
+            }
+            .padding(.top, 8)
+
+            OnboardingStepIndicator(
+                currentStep: step,
+                totalSteps: totalSteps,
+                stepTitle: stepTitles[step]
+            )
         }
     }
+
+    // MARK: - Step 0: Welcome
 
     private var welcomeStep: some View {
-        VStack(spacing: 20) {
-            Spacer()
-            Image(systemName: "heart.circle.fill")
-                .font(.system(size: 80))
-                .foregroundStyle(BloomlyTheme.blushDark)
-            Text("Welcome to Bloomly")
-                .font(.title2.bold())
-            Text("A warm, private space to track your pregnancy journey. Everything stays on your device.")
-                .multilineTextAlignment(.center)
-                .foregroundStyle(BloomlyTheme.textSecondary)
-            Spacer()
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 24) {
+                OnboardingHeroIcon(
+                    systemName: "heart.circle.fill",
+                    colors: [BloomlyTheme.blushDark, BloomlyTheme.sageDark]
+                )
+                .padding(.top, 8)
+
+                VStack(spacing: 10) {
+                    Text("Your journey starts here")
+                        .font(.title2.bold())
+                        .multilineTextAlignment(.center)
+                    Text("A calm, private space to track every moment — from first flutter to final countdown.")
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(BloomlyTheme.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                VStack(spacing: 12) {
+                    OnboardingFeatureRow(
+                        icon: "lock.shield.fill",
+                        title: "100% on your device",
+                        subtitle: "Your data never leaves your phone",
+                        tint: BloomlyTheme.sageDark
+                    )
+                    OnboardingFeatureRow(
+                        icon: "sparkles",
+                        title: "Week-by-week guides",
+                        subtitle: "Baby size, tips & milestones",
+                        tint: BloomlyTheme.blushDark
+                    )
+                    OnboardingFeatureRow(
+                        icon: "heart.text.square.fill",
+                        title: "Daily wellness logging",
+                        subtitle: "Symptoms, mood, water & more",
+                        tint: BloomlyTheme.sage
+                    )
+                }
+                .padding(.top, 4)
+            }
+            .padding(.vertical, 4)
         }
         .bloomlyCard()
     }
+
+    // MARK: - Step 1: Mode
 
     private var modeStep: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("What brings you here?")
-                .font(.title3.bold())
-            modeButton("I'm pregnant", icon: "figure.and.child.holdinghands", mode: "pregnant")
-            modeButton("I'm planning", icon: "calendar.badge.clock", mode: "planning")
-            Spacer()
+        VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("What brings you here?")
+                    .font(.title2.bold())
+                Text("We'll tailor Bloomly to your stage.")
+                    .font(.subheadline)
+                    .foregroundStyle(BloomlyTheme.textSecondary)
+            }
+
+            OnboardingModeCard(
+                title: "I'm pregnant",
+                subtitle: "Track weeks, baby size, kicks & milestones",
+                icon: "figure.and.child.holdinghands",
+                isSelected: trackingMode == "pregnant"
+            ) {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                    trackingMode = "pregnant"
+                    if step == 2 { clampSelectedDateToPregnancyRange() }
+                }
+            }
+
+            OnboardingModeCard(
+                title: "I'm planning",
+                subtitle: "Cycle tracking, fertile windows & prep",
+                icon: "calendar.badge.clock",
+                isSelected: trackingMode == "planning"
+            ) {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                    trackingMode = "planning"
+                }
+            }
+
+            Spacer(minLength: 0)
         }
         .bloomlyCard()
     }
 
-    private func modeButton(_ title: String, icon: String, mode: String) -> some View {
-        Button {
-            trackingMode = mode
-            if step == 2 { clampSelectedDateToPregnancyRange() }
-        } label: {
-            HStack {
-                Image(systemName: icon)
-                    .font(.title2)
-                    .foregroundStyle(trackingMode == mode ? .white : BloomlyTheme.sageDark)
-                Text(title)
-                    .font(.headline)
-                Spacer()
-                if trackingMode == mode {
-                    Image(systemName: "checkmark.circle.fill")
-                }
-            }
-            .padding()
-            .background(trackingMode == mode ? BloomlyTheme.sage : BloomlyTheme.creamDark)
-            .foregroundStyle(trackingMode == mode ? .white : BloomlyTheme.textPrimary)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-    }
+    // MARK: - Step 2: Dates
 
     private var dateStep: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            if trackingMode == "pregnant" {
-                Text("When did your journey begin?")
-                    .font(.title3.bold())
-                Picker("Input method", selection: $dateInputMethod) {
-                    Text("Last period date").tag("lmp")
-                    Text("Due date").tag("due")
-                }
-                .pickerStyle(.segmented)
-                DatePicker(
-                    dateInputMethod == "lmp" ? "Last menstrual period" : "Due date",
-                    selection: pregnancyDateSelection,
-                    in: pregnancyDateRange,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(.graphical)
-                .id(dateInputMethod)
-                .onChange(of: dateInputMethod) { clampSelectedDateToPregnancyRange() }
-            } else {
-                Text("Track your cycle")
-                    .font(.title3.bold())
-                Text("You can log period dates from the Daily Log and Profile tabs.")
-                    .foregroundStyle(BloomlyTheme.textSecondary)
-                DatePicker("Last period start", selection: $selectedDate, displayedComponents: .date)
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 16) {
+                if trackingMode == "pregnant" {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("When did your journey begin?")
+                            .font(.title2.bold())
+                        Text("We'll calculate your week and due date.")
+                            .font(.subheadline)
+                            .foregroundStyle(BloomlyTheme.textSecondary)
+                    }
+
+                    Picker("Input method", selection: $dateInputMethod) {
+                        Text("Last period").tag("lmp")
+                        Text("Due date").tag("due")
+                    }
+                    .pickerStyle(.segmented)
+
+                    OnboardingPregnancyPreview(
+                        week: previewWeek,
+                        dueDate: previewDueDate,
+                        trimester: PregnancyCalculator.trimester(for: previewWeek)
+                    )
+                    .transition(.scale.combined(with: .opacity))
+
+                    DatePicker(
+                        dateInputMethod == "lmp" ? "Last menstrual period" : "Due date",
+                        selection: pregnancyDateSelection,
+                        in: pregnancyDateRange,
+                        displayedComponents: .date
+                    )
                     .datePickerStyle(.graphical)
+                    .tint(BloomlyTheme.sageDark)
+                    .id(dateInputMethod)
+                    .onChange(of: dateInputMethod) { clampSelectedDateToPregnancyRange() }
+                } else {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Track your cycle")
+                            .font(.title2.bold())
+                        Text("When did your last period start? You can log more dates anytime.")
+                            .font(.subheadline)
+                            .foregroundStyle(BloomlyTheme.textSecondary)
+                    }
+
+                    HStack(spacing: 12) {
+                        Image(systemName: "drop.circle.fill")
+                            .font(.title2)
+                            .foregroundStyle(BloomlyTheme.blushDark)
+                        Text("Cycle insights appear on your Home tab")
+                            .font(.caption)
+                            .foregroundStyle(BloomlyTheme.textSecondary)
+                    }
+                    .padding(12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(BloomlyTheme.blush.opacity(0.2))
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+
+                    DatePicker("Last period start", selection: $selectedDate, displayedComponents: .date)
+                        .datePickerStyle(.graphical)
+                        .tint(BloomlyTheme.sageDark)
+                }
             }
-            Spacer()
         }
         .bloomlyCard()
+    }
+
+    // MARK: - Step 3: Preferences
+
+    private var personalStep: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Almost there!")
+                        .font(.title2.bold())
+                    Text("A few quick preferences to personalize Bloomly.")
+                        .font(.subheadline)
+                        .foregroundStyle(BloomlyTheme.textSecondary)
+                }
+
+                if trackingMode == "pregnant" {
+                    preferenceRow(icon: "star.circle.fill", title: "First pregnancy?") {
+                        Toggle("This is my first pregnancy", isOn: $isFirstPregnancy)
+                            .labelsHidden()
+                            .tint(BloomlyTheme.sageDark)
+                    }
+                }
+
+                preferenceRow(icon: "scalemass.fill", title: "Weight unit") {
+                    Picker("Weight unit", selection: $weightUnit) {
+                        Text("kg").tag("kg")
+                        Text("lbs").tag("lbs")
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(maxWidth: 160)
+                }
+
+                if trackingMode == "pregnant" {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack(spacing: 10) {
+                            Image(systemName: "figure.stand")
+                                .foregroundStyle(BloomlyTheme.sageDark)
+                            Text("Starting weight")
+                                .font(.subheadline.weight(.semibold))
+                            Text("(optional)")
+                                .font(.caption)
+                                .foregroundStyle(BloomlyTheme.textSecondary)
+                        }
+
+                        HStack(spacing: 12) {
+                            TextField(
+                                weightUnit == "lbs" ? "e.g. 140" : "e.g. 65",
+                                text: $startingWeightText
+                            )
+                            .keyboardType(.decimalPad)
+                            .focused($isWeightFieldFocused)
+                            .padding(12)
+                            .background(BloomlyTheme.creamDark)
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+
+                            Text(weightUnit)
+                                .font(.subheadline.weight(.medium))
+                                .foregroundStyle(BloomlyTheme.sageDark)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 12)
+                                .background(BloomlyTheme.sage.opacity(0.15))
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        }
+
+                        Text("Pre-pregnancy weight helps track healthy gain over time.")
+                            .font(.caption)
+                            .foregroundStyle(BloomlyTheme.textSecondary)
+                    }
+                    .padding(14)
+                    .background(BloomlyTheme.cream.opacity(0.6))
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+            }
+        }
+        .bloomlyCard()
+    }
+
+    private func preferenceRow<Content: View>(
+        icon: String,
+        title: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        HStack {
+            Label(title, systemImage: icon)
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(BloomlyTheme.textPrimary)
+            Spacer()
+            content()
+        }
+        .padding(.vertical, 4)
+    }
+
+    // MARK: - Navigation
+
+    private var navigationButtons: some View {
+        HStack(spacing: 16) {
+            if step > 0 {
+                Button {
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                        step -= 1
+                    }
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                            .font(.caption.weight(.semibold))
+                        Text("Back")
+                    }
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(BloomlyTheme.textSecondary)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                }
+            }
+
+            Spacer()
+
+            OnboardingPrimaryButton(
+                title: step < totalSteps - 1 ? "Continue" : "Get Started",
+                icon: step < totalSteps - 1 ? "arrow.right" : "sparkles"
+            ) {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    if step < totalSteps - 1 {
+                        step += 1
+                    } else {
+                        completeOnboarding()
+                    }
+                }
+            }
+        }
+        .padding(.top, 4)
+    }
+
+    // MARK: - Pregnancy Preview Helpers
+
+    private var previewLMP: Date {
+        if dateInputMethod == "lmp" {
+            selectedDate
+        } else {
+            PregnancyCalculator.lmp(fromDueDate: selectedDate)
+        }
+    }
+
+    private var previewDueDate: Date {
+        if dateInputMethod == "lmp" {
+            PregnancyCalculator.dueDate(fromLMP: selectedDate)
+        } else {
+            selectedDate
+        }
+    }
+
+    private var previewWeek: Int {
+        let days = Calendar.current.dateComponents([.day], from: previewLMP, to: .now).day ?? 0
+        return min(max(days / 7 + 1, 1), 42)
     }
 
     private var pregnancyDateRange: ClosedRange<Date> {
@@ -168,57 +415,7 @@ struct OnboardingView: View {
         }
     }
 
-    private var personalStep: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("A few preferences")
-                .font(.title3.bold())
-            if trackingMode == "pregnant" {
-                Toggle("This is my first pregnancy", isOn: $isFirstPregnancy)
-            }
-            Picker("Weight unit", selection: $weightUnit) {
-                Text("Kilograms (kg)").tag("kg")
-                Text("Pounds (lbs)").tag("lbs")
-            }
-            .pickerStyle(.segmented)
-            if trackingMode == "pregnant" {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Starting weight (optional)")
-                        .font(.subheadline.bold())
-                    HStack {
-                        TextField(weightUnit == "lbs" ? "e.g. 140" : "e.g. 65", text: $startingWeightText)
-                            .keyboardType(.decimalPad)
-                            .focused($isWeightFieldFocused)
-                        Text(weightUnit)
-                            .foregroundStyle(BloomlyTheme.textSecondary)
-                    }
-                    Text("Pre-pregnancy weight helps track healthy gain.")
-                        .font(.caption)
-                        .foregroundStyle(BloomlyTheme.textSecondary)
-                }
-            }
-            Spacer()
-        }
-        .bloomlyCard()
-    }
-
-    private var navigationButtons: some View {
-        HStack {
-            if step > 0 {
-                Button("Back") { step -= 1 }
-                    .foregroundStyle(BloomlyTheme.textSecondary)
-            }
-            Spacer()
-            Button(step < 3 ? "Continue" : "Get Started") {
-                if step < 3 {
-                    step += 1
-                } else {
-                    completeOnboarding()
-                }
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(BloomlyTheme.sageDark)
-        }
-    }
+    // MARK: - Complete
 
     private func completeOnboarding() {
         var lmp: Date?
