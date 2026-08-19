@@ -12,6 +12,7 @@ struct OnboardingView: View {
     @State private var isFirstPregnancy = true
     @State private var weightUnit = "kg"
     @State private var startingWeightText = ""
+    @FocusState private var isWeightFieldFocused: Bool
 
     var body: some View {
         ZStack {
@@ -26,6 +27,9 @@ struct OnboardingView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeInOut, value: step)
+                .onChange(of: step) { _, newStep in
+                    focusWeightFieldIfNeeded(for: newStep)
+                }
 
                 navigationButtons
             }
@@ -154,6 +158,16 @@ struct OnboardingView: View {
         selectedDate = min(max(selectedDate, range.lowerBound), range.upperBound)
     }
 
+    private func focusWeightFieldIfNeeded(for step: Int) {
+        guard step == 3, trackingMode == "pregnant" else {
+            isWeightFieldFocused = false
+            return
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            isWeightFieldFocused = true
+        }
+    }
+
     private var personalStep: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("A few preferences")
@@ -173,6 +187,7 @@ struct OnboardingView: View {
                     HStack {
                         TextField(weightUnit == "lbs" ? "e.g. 140" : "e.g. 65", text: $startingWeightText)
                             .keyboardType(.decimalPad)
+                            .focused($isWeightFieldFocused)
                         Text(weightUnit)
                             .foregroundStyle(BloomlyTheme.textSecondary)
                     }
