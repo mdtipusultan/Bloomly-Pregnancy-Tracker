@@ -26,7 +26,6 @@ struct Bloomly_PregnancyTrackerApp: App {
         WindowGroup {
             ContentView()
                 .task {
-                    _ = await NotificationManager.requestAuthorization()
                     await StoreKitManager.shared.refreshPremiumStatus()
                     syncPremiumToProfile()
                     await syncDailyReminders()

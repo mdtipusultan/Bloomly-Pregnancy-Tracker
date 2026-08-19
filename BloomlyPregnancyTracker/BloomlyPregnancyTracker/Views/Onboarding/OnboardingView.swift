@@ -12,6 +12,8 @@ struct OnboardingView: View {
     @State private var isFirstPregnancy = true
     @State private var weightUnit = "kg"
     @State private var startingWeightText = ""
+    @State private var waterRemindersEnabled = true
+    @State private var foodRemindersEnabled = true
     @FocusState private var isWeightFieldFocused: Bool
 
     private let totalSteps = 4
@@ -296,6 +298,34 @@ struct OnboardingView: View {
                     .background(BloomlyTheme.cream.opacity(0.6))
                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                 }
+
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 10) {
+                        Image(systemName: "bell.badge.fill")
+                            .foregroundStyle(BloomlyTheme.sageDark)
+                        Text("Daily reminders")
+                            .font(.subheadline.weight(.semibold))
+                    }
+
+                    preferenceRow(icon: "drop.fill", title: "Water reminders") {
+                        Toggle("Water reminders", isOn: $waterRemindersEnabled)
+                            .labelsHidden()
+                            .tint(BloomlyTheme.sageDark)
+                    }
+
+                    preferenceRow(icon: "fork.knife", title: "Meal reminders") {
+                        Toggle("Meal reminders", isOn: $foodRemindersEnabled)
+                            .labelsHidden()
+                            .tint(BloomlyTheme.sageDark)
+                    }
+
+                    Text("We'll ask for notification permission when you finish setup.")
+                        .font(.caption)
+                        .foregroundStyle(BloomlyTheme.textSecondary)
+                }
+                .padding(14)
+                .background(BloomlyTheme.cream.opacity(0.6))
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             }
         }
         .bloomlyCard()
@@ -344,12 +374,12 @@ struct OnboardingView: View {
                 title: step < totalSteps - 1 ? "Continue" : "Get Started",
                 icon: step < totalSteps - 1 ? "arrow.right" : "sparkles"
             ) {
-                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                    if step < totalSteps - 1 {
+                if step < totalSteps - 1 {
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                         step += 1
-                    } else {
-                        completeOnboarding()
                     }
+                } else {
+                    Task { await completeOnboarding() }
                 }
             }
         }
@@ -417,7 +447,22 @@ struct OnboardingView: View {
 
     // MARK: - Complete
 
-    private func completeOnboarding() {
+    private func completeOnboarding() async {
+        var waterEnabled = waterRemindersEnabled
+        var foodEnabled = foodRemindersEnabled
+
+        if waterEnabled || foodEnabled {
+            let authorized = await NotificationManager.requestAuthorization()
+            if !authorized {
+                waterEnabled = false
+                foodEnabled = false
+                await MainActor.run {
+                    waterRemindersEnabled = false
+                    foodRemindersEnabled = false
+                }
+            }
+        }
+
         var lmp: Date?
         var due: Date?
         if trackingMode == "pregnant" {
@@ -438,24 +483,32 @@ struct OnboardingView: View {
             WeightCalculator.isValid(weight, unit: weightUnit) ? weight : nil
         }
 
-        let profile = UserProfile(
-            lastMenstrualPeriod: lmp,
-            dueDate: due,
-            weightUnit: weightUnit,
-            startingWeight: startingWeight,
-            isFirstPregnancy: isFirstPregnancy,
-            isPremium: StoreKitManager.unlockAllFeaturesForDevelopment,
-            hasCompletedOnboarding: true,
-            trackingMode: trackingMode
-        )
-        modelContext.insert(profile)
+        await MainActor.run {
+            let profile = UserProfile(
+                lastMenstrualPeriod: lmp,
+                dueDate: due,
+                weightUnit: weightUnit,
+                startingWeight: startingWeight,
+                isFirstPregnancy: isFirstPregnancy,
+                isPremium: StoreKitManager.unlockAllFeaturesForDevelopment,
+                hasCompletedOnboarding: true,
+                trackingMode: trackingMode,
+                waterRemindersEnabled: waterEnabled,
+                foodRemindersEnabled: foodEnabled
+            )
+            modelContext.insert(profile)
 
-        if let startingWeight {
-            modelContext.insert(DailyLog(weightValue: startingWeight))
+            if let startingWeight {
+                modelContext.insert(DailyLog(weightValue: startingWeight))
+            }
+            if !StoreKitManager.unlockAllFeaturesForDevelopment {
+                showPaywall = true
+            }
         }
-        if StoreKitManager.unlockAllFeaturesForDevelopment {
-            return
-        }
-        showPaywall = true
+
+        await NotificationManager.syncDailyReminders(
+            waterEnabled: waterEnabled,
+            foodEnabled: foodEnabled
+        )
     }
 }

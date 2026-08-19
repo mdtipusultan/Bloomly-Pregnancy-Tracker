@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import UserNotifications
 
 enum NotificationManager {
@@ -14,6 +15,10 @@ enum NotificationManager {
         ("dinner", "Dinner Time", "Enjoy a wholesome dinner to end your day.", 18, 30)
     ]
 
+    static func authorizationStatus() async -> UNAuthorizationStatus {
+        await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
+    }
+
     static func requestAuthorization() async -> Bool {
         do {
             return try await UNUserNotificationCenter.current()
@@ -21,6 +26,12 @@ enum NotificationManager {
         } catch {
             return false
         }
+    }
+
+    @MainActor
+    static func openNotificationSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(url)
     }
 
     static func syncDailyReminders(waterEnabled: Bool, foodEnabled: Bool) async {
