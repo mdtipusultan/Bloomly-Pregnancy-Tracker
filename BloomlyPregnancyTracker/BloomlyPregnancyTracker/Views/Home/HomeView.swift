@@ -136,9 +136,14 @@ struct HomeView: View {
     }
 
     private var weightLabel: String {
-        guard let w = todayLog?.weightValue else { return "—" }
         let unit = profile?.weightUnit ?? "kg"
-        return String(format: "%.1f %@", w, unit)
+        if let w = todayLog?.weightValue {
+            return WeightCalculator.format(w, unit: unit)
+        }
+        if let w = profile?.startingWeight {
+            return WeightCalculator.format(w, unit: unit)
+        }
+        return "—"
     }
 
     private func quickButton(_ title: String, icon: String, value: String, color: Color, premium: Bool = false, action: @escaping () -> Void) -> some View {

@@ -235,17 +235,27 @@ struct OnboardingView: View {
             lmp = selectedDate
         }
 
+        let trimmedWeight = startingWeightText.trimmingCharacters(in: .whitespaces)
+        let parsedWeight = trimmedWeight.isEmpty ? nil : Double(trimmedWeight)
+        let startingWeight = parsedWeight.flatMap { weight in
+            WeightCalculator.isValid(weight, unit: weightUnit) ? weight : nil
+        }
+
         let profile = UserProfile(
             lastMenstrualPeriod: lmp,
             dueDate: due,
             weightUnit: weightUnit,
-            startingWeight: Double(startingWeightText.trimmingCharacters(in: .whitespaces)),
+            startingWeight: startingWeight,
             isFirstPregnancy: isFirstPregnancy,
             isPremium: StoreKitManager.unlockAllFeaturesForDevelopment,
             hasCompletedOnboarding: true,
             trackingMode: trackingMode
         )
         modelContext.insert(profile)
+
+        if let startingWeight {
+            modelContext.insert(DailyLog(weightValue: startingWeight))
+        }
         if StoreKitManager.unlockAllFeaturesForDevelopment {
             return
         }
