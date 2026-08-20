@@ -1,56 +1,108 @@
 import SwiftUI
 
 enum BloomlyTheme {
-    static let blush = Color(red: 0.96, green: 0.82, blue: 0.84)
-    static let blushDark = Color(red: 0.88, green: 0.65, blue: 0.70)
-    static let cream = Color(red: 0.99, green: 0.97, blue: 0.94)
-    static let creamDark = Color(red: 0.95, green: 0.91, blue: 0.86)
-    static let sage = Color(red: 0.65, green: 0.76, blue: 0.68)
-    static let sageDark = Color(red: 0.45, green: 0.58, blue: 0.50)
-    static let textPrimary = Color(red: 0.25, green: 0.22, blue: 0.24)
-    static let textSecondary = Color(red: 0.50, green: 0.46, blue: 0.48)
-    static let cardBackground = Color.white.opacity(0.85)
+    private static var palette: BloomlyThemePalette {
+        ThemeManager.shared.palette
+    }
 
-    static let backgroundGradient = LinearGradient(
-        colors: [cream, blush.opacity(0.35)],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
+    static var blush: Color { palette.blush }
+    static var blushDark: Color { palette.blushDark }
+    static var cream: Color { palette.cream }
+    static var creamDark: Color { palette.creamDark }
+    static var sage: Color { palette.sage }
+    static var sageDark: Color { palette.sageDark }
+    static var textPrimary: Color { palette.textPrimary }
+    static var textSecondary: Color { palette.textSecondary }
+    static var cardBackground: Color { palette.cardBackground }
 
-    static let primaryGradient = LinearGradient(
-        colors: [sageDark, sage],
-        startPoint: .leading,
-        endPoint: .trailing
-    )
+    static var backgroundGradient: LinearGradient { palette.backgroundGradient }
+    static var primaryGradient: LinearGradient { palette.primaryGradient }
 
     static func moodColor(for mood: Int) -> Color {
-        switch mood {
-        case 1: return Color(red: 0.45, green: 0.78, blue: 0.55)
-        case 2: return sage
-        case 3: return Color(red: 0.70, green: 0.72, blue: 0.78)
-        case 4: return Color(red: 0.95, green: 0.65, blue: 0.45)
-        case 5: return Color(red: 0.85, green: 0.45, blue: 0.50)
-        default: return textSecondary
-        }
+        palette.moodColor(for: mood)
     }
 
     static func severityColor(_ severity: String) -> Color {
-        switch severity {
-        case "mild": return sage.opacity(0.7)
-        case "moderate": return Color.orange.opacity(0.8)
-        case "strong": return Color.red.opacity(0.75)
-        default: return textSecondary
-        }
+        palette.severityColor(severity)
     }
 }
 
 struct BloomlyCard: ViewModifier {
+    @Environment(ThemeManager.self) private var themeManager
+
     func body(content: Content) -> some View {
+        let palette = themeManager.palette
         content
             .padding()
-            .background(BloomlyTheme.cardBackground)
+            .background(palette.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .shadow(color: BloomlyTheme.blushDark.opacity(0.12), radius: 8, y: 4)
+            .shadow(color: palette.blushDark.opacity(0.12), radius: 8, y: 4)
+    }
+}
+
+struct BloomlyScreenBackground: ViewModifier {
+    @Environment(ThemeManager.self) private var themeManager
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        let gradient = themeManager.palette.backgroundGradient
+        if #available(iOS 18.0, *) {
+            content.containerBackground(gradient, for: .navigation)
+        } else {
+            content
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background {
+                    gradient.ignoresSafeArea()
+                }
+        }
+    }
+}
+
+struct BloomlyThemedList: ViewModifier {
+    @Environment(ThemeManager.self) private var themeManager
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        let palette = themeManager.palette
+        let styled = content
+            .scrollContentBackground(.hidden)
+            .listRowBackground(palette.cardBackground)
+            .listRowSeparatorTint(palette.textSecondary.opacity(0.25))
+            .foregroundStyle(palette.textPrimary)
+            .tint(palette.sageDark)
+
+        if #available(iOS 18.0, *) {
+            styled.containerBackground(palette.backgroundGradient, for: .navigation)
+        } else {
+            styled
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background {
+                    palette.backgroundGradient.ignoresSafeArea()
+                }
+        }
+    }
+}
+
+struct BloomlyThemedNavigation: ViewModifier {
+    @Environment(ThemeManager.self) private var themeManager
+
+    func body(content: Content) -> some View {
+        let palette = themeManager.palette
+        content
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbarColorScheme(palette.id == "dark" || palette.id == "midnight" ? .dark : .light, for: .navigationBar)
+    }
+}
+
+/// Keeps SwiftUI in sync when the user changes app theme.
+struct ThemeEnvironmentModifier: ViewModifier {
+    @State private var themeManager = ThemeManager.shared
+
+    func body(content: Content) -> some View {
+        content
+            .environment(themeManager)
+            .id(themeManager.selectedThemeID)
     }
 }
 
@@ -60,6 +112,18 @@ extension View {
     }
 
     func bloomlyScreenBackground() -> some View {
-        background(BloomlyTheme.backgroundGradient.ignoresSafeArea())
+        modifier(BloomlyScreenBackground())
+    }
+
+    func bloomlyThemedList() -> some View {
+        modifier(BloomlyThemedList())
+    }
+
+    func bloomlyThemedNavigation() -> some View {
+        modifier(BloomlyThemedNavigation())
+    }
+
+    func bloomlyThemeAware() -> some View {
+        modifier(ThemeEnvironmentModifier())
     }
 }

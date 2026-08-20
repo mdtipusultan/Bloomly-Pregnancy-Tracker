@@ -3,6 +3,8 @@ import SwiftData
 import Charts
 
 struct ProfileView: View {
+    @Environment(ThemeManager.self) private var themeManager
+    @Environment(LanguageManager.self) private var languageManager
     @Query private var profiles: [UserProfile]
     @State private var showPaywall = false
 
@@ -11,24 +13,24 @@ struct ProfileView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Account") {
+                Section(L10n.profileAccount) {
                     if let profile {
-                        LabeledContent("Mode", value: profile.trackingMode == "pregnant" ? "Pregnant" : "Planning")
+                        LabeledContent(L10n.profileMode, value: profile.trackingMode == "pregnant" ? L10n.profilePregnant : L10n.profilePlanning)
                         if profile.trackingMode == "pregnant" {
                             if let due = profile.dueDate {
-                                LabeledContent("Due Date", value: due.formatted(date: .abbreviated, time: .omitted))
+                                LabeledContent(L10n.profileDueDate, value: due.formatted(date: .abbreviated, time: .omitted))
                             }
-                            LabeledContent("Week", value: "\(PregnancyCalculator.currentWeek(profile: profile))")
+                            LabeledContent(L10n.profileWeek, value: "\(PregnancyCalculator.currentWeek(profile: profile))")
                         }
-                        LabeledContent("Premium", value: profile.isPremium ? "Bloomly Plus" : "Free")
+                        LabeledContent(L10n.profilePremium, value: profile.isPremium ? L10n.profileBloomlyPlus : L10n.profileFree)
                     }
                 }
 
-                Section("Features") {
+                Section(L10n.profileFeatures) {
                     if profile?.trackingMode == "pregnant" {
-                        NavigationLink("Bump Journal") { BumpJournalView() }
+                        NavigationLink(L10n.profileBumpJournal) { BumpJournalView() }
                         if let profile, let entry = PregnancyCalculator.weekEntry(for: profile) {
-                            NavigationLink("Share with Partner") {
+                            NavigationLink(L10n.profileSharePartner) {
                                 PartnerShareView(
                                     profile: profile,
                                     entry: entry,
@@ -37,30 +39,55 @@ struct ProfileView: View {
                             }
                         }
                     }
-                    NavigationLink("Baby Names") { BabyNamesView() }
+                    NavigationLink(L10n.profileBabyNames) { BabyNamesView() }
                     if profile?.isPremium == true {
-                        NavigationLink("Appointments") { AppointmentsView() }
-                        NavigationLink("Weight Tracker") { WeightTrackerView() }
-                        NavigationLink("Nutrition Guide") { NutritionView() }
-                        NavigationLink("Statistics") { StatisticsView() }
+                        NavigationLink(L10n.profileAppointments) { AppointmentsView() }
+                        NavigationLink(L10n.profileWeightTracker) { WeightTrackerView() }
+                        NavigationLink(L10n.profileNutrition) { NutritionView() }
+                        NavigationLink(L10n.profileStatistics) { StatisticsView() }
                     }
                     if profile?.trackingMode == "planning" {
-                        NavigationLink("Cycle Tracker") { CycleTrackerView() }
+                        NavigationLink(L10n.profileCycleTracker) { CycleTrackerView() }
                     }
                     if profile?.isPremium != true {
-                        Button("Upgrade to Bloomly Plus") { showPaywall = true }
+                        Button(L10n.profileUpgrade) { showPaywall = true }
                     }
                 }
 
-                Section("Settings") {
+                Section(L10n.profileSettings) {
                     if let profile {
                         PartnerSettingsSection(profile: profile)
                     }
-                    NavigationLink("Daily Reminders") { ReminderSettingsView() }
-                    NavigationLink("Privacy") { PrivacyView() }
+                    NavigationLink {
+                        AppearanceSettingsView()
+                    } label: {
+                        HStack {
+                            Label(L10n.settingsAppearance, systemImage: "paintpalette.fill")
+                            Spacer()
+                            Text(L10n.t(themeManager.selectedTheme.nameKey))
+                                .font(.caption)
+                                .foregroundStyle(BloomlyTheme.textSecondary)
+                        }
+                    }
+                    NavigationLink {
+                        LanguageSettingsView()
+                    } label: {
+                        HStack {
+                            Label(L10n.settingsLanguage, systemImage: "globe")
+                            Spacer()
+                            Text("\(languageManager.currentLanguage.flag) \(languageManager.currentLanguage.nativeName)")
+                                .font(.caption)
+                                .foregroundStyle(BloomlyTheme.textSecondary)
+                        }
+                    }
+                    NavigationLink(L10n.profileDailyReminders) { ReminderSettingsView() }
+                    NavigationLink(L10n.profilePrivacy) { PrivacyView() }
                 }
             }
-            .navigationTitle("Profile")
+            .bloomlyThemedList()
+            .navigationTitle(L10n.profileTitle)
+            .bloomlyThemedNavigation()
+            .bloomlyLanguageAware()
             .onChange(of: profile?.partnerName) { _, _ in
                 WidgetDataSync.sync(profile: profile)
             }
@@ -75,25 +102,26 @@ struct PrivacyView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Your Privacy Matters")
+                Text(L10n.profilePrivacyTitle)
                     .font(.title2.bold())
-                Text("Bloomly is designed with privacy at its core. All your pregnancy data, health logs, appointments, and preferences are stored exclusively on your device.")
-                Text("We do not:")
+                Text(L10n.profilePrivacyBody)
+                Text(L10n.profilePrivacyWeDoNot)
                     .font(.headline)
                 VStack(alignment: .leading, spacing: 8) {
-                    bullet("Collect any personal data")
-                    bullet("Send data to servers or the cloud")
-                    bullet("Use analytics or tracking SDKs")
-                    bullet("Show advertisements")
-                    bullet("Require an account or login")
+                    bullet(L10n.t("profile.privacyBullet1"))
+                    bullet(L10n.t("profile.privacyBullet2"))
+                    bullet(L10n.t("profile.privacyBullet3"))
+                    bullet(L10n.t("profile.privacyBullet4"))
+                    bullet(L10n.t("profile.privacyBullet5"))
                 }
-                Text("Your data never leaves your iPhone unless you choose to back up your device through iCloud or iTunes.")
+                Text(L10n.profilePrivacyFooter)
                     .foregroundStyle(BloomlyTheme.textSecondary)
             }
             .padding()
         }
         .bloomlyScreenBackground()
-        .navigationTitle("Privacy")
+        .navigationTitle(L10n.profilePrivacy)
+        .bloomlyThemedNavigation()
     }
 
     private func bullet(_ text: String) -> some View {
@@ -144,19 +172,22 @@ struct BabyNamesView: View {
                     }
                 }
             }
+            .bloomlyThemedList()
         }
-        .navigationTitle("Baby Names")
+        .bloomlyScreenBackground()
+        .navigationTitle(L10n.profileBabyNames)
+        .bloomlyThemedNavigation()
         .toolbar {
-            Toggle("Favorites", isOn: $showFavoritesOnly)
+            Toggle(L10n.profileFavorites, isOn: $showFavoritesOnly)
         }
     }
 
     private var filters: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                filterMenu("Gender", selection: $genderFilter, options: ["all", "boy", "girl", "neutral"])
-                filterMenu("Letter", selection: $letterFilter, options: ["all"] + (65...90).map { String(UnicodeScalar($0)!) })
-                filterMenu("Style", selection: $styleFilter, options: ["all", "classic", "modern", "nature", "international"])
+                filterMenu(L10n.commonGender, selection: $genderFilter, options: ["all", "boy", "girl", "neutral"])
+                filterMenu(L10n.commonLetter, selection: $letterFilter, options: ["all"] + (65...90).map { String(UnicodeScalar($0)!) })
+                filterMenu(L10n.commonStyle, selection: $styleFilter, options: ["all", "classic", "modern", "nature", "international"])
             }
             .padding(.horizontal)
         }
@@ -201,23 +232,25 @@ struct AppointmentsView: View {
 
     var body: some View {
         List {
-            Section("Upcoming") {
+            Section(L10n.profileUpcoming) {
                 if upcoming.isEmpty {
-                    Text("No upcoming appointments").foregroundStyle(BloomlyTheme.textSecondary)
+                    Text(L10n.profileNoAppointments).foregroundStyle(BloomlyTheme.textSecondary)
                 }
                 ForEach(upcoming) { appt in
                     appointmentRow(appt)
                 }
                 .onDelete { indexSet in delete(upcoming, at: indexSet) }
             }
-            Section("Past") {
+            Section(L10n.profilePast) {
                 ForEach(past) { appt in
                     appointmentRow(appt)
                 }
                 .onDelete { indexSet in delete(Array(past), at: indexSet) }
             }
         }
-        .navigationTitle("Appointments")
+        .bloomlyThemedList()
+        .navigationTitle(L10n.profileAppointments)
+        .bloomlyThemedNavigation()
         .toolbar {
             Button { showAdd = true } label: { Image(systemName: "plus") }
         }
@@ -263,7 +296,7 @@ struct AddAppointmentSheet: View {
                     ForEach(types, id: \.self) { Text($0.capitalized).tag($0) }
                 }
             }
-            .navigationTitle("New Appointment")
+            .navigationTitle(L10n.profileNewAppointment)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
@@ -320,7 +353,8 @@ struct NutritionView: View {
             .padding()
         }
         .bloomlyScreenBackground()
-        .navigationTitle("Nutrition")
+        .navigationTitle(L10n.profileNutrition)
+        .bloomlyThemedNavigation()
     }
 }
 
@@ -345,26 +379,27 @@ struct StatisticsView: View {
             .padding()
         }
         .bloomlyScreenBackground()
-        .navigationTitle("Statistics")
+        .navigationTitle(L10n.profileStatistics)
+        .bloomlyThemedNavigation()
     }
 
     private var weightChart: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Weight Over Time").font(.headline)
+                Text(L10n.statsWeightOverTime).font(.headline)
                 Spacer()
-                NavigationLink("Details") { WeightTrackerView() }
+                NavigationLink(L10n.statsDetails) { WeightTrackerView() }
                     .font(.caption)
             }
 
             if weightData.isEmpty {
-                Text("No weight data yet. Log from Home or Weight Tracker.")
+                Text(L10n.statsNoWeightData)
                     .foregroundStyle(BloomlyTheme.textSecondary)
             } else {
                 if let latest = weightData.last?.weight, let starting = profile?.startingWeight {
                     HStack {
-                        summaryPill("Latest", WeightCalculator.format(latest, unit: unit))
-                        summaryPill("Gain", WeightCalculator.formatChange(latest - starting, unit: unit))
+                        summaryPill(L10n.weightLatest, WeightCalculator.format(latest, unit: unit))
+                        summaryPill(L10n.statsGain, WeightCalculator.formatChange(latest - starting, unit: unit))
                     }
                 }
 
@@ -401,10 +436,10 @@ struct StatisticsView: View {
 
     private var symptomChart: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Symptom Frequency").font(.headline)
+            Text(L10n.statsSymptomFrequency).font(.headline)
             let freq = StatsCalculator.symptomFrequency(from: logs).prefix(5)
             if freq.isEmpty {
-                Text("No symptom data yet").foregroundStyle(BloomlyTheme.textSecondary)
+                Text(L10n.statsNoSymptomData).foregroundStyle(BloomlyTheme.textSecondary)
             } else {
                 Chart(Array(freq), id: \.symptom) { item in
                     BarMark(x: .value("Count", item.count), y: .value("Symptom", SymptomCatalog.all.first { $0.key == item.symptom }?.label ?? item.symptom))
@@ -418,7 +453,7 @@ struct StatisticsView: View {
 
     private var moodCalendar: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Mood History").font(.headline)
+            Text(L10n.statsMoodHistory).font(.headline)
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 4) {
                 ForEach(logs.filter { $0.mood > 0 }.suffix(28)) { log in
                     Text(log.mood <= 5 ? SymptomCatalog.moodEmojis[log.mood - 1] : "—")
@@ -436,16 +471,16 @@ struct StatisticsView: View {
     private var waterStreak: some View {
         let streak = StatsCalculator.waterStreak(from: logs)
         return VStack(alignment: .leading, spacing: 8) {
-            Text("Water Streak").font(.headline)
+            Text(L10n.statsWaterStreak).font(.headline)
             HStack {
                 VStack {
                     Text("\(streak.current)").font(.title.bold())
-                    Text("Current").font(.caption)
+                    Text(L10n.statsCurrent).font(.caption)
                 }
                 .frame(maxWidth: .infinity)
                 VStack {
                     Text("\(streak.best)").font(.title.bold())
-                    Text("Best").font(.caption)
+                    Text(L10n.statsBest).font(.caption)
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -463,19 +498,19 @@ struct CycleTrackerView: View {
     var body: some View {
         List {
             if let next = CycleCalculator.predictNextPeriod(after: periodLogs, cycleLength: profiles.first?.averageCycleLength ?? 28) {
-                Section("Prediction") {
-                    LabeledContent("Next Period", value: next.formatted(date: .abbreviated, time: .omitted))
+                Section(L10n.statsPrediction) {
+                    LabeledContent(L10n.statsNextPeriod, value: next.formatted(date: .abbreviated, time: .omitted))
                     if let last = periodLogs.first {
                         let window = CycleCalculator.fertileWindow(from: last.startDate, cycleLength: profiles.first?.averageCycleLength ?? 28)
-                        LabeledContent("Fertile Window", value: "\(window.start.formatted(date: .abbreviated, time: .omitted)) – \(window.end.formatted(date: .abbreviated, time: .omitted))")
-                        LabeledContent("Ovulation Estimate", value: window.ovulation.formatted(date: .abbreviated, time: .omitted))
+                        LabeledContent(L10n.statsFertileWindow, value: "\(window.start.formatted(date: .abbreviated, time: .omitted)) – \(window.end.formatted(date: .abbreviated, time: .omitted))")
+                        LabeledContent(L10n.statsOvulationEstimate, value: window.ovulation.formatted(date: .abbreviated, time: .omitted))
                     }
                 }
             }
-            Section("History") {
+            Section(L10n.commonHistory) {
                 ForEach(periodLogs) { log in
                     VStack(alignment: .leading) {
-                        Text("\(log.startDate.formatted(date: .abbreviated, time: .omitted)) – \(log.endDate?.formatted(date: .abbreviated, time: .omitted) ?? "ongoing")")
+                        Text("\(log.startDate.formatted(date: .abbreviated, time: .omitted)) – \(log.endDate?.formatted(date: .abbreviated, time: .omitted) ?? L10n.commonOngoing)")
                     }
                 }
                 .onDelete { offsets in
@@ -483,7 +518,9 @@ struct CycleTrackerView: View {
                 }
             }
         }
-        .navigationTitle("Cycle Tracker")
+        .bloomlyThemedList()
+        .navigationTitle(L10n.profileCycleTracker)
+        .bloomlyThemedNavigation()
         .toolbar {
             Button { showAddPeriod = true } label: { Image(systemName: "plus") }
         }
@@ -507,7 +544,7 @@ struct AddPeriodSheet: View {
                     DatePicker("End Date", selection: $endDate, displayedComponents: .date)
                 }
             }
-            .navigationTitle("Log Period")
+            .navigationTitle(L10n.profileLogPeriod)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) { Button("Save") { save(); dismiss() } }

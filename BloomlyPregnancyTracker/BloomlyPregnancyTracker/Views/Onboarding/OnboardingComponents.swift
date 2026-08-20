@@ -62,7 +62,7 @@ struct OnboardingStepIndicator: View {
             }
 
             HStack {
-                Text("Step \(currentStep + 1) of \(totalSteps)")
+                Text(L10n.onboardingStepOf(current: currentStep + 1, total: totalSteps))
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(BloomlyTheme.sageDark)
                 Spacer()

@@ -32,7 +32,9 @@ struct BumpJournalView: View {
             .padding()
         }
         .bloomlyScreenBackground()
-        .navigationTitle("Bump Journal")
+        .navigationTitle(L10n.profileBumpJournal)
+        .bloomlyThemedNavigation()
+        .bloomlyLanguageAware()
         .onChange(of: pickerItem) { _, item in
             Task { await loadPickerItem(item) }
         }
@@ -49,16 +51,15 @@ struct BumpJournalView: View {
 
     private var headerCard: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Week \(currentWeek) Bump")
+            Text(L10n.bumpJournalWeekBump(currentWeek))
                 .font(.title2.bold())
-            Text("Capture your growing bump each week and watch your journey unfold.")
+            Text(L10n.bumpJournalSubtitle)
                 .font(.subheadline)
                 .foregroundStyle(BloomlyTheme.textSecondary)
             if profile?.trackingMode == "pregnant", let entry = profile.flatMap({ PregnancyCalculator.weekEntry(for: $0) }) {
                 HStack {
-                    Text(BabySizeCatalog.emoji(for: entry.sizeImage))
-                        .font(.title)
-                    Text(entry.babySize)
+                    BabySizeIcon(sizeImage: entry.sizeImage, fontSize: 34)
+                    Text(entry.localizedBabySize)
                         .font(.caption)
                         .foregroundStyle(BloomlyTheme.sageDark)
                 }
@@ -71,7 +72,7 @@ struct BumpJournalView: View {
     private var addPhotoSection: some View {
         HStack(spacing: 12) {
             PhotosPicker(selection: $pickerItem, matching: .images) {
-                Label("Photo Library", systemImage: "photo.on.rectangle")
+                Label(L10n.bumpJournalPhotoLibrary, systemImage: "photo.on.rectangle")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
@@ -80,7 +81,7 @@ struct BumpJournalView: View {
             Button {
                 showCamera = true
             } label: {
-                Label("Camera", systemImage: "camera.fill")
+                Label(L10n.bumpJournalCamera, systemImage: "camera.fill")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.bordered)
@@ -93,9 +94,9 @@ struct BumpJournalView: View {
             Image(systemName: "camera.macro")
                 .font(.system(size: 44))
                 .foregroundStyle(BloomlyTheme.blushDark)
-            Text("No bump photos yet")
+            Text(L10n.bumpJournalEmptyTitle)
                 .font(.headline)
-            Text("Add your first photo to start your visual journal.")
+            Text(L10n.bumpJournalEmptySubtitle)
                 .font(.caption)
                 .foregroundStyle(BloomlyTheme.textSecondary)
                 .multilineTextAlignment(.center)
@@ -118,22 +119,22 @@ struct BumpJournalView: View {
     private var noteSheet: some View {
         NavigationStack {
             Form {
-                Section("Week \(currentWeek)") {
-                    TextField("Optional note", text: $note, axis: .vertical)
+                Section(L10n.bumpJournalWeekBump(currentWeek)) {
+                    TextField(L10n.bumpJournalOptionalNote, text: $note, axis: .vertical)
                         .lineLimit(3...6)
                 }
             }
-            .navigationTitle("Save Photo")
+            .navigationTitle(L10n.bumpJournalSavePhoto)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(L10n.commonCancel) {
                         note = ""
                         pendingImageData = nil
                         showNoteSheet = false
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L10n.commonSave) {
                         savePendingPhoto()
                         showNoteSheet = false
                     }
@@ -185,7 +186,7 @@ struct BumpPhotoCell: View {
             }
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Week \(photo.week)")
+                    Text(L10n.weekNumber(photo.week))
                         .font(.caption.bold())
                     Text(photo.capturedAt.formatted(date: .abbreviated, time: .omitted))
                         .font(.caption2)

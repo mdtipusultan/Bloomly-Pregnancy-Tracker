@@ -12,6 +12,27 @@ struct WeekGuideEntry: Codable, Identifiable {
     let appointmentReminder: String?
 
     var id: Int { week }
+
+    /// Locale-aware baby size line (e.g. "Your baby is the size of a plum").
+    var localizedBabySize: String {
+        L10n.babySizeComparison(sizeImage: sizeImage)
+    }
+
+    var localizedDevelopment: String {
+        L10n.weekGuideDevelopment(week: week)
+    }
+
+    var localizedMomFeeling: String {
+        L10n.weekGuideMomFeeling(week: week)
+    }
+
+    var localizedTip: String {
+        L10n.weekGuideTipText
+    }
+
+    var localizedAppointmentReminder: String? {
+        L10n.weekGuideAppointment(for: week)
+    }
 }
 
 struct DailyTip: Codable, Identifiable {
@@ -73,9 +94,10 @@ enum ContentLoader {
 
     static func dailyTip(for date: Date) -> String {
         let tips = loadDailyTips()
-        guard !tips.isEmpty else { return "Rest when you need to — your body is doing amazing work." }
+        guard !tips.isEmpty else { return L10n.dailyTipFallback }
         let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: date) ?? 1
-        return tips[dayOfYear % tips.count].text
+        let tip = tips[dayOfYear % tips.count]
+        return L10n.dailyTip(id: tip.id)
     }
 
     private static func load<T: Decodable>(_ name: String, as type: T.Type) -> T? {

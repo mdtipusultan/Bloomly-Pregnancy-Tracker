@@ -11,7 +11,6 @@ struct BabySizeCard: View {
     @State private var fruitOpacity: Double = 0
     @State private var pulse = false
 
-    private var emoji: String { BabySizeCatalog.emoji(for: entry.sizeImage) }
     private var accent: Color { BabySizeCatalog.trimesterAccent(for: week) }
 
     var body: some View {
@@ -22,14 +21,13 @@ struct BabySizeCard: View {
                     .frame(width: compact ? 72 : 110, height: compact ? 72 : 110)
                     .scaleEffect(pulse ? 1.06 : 1.0)
 
-                Text(emoji)
-                    .font(.system(size: compact ? 36 : 56))
+                BabySizeIcon(sizeImage: entry.sizeImage, fontSize: compact ? 36 : 56)
                     .scaleEffect(fruitScale)
                     .opacity(fruitOpacity)
             }
 
             VStack(spacing: 6) {
-                Text(entry.babySize)
+                Text(entry.localizedBabySize)
                     .font(compact ? .subheadline.bold() : .headline)
                     .foregroundStyle(BloomlyTheme.sageDark)
                     .multilineTextAlignment(.center)
@@ -44,7 +42,7 @@ struct BabySizeCard: View {
 
             if showShareButton, let onShare {
                 Button(action: onShare) {
-                    Label("Share with Partner", systemImage: "square.and.arrow.up")
+                    Label(L10n.babySizeSharePartner, systemImage: "square.and.arrow.up")
                         .font(.caption.bold())
                 }
                 .buttonStyle(.bordered)
@@ -84,8 +82,10 @@ struct BabySizeTimelineStrip: View {
                 HStack(spacing: 12) {
                     ForEach(entries) { entry in
                         VStack(spacing: 6) {
-                            Text(BabySizeCatalog.emoji(for: entry.sizeImage))
-                                .font(.system(size: entry.week == currentWeek ? 32 : 22))
+                            BabySizeIcon(
+                                sizeImage: entry.sizeImage,
+                                fontSize: entry.week == currentWeek ? 32 : 22
+                            )
                                 .scaleEffect(entry.week == currentWeek ? 1.1 : 0.9)
                             Text("W\(entry.week)")
                                 .font(.caption2.bold())

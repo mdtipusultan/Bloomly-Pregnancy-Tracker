@@ -27,12 +27,14 @@ struct WeightTrackerView: View {
             .padding()
         }
         .bloomlyScreenBackground()
-        .navigationTitle("Weight Tracker")
+        .navigationTitle(L10n.profileWeightTracker)
+        .bloomlyThemedNavigation()
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button("Log") { showLogSheet = true }
+                Button(L10n.commonLog) { showLogSheet = true }
             }
         }
+        .bloomlyLanguageAware()
         .sheet(isPresented: $showLogSheet) {
             WeightLogSheet()
         }
@@ -45,14 +47,14 @@ struct WeightTrackerView: View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
                 statCard(
-                    title: "Latest",
+                    title: L10n.weightLatest,
                     value: latest.map { WeightCalculator.format($0.weight, unit: unit) } ?? "—",
-                    subtitle: latest.map { $0.date.formatted(date: .abbreviated, time: .omitted) } ?? "Not logged yet"
+                    subtitle: latest.map { $0.date.formatted(date: .abbreviated, time: .omitted) } ?? L10n.weightNotLoggedYet
                 )
                 statCard(
-                    title: "Starting",
-                    value: profile?.startingWeight.map { WeightCalculator.format($0, unit: unit) } ?? "Set",
-                    subtitle: profile?.startingWeight == nil ? "Tap to add" : "Pre-pregnancy"
+                    title: L10n.weightStarting,
+                    value: profile?.startingWeight.map { WeightCalculator.format($0, unit: unit) } ?? L10n.weightSet,
+                    subtitle: profile?.startingWeight == nil ? L10n.t("weight.tapToAdd") : L10n.weightPrePregnancy
                 )
                 .onTapGesture {
                     if profile?.isPremium == true { showStartingWeightSheet = true }
@@ -63,16 +65,16 @@ struct WeightTrackerView: View {
                 let gain = WeightCalculator.totalGain(current: current, starting: starting)
                 HStack(spacing: 12) {
                     statCard(
-                        title: "Total Change",
+                        title: L10n.weightTotalChange,
                         value: WeightCalculator.formatChange(gain, unit: unit),
-                        subtitle: "Since starting weight"
+                        subtitle: L10n.weightSinceStarting
                     )
                     if let previous = WeightCalculator.previousEntry(before: .now, from: logs)?.weight {
                         let change = current - previous
                         statCard(
-                            title: "Since Last",
+                            title: L10n.weightSinceLast,
                             value: WeightCalculator.formatChange(change, unit: unit),
-                            subtitle: "Previous entry"
+                            subtitle: L10n.weightPreviousEntry
                         )
                     }
                 }
@@ -98,14 +100,14 @@ struct WeightTrackerView: View {
 
     private var chartSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Weight Trend")
+            Text(L10n.weightTrend)
                 .font(.headline)
 
             if entries.isEmpty {
                 emptyState(
                     icon: "scalemass",
-                    message: "No weight logged yet",
-                    actionTitle: "Log Weight"
+                    message: L10n.weightNoWeightYet,
+                    actionTitle: L10n.weightLogWeight
                 ) { showLogSheet = true }
             } else {
                 Chart {
@@ -136,7 +138,7 @@ struct WeightTrackerView: View {
 
     private var guidanceCard: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label("Week \(week) Guidance", systemImage: "info.circle.fill")
+            Label(L10n.weightGuidance(week), systemImage: "info.circle.fill")
                 .font(.headline)
                 .foregroundStyle(BloomlyTheme.sageDark)
             Text(WeightCalculator.pregnancyGainGuidance(week: week, unit: unit))
@@ -149,11 +151,11 @@ struct WeightTrackerView: View {
 
     private var historySection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("History")
+            Text(L10n.commonHistory)
                 .font(.headline)
 
             if entries.isEmpty {
-                Text("Your weight entries will appear here.")
+                Text(L10n.weightHistoryEmpty)
                     .font(.subheadline)
                     .foregroundStyle(BloomlyTheme.textSecondary)
             } else {
@@ -229,33 +231,36 @@ struct WeightLogSheet: View {
                 if profile?.isPremium == true {
                     logContent
                 } else {
-                    PremiumGateView(feature: "Weight tracking")
+                    PremiumGateView(feature: L10n.profileWeightTracker)
                 }
             }
             .bloomlyScreenBackground()
             .navigationTitle(navigationTitle)
-            .navigationBarTitleDisplayMode(.inline)
+            .bloomlyThemedNavigation()
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.commonCancel) { dismiss() } }
                 if profile?.isPremium == true {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("Save") { save(); dismiss() }
+                        Button(L10n.commonSave) { save(); dismiss() }
                             .disabled(!hasWeight || !WeightCalculator.isValid(weight, unit: unit))
                     }
                 }
             }
             .onAppear { loadExisting() }
-            .alert("Invalid Weight", isPresented: $showError) {
-                Button("OK", role: .cancel) {}
+            .alert(L10n.weightInvalidTitle, isPresented: $showError) {
+                Button(L10n.commonOK, role: .cancel) {}
             } message: {
                 let range = WeightCalculator.validRange(for: unit)
-                Text("Enter a weight between \(WeightCalculator.format(range.lowerBound, unit: unit)) and \(WeightCalculator.format(range.upperBound, unit: unit)).")
+                Text(L10n.weightRange(
+                    WeightCalculator.format(range.lowerBound, unit: unit),
+                    WeightCalculator.format(range.upperBound, unit: unit)
+                ))
             }
         }
     }
 
     private var navigationTitle: String {
-        Calendar.current.isDateInToday(logDate) ? "Log Weight" : logDate.formatted(date: .abbreviated, time: .omitted)
+        Calendar.current.isDateInToday(logDate) ? L10n.weightLogTitle : logDate.formatted(date: .abbreviated, time: .omitted)
     }
 
     private var logContent: some View {
@@ -268,14 +273,14 @@ struct WeightLogSheet: View {
 
                 if let previous = previousWeight, hasWeight {
                     let change = weight - previous
-                    Text("\(WeightCalculator.formatChange(change, unit: unit)) since last entry")
+                    Text(L10n.weightSinceLastEntry(WeightCalculator.formatChange(change, unit: unit)))
                         .font(.subheadline)
                         .foregroundStyle(BloomlyTheme.textSecondary)
                 }
 
                 if let starting = profile?.startingWeight, hasWeight {
                     let gain = WeightCalculator.totalGain(current: weight, starting: starting)
-                    Text("\(WeightCalculator.formatChange(gain, unit: unit)) since starting weight")
+                    Text(L10n.weightSinceStartingWeight(WeightCalculator.formatChange(gain, unit: unit)))
                         .font(.caption)
                         .foregroundStyle(BloomlyTheme.textSecondary)
                 }
@@ -291,10 +296,10 @@ struct WeightLogSheet: View {
             }
 
             VStack(spacing: 8) {
-                Text("Or enter manually")
+                Text(L10n.weightOrEnterManually)
                     .font(.caption)
                     .foregroundStyle(BloomlyTheme.textSecondary)
-                TextField("Weight", value: $weight, format: .number.precision(.fractionLength(1)))
+                TextField(L10n.weightFieldPlaceholder, value: $weight, format: .number.precision(.fractionLength(1)))
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.center)
                     .font(.title2.bold())
@@ -308,7 +313,7 @@ struct WeightLogSheet: View {
             .padding(.horizontal)
 
             if profile?.startingWeight == nil {
-                Text("Tip: set your starting weight in the Weight Tracker for gain tracking.")
+                Text(L10n.weightStartingWeightTip)
                     .font(.caption)
                     .foregroundStyle(BloomlyTheme.textSecondary)
                     .multilineTextAlignment(.center)
@@ -384,9 +389,9 @@ struct StartingWeightSheet: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
-                Text("Starting Weight")
+                Text(L10n.weightStartingTitle)
                     .font(.title3.bold())
-                Text("Your pre-pregnancy weight helps track healthy gain over time.")
+                Text(L10n.weightStartingSubtitle)
                     .font(.subheadline)
                     .foregroundStyle(BloomlyTheme.textSecondary)
                     .multilineTextAlignment(.center)
@@ -409,11 +414,11 @@ struct StartingWeightSheet: View {
             }
             .padding()
             .bloomlyScreenBackground()
-            .navigationBarTitleDisplayMode(.inline)
+            .bloomlyThemedNavigation()
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.commonCancel) { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save(); dismiss() }
+                    Button(L10n.commonSave) { save(); dismiss() }
                         .disabled(!WeightCalculator.isValid(weight, unit: unit))
                 }
             }
@@ -424,10 +429,10 @@ struct StartingWeightSheet: View {
                     weight = unit == "lbs" ? 140 : 65
                 }
             }
-            .alert("Invalid Weight", isPresented: $showError) {
-                Button("OK", role: .cancel) {}
+            .alert(L10n.weightInvalidTitle, isPresented: $showError) {
+                Button(L10n.commonOK, role: .cancel) {}
             } message: {
-                Text("Please enter a valid weight in \(unit).")
+                Text(L10n.weightInvalidUnit(unit))
             }
         }
     }

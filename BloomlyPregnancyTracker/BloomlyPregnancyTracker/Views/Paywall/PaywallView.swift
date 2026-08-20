@@ -5,6 +5,7 @@ import StoreKit
 struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Environment(LanguageManager.self) private var languageManager
     @Query private var profiles: [UserProfile]
     @State private var store = StoreKitManager.shared
     @State private var isPurchasing = false
@@ -24,26 +25,26 @@ struct PaywallView: View {
                         Image(systemName: "sparkles")
                             .font(.system(size: 48))
                             .foregroundStyle(BloomlyTheme.blushDark)
-                        Text("Bloomly Plus")
+                        Text(L10n.paywallTitle)
                             .font(.title.bold())
-                        Text("Unlock the full wellness experience")
+                        Text(L10n.paywallSubtitle)
                             .foregroundStyle(BloomlyTheme.textSecondary)
                     }
                     .padding(.top)
 
                     VStack(alignment: .leading, spacing: 12) {
-                        featureRow("Full symptom & weight logging")
-                        featureRow("Wellness tools: Kegel, kick & contraction timers")
-                        featureRow("Appointments with reminders")
-                        featureRow("Statistics & history charts")
-                        featureRow("Trimester-aware nutrition guide")
+                        featureRow(L10n.paywallFeatureSymptoms)
+                        featureRow(L10n.paywallFeatureTools)
+                        featureRow(L10n.paywallFeatureAppointments)
+                        featureRow(L10n.paywallFeatureStatistics)
+                        featureRow(L10n.paywallFeatureNutrition)
                     }
                     .bloomlyCard()
 
                     if store.isLoading {
                         ProgressView()
                     } else if store.products.isEmpty {
-                        Text("Subscriptions will appear when configured in App Store Connect.")
+                        Text(L10n.paywallSubscriptionsPlaceholder)
                             .font(.caption)
                             .foregroundStyle(BloomlyTheme.textSecondary)
                             .multilineTextAlignment(.center)
@@ -78,12 +79,12 @@ struct PaywallView: View {
                             .foregroundStyle(.red)
                     }
 
-                    Button("Restore Purchases") {
+                    Button(L10n.paywallRestore) {
                         Task { await store.restorePurchases(); syncPremium() }
                     }
                     .font(.subheadline)
 
-                    Button("Start Free") {
+                    Button(L10n.paywallStartFree) {
                         finish()
                     }
                     .font(.headline)
@@ -92,8 +93,10 @@ struct PaywallView: View {
                 .padding()
             }
             .bloomlyScreenBackground()
-            .navigationBarTitleDisplayMode(.inline)
+            .bloomlyThemedNavigation()
         }
+        .bloomlyLanguageAware()
+        .id(languageManager.selectedLanguageID)
         .task {
             await store.loadProducts()
             await store.refreshPremiumStatus()
@@ -118,7 +121,7 @@ struct PaywallView: View {
                 let success = try await store.purchase(product)
                 if success { syncPremium(); finish() }
             } catch {
-                errorMessage = "Purchase could not be completed."
+                errorMessage = L10n.paywallPurchaseError
             }
             isPurchasing = false
         }

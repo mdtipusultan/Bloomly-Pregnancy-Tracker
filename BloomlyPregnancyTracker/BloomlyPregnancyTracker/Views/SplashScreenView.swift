@@ -29,10 +29,10 @@ struct SplashScreenView: View {
                 .opacity(iconOpacity)
 
                 VStack(spacing: 8) {
-                    Text("Bloomly")
+                    Text(L10n.appName)
                         .font(.system(size: 36, weight: .bold, design: .rounded))
                         .foregroundStyle(BloomlyTheme.textPrimary)
-                    Text("Your pregnancy companion")
+                    Text(L10n.splashTagline)
                         .font(.subheadline)
                         .foregroundStyle(BloomlyTheme.textSecondary)
                 }

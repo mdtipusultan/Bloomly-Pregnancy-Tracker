@@ -13,7 +13,7 @@ struct QuickWaterLogSheet: View {
                 Text("\(glasses)")
                     .font(.system(size: 64, weight: .bold, design: .rounded))
                     .foregroundStyle(.blue)
-                Text("glasses of water")
+                Text(L10n.homeGlassesOfWater)
                     .foregroundStyle(BloomlyTheme.textSecondary)
                 HStack(spacing: 20) {
                     Button { glasses = max(0, glasses - 1) } label: {
@@ -27,18 +27,18 @@ struct QuickWaterLogSheet: View {
                 ProgressView(value: Double(glasses), total: 8)
                     .tint(.blue)
                     .padding(.horizontal)
-                Text("Daily goal: 8 glasses")
+                Text(L10n.homeDailyGoalWater)
                     .font(.caption)
                     .foregroundStyle(BloomlyTheme.textSecondary)
                 Spacer()
             }
             .padding()
             .bloomlyScreenBackground()
-            .navigationTitle("Water Intake")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(L10n.homeWaterIntake)
+            .bloomlyThemedNavigation()
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
-                ToolbarItem(placement: .confirmationAction) { Button("Save") { save(); dismiss() } }
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.commonCancel) { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) { Button(L10n.commonSave) { save(); dismiss() } }
             }
             .onAppear {
                 glasses = todayLog?.waterGlasses ?? 0
@@ -69,7 +69,7 @@ struct QuickMoodLogSheet: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 32) {
-                Text("How are you feeling?")
+                Text(L10n.homeHowFeeling)
                     .font(.title3.bold())
                 HStack(spacing: 16) {
                     ForEach(1...5, id: \.self) { mood in
@@ -88,12 +88,12 @@ struct QuickMoodLogSheet: View {
             }
             .padding()
             .bloomlyScreenBackground()
-            .navigationTitle("Mood")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(L10n.homeMood)
+            .bloomlyThemedNavigation()
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.commonCancel) { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save(); dismiss() }.disabled(selectedMood == 0)
+                    Button(L10n.commonSave) { save(); dismiss() }.disabled(selectedMood == 0)
                 }
             }
             .onAppear { selectedMood = todayLog?.mood ?? 0 }
@@ -129,9 +129,9 @@ struct QuickSymptomLogSheet: View {
                     List {
                         ForEach(SymptomCatalog.all, id: \.key) { symptom in
                             Section(symptom.label) {
-                                Toggle("Logged", isOn: binding(for: symptom.key))
+                                Toggle(L10n.commonLogged, isOn: binding(for: symptom.key))
                                 if selected.contains(symptom.key) {
-                                    Picker("Severity", selection: severityBinding(for: symptom.key)) {
+                                    Picker(L10n.commonSeverity, selection: severityBinding(for: symptom.key)) {
                                         ForEach(SymptomCatalog.severities, id: \.self) { s in
                                             Text(s.capitalized).tag(s)
                                         }
@@ -141,16 +141,18 @@ struct QuickSymptomLogSheet: View {
                             }
                         }
                     }
+                    .bloomlyThemedList()
                 } else {
-                    PremiumGateView(feature: "Symptom logging")
+                    PremiumGateView(feature: L10n.homeSymptoms)
                 }
             }
-            .navigationTitle("Symptoms")
-            .navigationBarTitleDisplayMode(.inline)
+            .bloomlyScreenBackground()
+            .navigationTitle(L10n.homeSymptoms)
+            .bloomlyThemedNavigation()
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.commonCancel) { dismiss() } }
                 if profiles.first?.isPremium == true {
-                    ToolbarItem(placement: .confirmationAction) { Button("Save") { save(); dismiss() } }
+                    ToolbarItem(placement: .confirmationAction) { Button(L10n.commonSave) { save(); dismiss() } }
                 }
             }
             .onAppear { loadExisting() }
@@ -202,9 +204,9 @@ struct PremiumGateView: View {
             Image(systemName: "lock.fill")
                 .font(.largeTitle)
                 .foregroundStyle(BloomlyTheme.blushDark)
-            Text("\(feature) is part of Bloomly Plus")
+            Text(L10n.premiumFeature(feature))
                 .font(.headline)
-            Button("Upgrade") { showPaywall = true }
+            Button(L10n.commonUpgrade) { showPaywall = true }
                 .buttonStyle(.borderedProminent)
                 .tint(BloomlyTheme.sageDark)
         }

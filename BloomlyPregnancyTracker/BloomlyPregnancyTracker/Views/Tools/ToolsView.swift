@@ -9,28 +9,32 @@ struct ToolsView: View {
             List {
                 if profiles.first?.isPremium == true {
                     NavigationLink { KegelTimerView() } label: {
-                        toolRow("Kegel Timer", icon: "timer", subtitle: "3 sets × 10 reps")
+                        toolRow(L10n.toolsKegelTimer, icon: "timer", subtitle: L10n.toolsKegelSubtitle)
                     }
                     NavigationLink { KickCounterView() } label: {
-                        toolRow("Kick Counter", icon: "hand.tap.fill", subtitle: "Track baby movements")
+                        toolRow(L10n.toolsKickCounter, icon: "hand.tap.fill", subtitle: L10n.toolsKickSubtitle)
                     }
                     NavigationLink { ContractionTimerView() } label: {
-                        toolRow("Contraction Timer", icon: "waveform.path", subtitle: "Time contractions")
+                        toolRow(L10n.toolsContractionTimer, icon: "waveform.path", subtitle: L10n.toolsContractionSubtitle)
                     }
                     NavigationLink { HydrationTrackerView() } label: {
-                        toolRow("Hydration Tracker", icon: "drop.fill", subtitle: "Visual water counter")
+                        toolRow(L10n.toolsHydration, icon: "drop.fill", subtitle: L10n.toolsHydrationSubtitle)
                     }
                     NavigationLink { WeightTrackerView() } label: {
-                        toolRow("Weight Tracker", icon: "scalemass.fill", subtitle: "Log weight & view trends")
+                        toolRow(L10n.toolsWeightTracker, icon: "scalemass.fill", subtitle: L10n.toolsWeightSubtitle)
                     }
                 } else {
                     Section {
-                        PremiumGateView(feature: "Wellness tools")
+                        PremiumGateView(feature: L10n.toolsWellnessGate)
                             .listRowBackground(Color.clear)
                     }
                 }
             }
-            .navigationTitle("Tools")
+            .bloomlyThemedList()
+            .navigationTitle(L10n.toolsTitle)
+            .bloomlyThemedNavigation()
+            .bloomlyThemeAware()
+            .bloomlyLanguageAware()
         }
     }
 
@@ -60,9 +64,9 @@ struct KegelTimerView: View {
 
     var body: some View {
         VStack(spacing: 32) {
-            Text("Set \(min(setCount + 1, 3)) of 3")
+            Text(L10n.kegelSetOf(min(setCount + 1, 3)))
                 .font(.headline)
-            Text("Rep \(repCount) of 10")
+            Text(L10n.kegelRepOf(repCount))
                 .foregroundStyle(BloomlyTheme.textSecondary)
             Text(phaseLabel)
                 .font(.system(size: 48, weight: .bold, design: .rounded))
@@ -71,31 +75,32 @@ struct KegelTimerView: View {
                 Text("\(countdown)s")
                     .font(.title)
             }
-            Button(setCount >= 3 && phase == .complete ? "Done!" : (phase == .ready ? "Start" : "Pause")) {
+            Button(setCount >= 3 && phase == .complete ? L10n.commonDone : (phase == .ready ? L10n.commonStart : L10n.commonPause)) {
                 if phase == .ready || phase == .complete { startSession() }
                 else { stopTimer() }
             }
             .buttonStyle(.borderedProminent)
             .tint(BloomlyTheme.sageDark)
             .disabled(setCount >= 3 && phase == .complete)
-            Text("Hold for 5 seconds, release for 5 seconds")
+            Text(L10n.t("tools.kegel.instructions"))
                 .font(.caption)
                 .foregroundStyle(BloomlyTheme.textSecondary)
             Spacer()
         }
         .padding()
         .bloomlyScreenBackground()
-        .navigationTitle("Kegel Timer")
+        .navigationTitle(L10n.toolsKegelTimer)
+        .bloomlyThemedNavigation()
         .onDisappear { stopTimer() }
     }
 
     private var phaseLabel: String {
         switch phase {
-        case .ready: return "Ready"
-        case .hold: return "Hold"
-        case .release: return "Release"
-        case .rest: return "Rest"
-        case .complete: return "Complete!"
+        case .ready: return L10n.t("tools.kegel.ready")
+        case .hold: return L10n.t("tools.kegel.hold")
+        case .release: return L10n.t("tools.kegel.release")
+        case .rest: return L10n.t("tools.kegel.rest")
+        case .complete: return L10n.t("tools.kegel.complete")
         }
     }
 
@@ -150,13 +155,13 @@ struct KickCounterView: View {
             Text("\(kicks)")
                 .font(.system(size: 80, weight: .bold, design: .rounded))
                 .foregroundStyle(BloomlyTheme.blushDark)
-            Text("kicks")
+            Text(L10n.t("tools.kick.kicks"))
                 .foregroundStyle(BloomlyTheme.textSecondary)
             Button {
                 if !isActive { isActive = true; sessionStart = .now }
                 kicks += 1
             } label: {
-                Text("Tap for Kick")
+                Text(L10n.t("tools.kick.tapForKick"))
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -165,17 +170,18 @@ struct KickCounterView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             if isActive {
-                Button("Save Session") { saveSession() }
+                Button(L10n.t("tools.kick.saveSession")) { saveSession() }
                     .buttonStyle(.borderedProminent)
                     .tint(BloomlyTheme.sageDark)
-                Button("Reset") { kicks = 0; isActive = false; sessionStart = nil }
+                Button(L10n.commonReset) { kicks = 0; isActive = false; sessionStart = nil }
                     .foregroundStyle(BloomlyTheme.textSecondary)
             }
             Spacer()
         }
         .padding()
         .bloomlyScreenBackground()
-        .navigationTitle("Kick Counter")
+        .navigationTitle(L10n.toolsKickCounter)
+        .bloomlyThemedNavigation()
     }
 
     private func saveSession() {
@@ -198,7 +204,7 @@ struct ContractionTimerView: View {
             Text(formatTime(elapsed))
                 .font(.system(size: 56, weight: .bold, design: .monospaced))
                 .foregroundStyle(BloomlyTheme.blushDark)
-            Button(activeSession == nil ? "Start Contraction" : "Stop Contraction") {
+            Button(activeSession == nil ? L10n.t("tools.contraction.start") : L10n.t("tools.contraction.stop")) {
                 toggleContraction()
             }
             .buttonStyle(.borderedProminent)
@@ -208,23 +214,25 @@ struct ContractionTimerView: View {
                     VStack(alignment: .leading) {
                         Text(session.startTime.formatted(date: .omitted, time: .shortened))
                         if let duration = session.duration {
-                            Text("Duration: \(formatTime(duration))")
+                            Text(L10n.contractionDuration(formatTime(duration)))
                                 .font(.caption)
                         }
                         if let interval = session.intervalFromPrevious {
-                            Text("Interval: \(formatTime(interval))")
+                            Text(L10n.contractionInterval(formatTime(interval)))
                                 .font(.caption)
                                 .foregroundStyle(BloomlyTheme.textSecondary)
                         }
                     }
                 }
+                .bloomlyThemedList()
                 .frame(maxHeight: 250)
             }
             Spacer()
         }
         .padding()
         .bloomlyScreenBackground()
-        .navigationTitle("Contraction Timer")
+        .navigationTitle(L10n.toolsContractionTimer)
+        .bloomlyThemedNavigation()
         .onDisappear { timer?.invalidate() }
     }
 
@@ -272,13 +280,14 @@ struct HydrationTrackerView: View {
                         .foregroundStyle(i < todayGlasses ? .blue : BloomlyTheme.creamDark)
                 }
             }
-            Text("Log water from the Home tab quick actions")
+            Text(L10n.t("tools.hydration.logFromHome"))
                 .font(.caption)
                 .foregroundStyle(BloomlyTheme.textSecondary)
             Spacer()
         }
         .padding()
         .bloomlyScreenBackground()
-        .navigationTitle("Hydration")
+        .navigationTitle(L10n.toolsHydration)
+        .bloomlyThemedNavigation()
     }
 }

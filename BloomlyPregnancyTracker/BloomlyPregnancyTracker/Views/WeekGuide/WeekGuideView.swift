@@ -20,7 +20,10 @@ struct WeekGuideView: View {
                 .padding()
             }
             .bloomlyScreenBackground()
-            .navigationTitle("Week Guide")
+            .navigationTitle(L10n.weekGuideTitle)
+            .bloomlyThemedNavigation()
+            .bloomlyThemeAware()
+            .bloomlyLanguageAware()
             .onAppear {
                 selectedWeek = profile.map { PregnancyCalculator.currentWeek(profile: $0) } ?? 1
             }
@@ -48,19 +51,19 @@ struct WeekGuideView: View {
 
     private func weekDetail(_ entry: WeekGuideEntry) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Week \(entry.week)")
+            Text(L10n.weekNumber(entry.week))
                 .font(.title.bold())
             BabySizeCard(entry: entry, week: entry.week)
             BabySizeTimelineStrip(currentWeek: entry.week, entries: timelineEntries(around: entry.week))
             HStack {
-                detailCard("Length", icon: "ruler", text: entry.length)
-                detailCard("Weight", icon: "scalemass", text: entry.weight)
+                detailCard(L10n.weekGuideLength, icon: "ruler", text: entry.length)
+                detailCard(L10n.weekGuideWeight, icon: "scalemass", text: entry.weight)
             }
-            detailCard("Development", icon: "sparkles", text: entry.development)
-            detailCard("How You May Feel", icon: "heart.fill", text: entry.momFeeling)
-            detailCard("Tip", icon: "lightbulb.fill", text: entry.tip)
-            if let appt = entry.appointmentReminder {
-                detailCard("Appointment", icon: "calendar", text: appt)
+            detailCard(L10n.weekGuideDevelopment, icon: "sparkles", text: entry.localizedDevelopment)
+            detailCard(L10n.weekGuideMomFeeling, icon: "heart.fill", text: entry.localizedMomFeeling)
+            detailCard(L10n.weekGuideTip, icon: "lightbulb.fill", text: entry.localizedTip)
+            if let appt = entry.localizedAppointmentReminder {
+                detailCard(L10n.weekGuideAppointment, icon: "calendar", text: appt)
             }
         }
     }

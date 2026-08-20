@@ -36,7 +36,10 @@ struct HomeView: View {
                 .padding()
             }
             .bloomlyScreenBackground()
-            .navigationTitle("Home")
+            .navigationTitle(L10n.homeTitle)
+            .bloomlyThemedNavigation()
+            .bloomlyThemeAware()
+            .bloomlyLanguageAware()
             .sheet(isPresented: $showWaterLog) { QuickWaterLogSheet() }
             .sheet(isPresented: $showSymptomLog) { QuickSymptomLogSheet() }
             .sheet(isPresented: $showMoodLog) { QuickMoodLogSheet() }
@@ -55,11 +58,11 @@ struct HomeView: View {
         VStack(spacing: 16) {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Week \(week)")
+                    Text(L10n.weekNumber(week))
                         .font(.system(size: 42, weight: .bold, design: .rounded))
                         .foregroundStyle(BloomlyTheme.blushDark)
                     if let days = profile.flatMap({ PregnancyCalculator.daysUntilDue(profile: $0) }) {
-                        Text(days >= 0 ? "\(days) days until due date" : "Your due date has passed")
+                        Text(days >= 0 ? L10n.daysUntilDue(days) : L10n.homeDueDatePassed)
                             .font(.subheadline)
                             .foregroundStyle(BloomlyTheme.textSecondary)
                     }
@@ -87,9 +90,9 @@ struct HomeView: View {
 
     private var planningHeader: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Planning Mode")
+            Text(L10n.homePlanningMode)
                 .font(.title.bold())
-            Text("Track your cycle and prepare for your journey.")
+            Text(L10n.homePlanningSubtitle)
                 .foregroundStyle(BloomlyTheme.textSecondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -98,7 +101,7 @@ struct HomeView: View {
 
     private var dailyTipCard: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label("Daily Tip", systemImage: "lightbulb.fill")
+            Label(L10n.homeDailyTip, systemImage: "lightbulb.fill")
                 .font(.subheadline.bold())
                 .foregroundStyle(BloomlyTheme.sageDark)
             Text(ContentLoader.dailyTip(for: .now))
@@ -111,19 +114,19 @@ struct HomeView: View {
 
     private var quickLogSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Quick Log")
+            Text(L10n.homeQuickLog)
                 .font(.headline)
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                quickButton("Water", icon: "drop.fill", value: "\(todayLog?.waterGlasses ?? 0)/8", color: .blue) {
+                quickButton(L10n.homeWater, icon: "drop.fill", value: "\(todayLog?.waterGlasses ?? 0)/8", color: .blue) {
                     showWaterLog = true
                 }
-                quickButton("Mood", icon: "face.smiling", value: moodLabel, color: BloomlyTheme.sage) {
+                quickButton(L10n.homeMood, icon: "face.smiling", value: moodLabel, color: BloomlyTheme.sage) {
                     showMoodLog = true
                 }
-                quickButton("Symptoms", icon: "heart.text.square", value: "\(todayLog?.symptoms.count ?? 0)", color: BloomlyTheme.blushDark, premium: true) {
+                quickButton(L10n.homeSymptoms, icon: "heart.text.square", value: "\(todayLog?.symptoms.count ?? 0)", color: BloomlyTheme.blushDark, premium: true) {
                     showSymptomLog = true
                 }
-                quickButton("Weight", icon: "scalemass.fill", value: weightLabel, color: BloomlyTheme.sageDark, premium: true) {
+                quickButton(L10n.homeWeight, icon: "scalemass.fill", value: weightLabel, color: BloomlyTheme.sageDark, premium: true) {
                     showWeightLog = true
                 }
             }
@@ -173,7 +176,7 @@ struct HomeView: View {
 
     private var progressSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Pregnancy Progress")
+            Text(L10n.homePregnancyProgress)
                 .font(.headline)
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
@@ -184,7 +187,7 @@ struct HomeView: View {
                 }
             }
             .frame(height: 12)
-            Text("Week \(week) of 40")
+            Text(L10n.weekOfTotal(week))
                 .font(.caption)
                 .foregroundStyle(BloomlyTheme.textSecondary)
         }

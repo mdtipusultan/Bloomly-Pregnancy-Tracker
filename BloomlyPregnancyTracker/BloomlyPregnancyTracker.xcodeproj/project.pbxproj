@@ -180,7 +180,31 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				ar,
+				bn,
+				de,
+				el,
 				en,
+				es,
+				fr,
+				he,
+				hi,
+				id,
+				it,
+				ja,
+				ko,
+				ms,
+				nl,
+				pl,
+				pt,
+				ro,
+				ru,
+				sv,
+				th,
+				tr,
+				uk,
+				vi,
+				"zh-Hans",
 				Base,
 			);
 			mainGroup = CE2DC4002FE6F49D003A3AD6;

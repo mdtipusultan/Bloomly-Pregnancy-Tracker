@@ -13,7 +13,7 @@ enum WidgetDataSync {
         let entry = ContentLoader.loadWeekGuide().first { $0.week == week }
         let snapshot = WidgetSnapshot(
             week: week,
-            babySizeText: entry?.babySize ?? "Growing every day",
+            babySizeText: entry.map { L10n.babySizeComparison(sizeImage: $0.sizeImage) } ?? L10n.babySizeGrowingEveryDay,
             sizeImage: entry?.sizeImage ?? "unknown",
             length: entry?.length ?? "—",
             weight: entry?.weight ?? "—",

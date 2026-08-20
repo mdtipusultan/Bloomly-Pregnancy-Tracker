@@ -19,7 +19,7 @@ struct DailyLogView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
+                    DatePicker(L10n.commonDate, selection: $selectedDate, displayedComponents: .date)
                         .datePickerStyle(.graphical)
                         .bloomlyCard()
                     summarySection
@@ -28,7 +28,9 @@ struct DailyLogView: View {
                 .padding()
             }
             .bloomlyScreenBackground()
-            .navigationTitle("Daily Log")
+            .navigationTitle(L10n.dailyLogTitle)
+            .bloomlyThemedNavigation()
+            .bloomlyLanguageAware()
             .onChange(of: selectedDate) { _, _ in loadNotes() }
             .onAppear { loadNotes() }
             .sheet(isPresented: $showWeightLog) {
@@ -39,19 +41,19 @@ struct DailyLogView: View {
 
     private var summarySection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Day Summary")
+            Text(L10n.dailyLogDaySummary)
                 .font(.headline)
             HStack {
-                summaryItem("Mood", value: moodText)
-                summaryItem("Water", value: "\(logForDate?.waterGlasses ?? 0)/8")
+                summaryItem(L10n.homeMood, value: moodText)
+                summaryItem(L10n.homeWater, value: "\(logForDate?.waterGlasses ?? 0)/8")
             }
             if profile?.isPremium == true {
                 HStack {
                     Button { showWeightLog = true } label: {
-                        summaryItem("Weight", value: weightText, showsChevron: true)
+                        summaryItem(L10n.homeWeight, value: weightText, showsChevron: true)
                     }
                     .buttonStyle(.plain)
-                    summaryItem("Symptoms", value: "\(logForDate?.symptoms.count ?? 0)")
+                    summaryItem(L10n.homeSymptoms, value: "\(logForDate?.symptoms.count ?? 0)")
                 }
                 if let symptoms = logForDate?.symptoms, !symptoms.isEmpty {
                     FlowLayout(spacing: 8) {
@@ -99,7 +101,7 @@ struct DailyLogView: View {
 
     private var notesSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Notes")
+            Text(L10n.dailyLogNotes)
                 .font(.headline)
             TextEditor(text: $notes)
                 .frame(minHeight: 120)

@@ -3,6 +3,9 @@ import SwiftData
 
 @main
 struct Bloomly_PregnancyTrackerApp: App {
+    @State private var themeManager = ThemeManager.shared
+    @State private var languageManager = LanguageManager.shared
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             UserProfile.self,
@@ -25,6 +28,8 @@ struct Bloomly_PregnancyTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(themeManager)
+                .environment(languageManager)
                 .task {
                     await StoreKitManager.shared.refreshPremiumStatus()
                     syncPremiumToProfile()

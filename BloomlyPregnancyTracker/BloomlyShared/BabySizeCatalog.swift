@@ -5,6 +5,19 @@ enum BabySizeCatalog {
         emojiMap[sizeImage] ?? "🌱"
     }
 
+    static func customIconKind(for sizeImage: String) -> BabySizeCustomIconKind? {
+        switch sizeImage {
+        case "pumpkin":
+            return .pumpkin(small: false)
+        case "small_pumpkin":
+            return .pumpkin(small: true)
+        case "butternut_squash":
+            return .butternutSquash
+        default:
+            return nil
+        }
+    }
+
     static func shortName(for sizeImage: String) -> String {
         sizeImage.replacingOccurrences(of: "_", with: " ").capitalized
     }
@@ -18,16 +31,16 @@ enum BabySizeCatalog {
     }
 
     private static let emojiMap: [String: String] = [
-        "poppy_seed": "🌸",
-        "sesame_seed": "⚪️",
+        "poppy_seed": "🌼",
+        "sesame_seed": "🌾",
         "lentil": "🫘",
         "blueberry": "🫐",
         "raspberry": "🍇",
         "grape": "🍇",
         "cherry": "🍒",
         "strawberry": "🍓",
-        "fig": "🫒",
-        "lime": "🍋‍🟩",
+        "fig": "🍐",
+        "lime": "🍋",
         "peach": "🍑",
         "plum": "🍑",
         "lemon": "🍋",

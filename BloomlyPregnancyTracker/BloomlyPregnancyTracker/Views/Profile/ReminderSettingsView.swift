@@ -17,7 +17,7 @@ struct ReminderSettingsView: View {
                         NotificationManager.openNotificationSettings()
                     } label: {
                         Label {
-                            Text("Notifications are disabled. Tap here to open Settings and enable them for Bloomly.")
+                            Text(L10n.t("reminders.notificationsDisabled"))
                                 .font(.subheadline)
                                 .foregroundStyle(BloomlyTheme.textPrimary)
                         } icon: {
@@ -30,22 +30,22 @@ struct ReminderSettingsView: View {
 
             Section {
                 if let profile {
-                    Toggle("Water Reminders", isOn: waterReminderBinding(for: profile))
-                    Toggle("Meal Reminders", isOn: foodReminderBinding(for: profile))
+                    Toggle(L10n.t("reminders.waterReminders"), isOn: waterReminderBinding(for: profile))
+                    Toggle(L10n.t("reminders.mealReminders"), isOn: foodReminderBinding(for: profile))
                 }
             } footer: {
-                Text("Daily local reminders to help you stay hydrated and eat on schedule.")
+                Text(L10n.t("reminders.footer"))
             }
 
-            Section("Water Schedule") {
+            Section(L10n.t("reminders.waterSchedule")) {
                 ForEach(NotificationManager.waterReminderSchedule, id: \.self) { time in
                     Label(time, systemImage: "drop.fill")
                         .foregroundStyle(BloomlyTheme.sageDark)
                 }
             }
 
-            Section("Meal Schedule") {
-                ForEach(NotificationManager.foodReminderSchedule, id: \.label) { meal in
+            Section(L10n.t("reminders.mealSchedule")) {
+                ForEach(NotificationManager.localizedFoodReminderSchedule, id: \.label) { meal in
                     HStack {
                         Label(meal.label, systemImage: meal.icon)
                             .foregroundStyle(BloomlyTheme.blushDark)
@@ -56,7 +56,9 @@ struct ReminderSettingsView: View {
                 }
             }
         }
-        .navigationTitle("Daily Reminders")
+        .bloomlyThemedList()
+        .navigationTitle(L10n.profileDailyReminders)
+        .bloomlyThemedNavigation()
         .task { await checkNotificationStatus() }
         .onChange(of: scenePhase) { _, newPhase in
             guard newPhase == .active else { return }
@@ -154,12 +156,16 @@ extension NotificationManager {
         ["8:00 AM", "10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM", "6:00 PM", "8:00 PM"]
     }
 
-    static var foodReminderSchedule: [(label: String, time: String, icon: String)] {
+    static var localizedFoodReminderSchedule: [(label: String, time: String, icon: String)] {
         [
-            ("Breakfast", "8:00 AM", "sunrise.fill"),
-            ("Lunch", "12:30 PM", "sun.max.fill"),
-            ("Snack", "3:30 PM", "carrot.fill"),
-            ("Dinner", "6:30 PM", "moon.stars.fill")
+            (L10n.t("reminders.breakfast"), "8:00 AM", "sunrise.fill"),
+            (L10n.t("reminders.lunch"), "12:30 PM", "sun.max.fill"),
+            (L10n.t("reminders.snack"), "3:30 PM", "carrot.fill"),
+            (L10n.t("reminders.dinner"), "6:30 PM", "moon.stars.fill")
         ]
+    }
+
+    static var foodReminderSchedule: [(label: String, time: String, icon: String)] {
+        localizedFoodReminderSchedule
     }
 }

@@ -29,7 +29,10 @@ struct BloomlyWidgetEntryView: View {
     @Environment(\.widgetFamily) private var family
 
     private var snapshot: WidgetSnapshot { entry.snapshot }
-    private var emoji: String { BabySizeCatalog.emoji(for: snapshot.sizeImage) }
+    private var widgetPalette: BloomlyThemePalette {
+        let themeID = BloomlyAppGroup.sharedDefaults?.string(forKey: "bloomly.theme") ?? ThemeRegistry.blush.id
+        return ThemeRegistry.palette(for: themeID)
+    }
 
     var body: some View {
         switch family {
@@ -46,8 +49,7 @@ struct BloomlyWidgetEntryView: View {
                 Text("Week \(snapshot.week)")
                     .font(.headline)
                 Spacer()
-                Text(emoji)
-                    .font(.title2)
+                BabySizeIcon(sizeImage: snapshot.sizeImage, fontSize: 28)
             }
             Text(BabySizeCatalog.shortName(for: snapshot.sizeImage))
                 .font(.caption.bold())
@@ -61,18 +63,13 @@ struct BloomlyWidgetEntryView: View {
                 .tint(BabySizeCatalog.trimesterAccent(for: snapshot.week))
         }
         .containerBackground(for: .widget) {
-            LinearGradient(
-                colors: [Color(red: 0.99, green: 0.97, blue: 0.94), Color(red: 0.96, green: 0.82, blue: 0.84).opacity(0.5)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+            widgetPalette.backgroundGradient
         }
     }
 
     private var mediumView: some View {
         HStack(spacing: 16) {
-            Text(emoji)
-                .font(.system(size: 52))
+            BabySizeIcon(sizeImage: snapshot.sizeImage, fontSize: 52)
             VStack(alignment: .leading, spacing: 6) {
                 Text("Week \(snapshot.week)")
                     .font(.title3.bold())
@@ -96,11 +93,7 @@ struct BloomlyWidgetEntryView: View {
             }
         }
         .containerBackground(for: .widget) {
-            LinearGradient(
-                colors: [Color(red: 0.99, green: 0.97, blue: 0.94), Color(red: 0.96, green: 0.82, blue: 0.84).opacity(0.5)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+            widgetPalette.backgroundGradient
         }
     }
 }

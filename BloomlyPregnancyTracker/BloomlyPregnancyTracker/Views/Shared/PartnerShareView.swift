@@ -8,9 +8,9 @@ struct PartnerShareView: View {
     @State private var shareMessage = ""
     @State private var renderedImage: UIImage?
     @Environment(\.dismiss) private var dismiss
+    @Environment(LanguageManager.self) private var languageManager
 
     private var daysUntilDue: Int? { PregnancyCalculator.daysUntilDue(profile: profile) }
-    private var emoji: String { BabySizeCatalog.emoji(for: entry.sizeImage) }
 
     var body: some View {
         NavigationStack {
@@ -20,9 +20,9 @@ struct PartnerShareView: View {
                         .padding(.top, 8)
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Personal message")
+                        Text(L10n.partnerPersonalMessage)
                             .font(.subheadline.bold())
-                        TextField("Can't wait to meet our little one!", text: $shareMessage, axis: .vertical)
+                        TextField(L10n.partnerMessagePlaceholder, text: $shareMessage, axis: .vertical)
                             .lineLimit(2...4)
                             .textFieldStyle(.roundedBorder)
                     }
@@ -30,16 +30,16 @@ struct PartnerShareView: View {
                     if let image = renderedImage {
                         ShareLink(
                             item: Image(uiImage: image),
-                            preview: SharePreview("Bloomly Week \(week)", image: Image(uiImage: image))
+                            preview: SharePreview(L10n.partnerSharePreview(week), image: Image(uiImage: image))
                         ) {
-                            Label("Share Image", systemImage: "photo")
+                            Label(L10n.partnerShareImage, systemImage: "photo")
                                 .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(.borderedProminent)
                         .tint(BloomlyTheme.sageDark)
 
                         ShareLink(item: shareText) {
-                            Label("Share Text Update", systemImage: "text.bubble")
+                            Label(L10n.partnerShareText, systemImage: "text.bubble")
                                 .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(.bordered)
@@ -49,25 +49,28 @@ struct PartnerShareView: View {
                 .padding()
             }
             .bloomlyScreenBackground()
-            .navigationTitle("Share Update")
+            .navigationTitle(L10n.partnerShareTitle)
+            .bloomlyThemedNavigation()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Done") { dismiss() }
+                    Button(L10n.commonDone) { dismiss() }
                 }
             }
             .onAppear { renderCard() }
             .onChange(of: shareMessage) { _, _ in renderCard() }
         }
+        .bloomlyLanguageAware()
+        .id(languageManager.selectedLanguageID)
     }
 
     private var shareCard: some View {
         VStack(spacing: 20) {
             HStack {
-                Text("Bloomly")
+                Text(L10n.appName)
                     .font(.caption.bold())
                     .foregroundStyle(BloomlyTheme.sageDark)
                 Spacer()
-                Text("Week \(week)")
+                Text(L10n.weekNumber(week))
                     .font(.caption.bold())
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
@@ -75,21 +78,20 @@ struct PartnerShareView: View {
                     .clipShape(Capsule())
             }
 
-            Text(emoji)
-                .font(.system(size: 72))
+            BabySizeIcon(sizeImage: entry.sizeImage, fontSize: 72)
 
-            Text(entry.babySize)
+            Text(entry.localizedBabySize)
                 .font(.title3.bold())
                 .multilineTextAlignment(.center)
                 .foregroundStyle(BloomlyTheme.textPrimary)
 
             HStack(spacing: 20) {
-                statBlock("Length", entry.length)
-                statBlock("Weight", entry.weight)
+                statBlock(L10n.weekGuideLength, entry.length)
+                statBlock(L10n.weekGuideWeight, entry.weight)
             }
 
             if let days = daysUntilDue {
-                Text(days >= 0 ? "\(days) days until due date" : "Due date has passed — any day now!")
+                Text(days >= 0 ? L10n.daysUntilDue(days) : L10n.partnerDueDatePassed)
                     .font(.subheadline)
                     .foregroundStyle(BloomlyTheme.textSecondary)
             }
@@ -102,7 +104,7 @@ struct PartnerShareView: View {
             }
 
             if let partner = profile.partnerName, !partner.isEmpty {
-                Text("— For \(partner)")
+                Text(L10n.partnerForName(partner))
                     .font(.caption)
                     .foregroundStyle(BloomlyTheme.textSecondary)
             }
@@ -136,12 +138,12 @@ struct PartnerShareView: View {
 
     private var shareText: String {
         var lines = [
-            "🌸 Bloomly — Week \(week)",
-            entry.babySize,
+            L10n.partnerShareLine(week),
+            entry.localizedBabySize,
             "\(entry.length) · \(entry.weight)"
         ]
         if let days = daysUntilDue, days >= 0 {
-            lines.append("\(days) days until due date")
+            lines.append(L10n.daysUntilDue(days))
         }
         let trimmed = shareMessage.trimmingCharacters(in: .whitespacesAndNewlines)
         if !trimmed.isEmpty {
@@ -162,16 +164,16 @@ struct PartnerSettingsSection: View {
     @Bindable var profile: UserProfile
 
     var body: some View {
-        Section("Partner Sharing") {
-            TextField("Your name (optional)", text: Binding(
+        Section(L10n.profilePartnerSharing) {
+            TextField(L10n.profileYourName, text: Binding(
                 get: { profile.displayName ?? "" },
                 set: { profile.displayName = $0.isEmpty ? nil : $0 }
             ))
-            TextField("Partner's name (optional)", text: Binding(
+            TextField(L10n.profilePartnerName, text: Binding(
                 get: { profile.partnerName ?? "" },
                 set: { profile.partnerName = $0.isEmpty ? nil : $0 }
             ))
-            Text("Used when sharing weekly baby-size updates.")
+            Text(L10n.profilePartnerHint)
                 .font(.caption)
                 .foregroundStyle(BloomlyTheme.textSecondary)
         }

@@ -3,6 +3,7 @@ import SwiftData
 
 struct OnboardingView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(LanguageManager.self) private var languageManager
     @Binding var showPaywall: Bool
 
     @State private var step = 0
@@ -19,7 +20,12 @@ struct OnboardingView: View {
     private let totalSteps = 4
 
     private var stepTitles: [String] {
-        ["Welcome", "Your journey", "Key dates", "Preferences"]
+        [
+            L10n.onboardingStepWelcome,
+            L10n.onboardingStepJourney,
+            L10n.onboardingStepDates,
+            L10n.onboardingStepPreferences
+        ]
     }
 
     var body: some View {
@@ -46,6 +52,8 @@ struct OnboardingView: View {
             .padding(.horizontal)
             .padding(.bottom, 8)
         }
+        .bloomlyLanguageAware()
+        .id(languageManager.selectedLanguageID)
     }
 
     // MARK: - Header
@@ -56,7 +64,7 @@ struct OnboardingView: View {
                 Image(systemName: "leaf.fill")
                     .font(.title3)
                     .foregroundStyle(BloomlyTheme.sageDark)
-                Text("Bloomly")
+                Text(L10n.appName)
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .foregroundStyle(BloomlyTheme.textPrimary)
                 Spacer()
@@ -83,10 +91,10 @@ struct OnboardingView: View {
                 .padding(.top, 8)
 
                 VStack(spacing: 10) {
-                    Text("Your journey starts here")
+                    Text(L10n.onboardingWelcomeTitle)
                         .font(.title2.bold())
                         .multilineTextAlignment(.center)
-                    Text("A calm, private space to track every moment — from first flutter to final countdown.")
+                    Text(L10n.onboardingWelcomeSubtitle)
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(BloomlyTheme.textSecondary)
@@ -96,20 +104,20 @@ struct OnboardingView: View {
                 VStack(spacing: 12) {
                     OnboardingFeatureRow(
                         icon: "lock.shield.fill",
-                        title: "100% on your device",
-                        subtitle: "Your data never leaves your phone",
+                        title: L10n.onboardingFeaturePrivacyTitle,
+                        subtitle: L10n.onboardingFeaturePrivacySubtitle,
                         tint: BloomlyTheme.sageDark
                     )
                     OnboardingFeatureRow(
                         icon: "sparkles",
-                        title: "Week-by-week guides",
-                        subtitle: "Baby size, tips & milestones",
+                        title: L10n.onboardingFeatureGuidesTitle,
+                        subtitle: L10n.onboardingFeatureGuidesSubtitle,
                         tint: BloomlyTheme.blushDark
                     )
                     OnboardingFeatureRow(
                         icon: "heart.text.square.fill",
-                        title: "Daily wellness logging",
-                        subtitle: "Symptoms, mood, water & more",
+                        title: L10n.onboardingFeatureLoggingTitle,
+                        subtitle: L10n.onboardingFeatureLoggingSubtitle,
                         tint: BloomlyTheme.sage
                     )
                 }
@@ -125,16 +133,16 @@ struct OnboardingView: View {
     private var modeStep: some View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("What brings you here?")
+                Text(L10n.onboardingModeTitle)
                     .font(.title2.bold())
-                Text("We'll tailor Bloomly to your stage.")
+                Text(L10n.onboardingModeSubtitle)
                     .font(.subheadline)
                     .foregroundStyle(BloomlyTheme.textSecondary)
             }
 
             OnboardingModeCard(
-                title: "I'm pregnant",
-                subtitle: "Track weeks, baby size, kicks & milestones",
+                title: L10n.onboardingModePregnantTitle,
+                subtitle: L10n.onboardingModePregnantSubtitle,
                 icon: "figure.and.child.holdinghands",
                 isSelected: trackingMode == "pregnant"
             ) {
@@ -145,8 +153,8 @@ struct OnboardingView: View {
             }
 
             OnboardingModeCard(
-                title: "I'm planning",
-                subtitle: "Cycle tracking, fertile windows & prep",
+                title: L10n.onboardingModePlanningTitle,
+                subtitle: L10n.onboardingModePlanningSubtitle,
                 icon: "calendar.badge.clock",
                 isSelected: trackingMode == "planning"
             ) {
@@ -167,16 +175,16 @@ struct OnboardingView: View {
             VStack(alignment: .leading, spacing: 16) {
                 if trackingMode == "pregnant" {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("When did your journey begin?")
+                        Text(L10n.onboardingDatesPregnantTitle)
                             .font(.title2.bold())
-                        Text("We'll calculate your week and due date.")
+                        Text(L10n.onboardingDatesPregnantSubtitle)
                             .font(.subheadline)
                             .foregroundStyle(BloomlyTheme.textSecondary)
                     }
 
                     Picker("Input method", selection: $dateInputMethod) {
-                        Text("Last period").tag("lmp")
-                        Text("Due date").tag("due")
+                        Text(L10n.onboardingDatesLastPeriod).tag("lmp")
+                        Text(L10n.onboardingDatesDueDate).tag("due")
                     }
                     .pickerStyle(.segmented)
 
@@ -188,7 +196,7 @@ struct OnboardingView: View {
                     .transition(.scale.combined(with: .opacity))
 
                     DatePicker(
-                        dateInputMethod == "lmp" ? "Last menstrual period" : "Due date",
+                        dateInputMethod == "lmp" ? L10n.onboardingDatesLMPLabel : L10n.onboardingDatesDueDate,
                         selection: pregnancyDateSelection,
                         in: pregnancyDateRange,
                         displayedComponents: .date
@@ -199,9 +207,9 @@ struct OnboardingView: View {
                     .onChange(of: dateInputMethod) { clampSelectedDateToPregnancyRange() }
                 } else {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Track your cycle")
+                        Text(L10n.onboardingDatesPlanningTitle)
                             .font(.title2.bold())
-                        Text("When did your last period start? You can log more dates anytime.")
+                        Text(L10n.onboardingDatesPlanningSubtitle)
                             .font(.subheadline)
                             .foregroundStyle(BloomlyTheme.textSecondary)
                     }
@@ -210,7 +218,7 @@ struct OnboardingView: View {
                         Image(systemName: "drop.circle.fill")
                             .font(.title2)
                             .foregroundStyle(BloomlyTheme.blushDark)
-                        Text("Cycle insights appear on your Home tab")
+                        Text(L10n.onboardingDatesPlanningTip)
                             .font(.caption)
                             .foregroundStyle(BloomlyTheme.textSecondary)
                     }
@@ -219,7 +227,7 @@ struct OnboardingView: View {
                     .background(BloomlyTheme.blush.opacity(0.2))
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
 
-                    DatePicker("Last period start", selection: $selectedDate, displayedComponents: .date)
+                    DatePicker(L10n.onboardingDatesLastPeriodStart, selection: $selectedDate, displayedComponents: .date)
                         .datePickerStyle(.graphical)
                         .tint(BloomlyTheme.sageDark)
                 }
@@ -234,23 +242,23 @@ struct OnboardingView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Almost there!")
+                    Text(L10n.onboardingPrefsTitle)
                         .font(.title2.bold())
-                    Text("A few quick preferences to personalize Bloomly.")
+                    Text(L10n.onboardingPrefsSubtitle)
                         .font(.subheadline)
                         .foregroundStyle(BloomlyTheme.textSecondary)
                 }
 
                 if trackingMode == "pregnant" {
-                    preferenceRow(icon: "star.circle.fill", title: "First pregnancy?") {
-                        Toggle("This is my first pregnancy", isOn: $isFirstPregnancy)
+                    preferenceRow(icon: "star.circle.fill", title: L10n.onboardingPrefsFirstPregnancy) {
+                        Toggle(L10n.onboardingPrefsFirstPregnancyToggle, isOn: $isFirstPregnancy)
                             .labelsHidden()
                             .tint(BloomlyTheme.sageDark)
                     }
                 }
 
-                preferenceRow(icon: "scalemass.fill", title: "Weight unit") {
-                    Picker("Weight unit", selection: $weightUnit) {
+                preferenceRow(icon: "scalemass.fill", title: L10n.onboardingPrefsWeightUnit) {
+                    Picker(L10n.onboardingPrefsWeightUnit, selection: $weightUnit) {
                         Text("kg").tag("kg")
                         Text("lbs").tag("lbs")
                     }
@@ -263,9 +271,9 @@ struct OnboardingView: View {
                         HStack(spacing: 10) {
                             Image(systemName: "figure.stand")
                                 .foregroundStyle(BloomlyTheme.sageDark)
-                            Text("Starting weight")
+                            Text(L10n.onboardingPrefsStartingWeight)
                                 .font(.subheadline.weight(.semibold))
-                            Text("(optional)")
+                            Text(L10n.commonOptional)
                                 .font(.caption)
                                 .foregroundStyle(BloomlyTheme.textSecondary)
                         }
@@ -290,7 +298,7 @@ struct OnboardingView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                         }
 
-                        Text("Pre-pregnancy weight helps track healthy gain over time.")
+                        Text(L10n.onboardingPrefsStartingWeightHint)
                             .font(.caption)
                             .foregroundStyle(BloomlyTheme.textSecondary)
                     }
@@ -303,23 +311,23 @@ struct OnboardingView: View {
                     HStack(spacing: 10) {
                         Image(systemName: "bell.badge.fill")
                             .foregroundStyle(BloomlyTheme.sageDark)
-                        Text("Daily reminders")
+                        Text(L10n.onboardingPrefsDailyReminders)
                             .font(.subheadline.weight(.semibold))
                     }
 
-                    preferenceRow(icon: "drop.fill", title: "Water reminders") {
-                        Toggle("Water reminders", isOn: $waterRemindersEnabled)
+                    preferenceRow(icon: "drop.fill", title: L10n.t("reminders.waterReminders")) {
+                        Toggle(L10n.t("reminders.waterReminders"), isOn: $waterRemindersEnabled)
                             .labelsHidden()
                             .tint(BloomlyTheme.sageDark)
                     }
 
-                    preferenceRow(icon: "fork.knife", title: "Meal reminders") {
-                        Toggle("Meal reminders", isOn: $foodRemindersEnabled)
+                    preferenceRow(icon: "fork.knife", title: L10n.t("reminders.mealReminders")) {
+                        Toggle(L10n.t("reminders.mealReminders"), isOn: $foodRemindersEnabled)
                             .labelsHidden()
                             .tint(BloomlyTheme.sageDark)
                     }
 
-                    Text("We'll ask for notification permission when you finish setup.")
+                    Text(L10n.onboardingPrefsNotificationHint)
                         .font(.caption)
                         .foregroundStyle(BloomlyTheme.textSecondary)
                 }
@@ -359,7 +367,7 @@ struct OnboardingView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "chevron.left")
                             .font(.caption.weight(.semibold))
-                        Text("Back")
+                        Text(L10n.commonBack)
                     }
                     .font(.subheadline.weight(.medium))
                     .foregroundStyle(BloomlyTheme.textSecondary)
@@ -371,7 +379,7 @@ struct OnboardingView: View {
             Spacer()
 
             OnboardingPrimaryButton(
-                title: step < totalSteps - 1 ? "Continue" : "Get Started",
+                title: step < totalSteps - 1 ? L10n.commonContinue : L10n.onboardingGetStarted,
                 icon: step < totalSteps - 1 ? "arrow.right" : "sparkles"
             ) {
                 if step < totalSteps - 1 {
