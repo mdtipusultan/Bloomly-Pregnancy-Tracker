@@ -9,7 +9,6 @@ struct ProfileView: View {
     @Query private var profiles: [UserProfile]
     @State private var store = StoreKitManager.shared
     @State private var showPaywall = false
-    @State private var showManageSubscriptions = false
     @State private var isRestoring = false
 
     private var profile: UserProfile? { profiles.first }
@@ -63,7 +62,7 @@ struct ProfileView: View {
                         BloomlyGroupedDivider()
 
                         BloomlyGroupedButtonRow {
-                            showManageSubscriptions = true
+                            showPaywall = true
                         } label: {
                             Label(L10n.profileManageSubscription, systemImage: "creditcard")
                         }
@@ -90,10 +89,9 @@ struct ProfileView: View {
             .onChange(of: profile?.partnerName) { _, _ in
                 WidgetDataSync.sync(profile: profile)
             }
-            .sheet(isPresented: $showPaywall) {
+            .fullScreenCover(isPresented: $showPaywall) {
                 PaywallView(onComplete: {})
             }
-            .manageSubscriptionsSheet(isPresented: $showManageSubscriptions)
         }
     }
 
@@ -117,12 +115,15 @@ struct ProfileView: View {
                 .bloomlyGroupedRow()
             BloomlyGroupedDivider()
             if let profile, let entry = PregnancyCalculator.weekEntry(for: profile) {
-                NavigationLink(L10n.profileSharePartner) {
+                NavigationLink {
                     PartnerShareView(
                         profile: profile,
                         entry: entry,
                         week: PregnancyCalculator.currentWeek(profile: profile)
                     )
+                } label: {
+                    Label(L10n.profileSharePartner, systemImage: "heart.text.square.fill")
+                        .foregroundStyle(BloomlyTheme.textPrimary)
                 }
                 .bloomlyGroupedRow()
                 BloomlyGroupedDivider()

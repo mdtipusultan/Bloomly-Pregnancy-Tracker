@@ -14,8 +14,13 @@ final class StoreKitManager {
     static let unlockAllFeaturesForDevelopment = true
 
     var products: [Product] = []
+    var purchasedProductIDs: Set<String> = []
     var isPremium = unlockAllFeaturesForDevelopment
     var isLoading = false
+
+    func isPurchased(_ productID: String) -> Bool {
+        purchasedProductIDs.contains(productID)
+    }
 
     nonisolated(unsafe) private var updateTask: Task<Void, Never>?
 
@@ -59,18 +64,17 @@ final class StoreKitManager {
     }
 
     func refreshPremiumStatus() async {
-        if Self.unlockAllFeaturesForDevelopment {
-            isPremium = true
-            return
-        }
         var premium = false
+        var ids: Set<String> = []
         for await result in Transaction.currentEntitlements {
             if let transaction = try? checkVerified(result),
                [Self.monthlyID, Self.yearlyID, Self.lifetimeID].contains(transaction.productID) {
                 premium = true
+                ids.insert(transaction.productID)
             }
         }
-        isPremium = premium
+        purchasedProductIDs = ids
+        isPremium = Self.unlockAllFeaturesForDevelopment || premium
     }
 
     private func listenForTransactions() async {

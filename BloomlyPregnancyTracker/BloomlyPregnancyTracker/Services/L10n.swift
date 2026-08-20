@@ -303,6 +303,13 @@ enum L10n {
     // Paywall
     static var paywallTitle: String { t("paywall.title") }
     static var paywallSubtitle: String { t("paywall.subtitle") }
+    static var paywallHeroCare: String { t("paywall.heroCare") }
+    static var paywallBestValue: String { t("paywall.bestValue") }
+    static var paywallPurchased: String { t("paywall.purchased") }
+    static var paywallPerMonth: String { t("paywall.perMonth") }
+    static var paywallPerYear: String { t("paywall.perYear") }
+    static var paywallOneTime: String { t("paywall.oneTime") }
+    static var paywallLegal: String { t("paywall.legal") }
     static var paywallFeatureSymptoms: String { t("paywall.feature.symptoms") }
     static var paywallFeatureTools: String { t("paywall.feature.tools") }
     static var paywallFeatureAppointments: String { t("paywall.feature.appointments") }
@@ -312,6 +319,14 @@ enum L10n {
     static var paywallRestore: String { t("paywall.restore") }
     static var paywallStartFree: String { t("paywall.startFree") }
     static var paywallPurchaseError: String { t("paywall.purchaseError") }
+
+    static func paywallContinuePrice(_ price: String) -> String {
+        t("paywall.continuePrice %@", price)
+    }
+
+    static func paywallSavePercent(_ percent: Int) -> String {
+        t("paywall.savePercent %lld", percent)
+    }
 
     // Bump Journal
     static var bumpJournalSubtitle: String { t("bumpJournal.subtitle") }

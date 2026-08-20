@@ -161,40 +161,64 @@ struct PartnerShareView: View {
 }
 
 struct PartnerSettingsFields: View {
+    @Environment(ThemeManager.self) private var themeManager
     @Bindable var profile: UserProfile
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(L10n.profilePartnerSharing)
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(BloomlyTheme.textPrimary)
-                .padding(.horizontal, 16)
-                .padding(.top, 12)
-                .padding(.bottom, 8)
-
-            TextField(L10n.profileYourName, text: Binding(
-                get: { profile.displayName ?? "" },
-                set: { profile.displayName = $0.isEmpty ? nil : $0 }
-            ))
+            HStack(spacing: 12) {
+                Image(systemName: "person.2.fill")
+                    .font(.body)
+                    .foregroundStyle(themeManager.palette.sageDark)
+                    .frame(width: 24)
+                Text(L10n.profilePartnerSharing)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(themeManager.palette.textPrimary)
+            }
             .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.top, 12)
+            .padding(.bottom, 10)
+
+            partnerField(
+                title: L10n.profileYourName,
+                text: Binding(
+                    get: { profile.displayName ?? "" },
+                    set: { profile.displayName = $0.isEmpty ? nil : $0 }
+                )
+            )
 
             BloomlyGroupedDivider()
 
-            TextField(L10n.profilePartnerName, text: Binding(
-                get: { profile.partnerName ?? "" },
-                set: { profile.partnerName = $0.isEmpty ? nil : $0 }
-            ))
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            partnerField(
+                title: L10n.profilePartnerName,
+                text: Binding(
+                    get: { profile.partnerName ?? "" },
+                    set: { profile.partnerName = $0.isEmpty ? nil : $0 }
+                )
+            )
 
             Text(L10n.profilePartnerHint)
                 .font(.caption)
-                .foregroundStyle(BloomlyTheme.textSecondary)
+                .foregroundStyle(themeManager.palette.textSecondary)
                 .padding(.horizontal, 16)
+                .padding(.top, 4)
                 .padding(.bottom, 12)
 
             BloomlyGroupedDivider()
         }
+    }
+
+    private func partnerField(title: String, text: Binding<String>) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.caption.weight(.medium))
+                .foregroundStyle(themeManager.palette.textSecondary)
+            TextField(title, text: text)
+                .font(.body)
+                .foregroundStyle(themeManager.palette.textPrimary)
+                .tint(themeManager.palette.sageDark)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
     }
 }
