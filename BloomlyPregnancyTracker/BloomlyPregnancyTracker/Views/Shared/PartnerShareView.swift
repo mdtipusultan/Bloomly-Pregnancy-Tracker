@@ -160,22 +160,41 @@ struct PartnerShareView: View {
     }
 }
 
-struct PartnerSettingsSection: View {
+struct PartnerSettingsFields: View {
     @Bindable var profile: UserProfile
 
     var body: some View {
-        Section(L10n.profilePartnerSharing) {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(L10n.profilePartnerSharing)
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(BloomlyTheme.textPrimary)
+                .padding(.horizontal, 16)
+                .padding(.top, 12)
+                .padding(.bottom, 8)
+
             TextField(L10n.profileYourName, text: Binding(
                 get: { profile.displayName ?? "" },
                 set: { profile.displayName = $0.isEmpty ? nil : $0 }
             ))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+
+            BloomlyGroupedDivider()
+
             TextField(L10n.profilePartnerName, text: Binding(
                 get: { profile.partnerName ?? "" },
                 set: { profile.partnerName = $0.isEmpty ? nil : $0 }
             ))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+
             Text(L10n.profilePartnerHint)
                 .font(.caption)
                 .foregroundStyle(BloomlyTheme.textSecondary)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+
+            BloomlyGroupedDivider()
         }
     }
 }

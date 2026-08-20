@@ -1,92 +1,91 @@
 import SwiftUI
 import SwiftData
 import Charts
+import StoreKit
 
 struct ProfileView: View {
     @Environment(ThemeManager.self) private var themeManager
     @Environment(LanguageManager.self) private var languageManager
     @Query private var profiles: [UserProfile]
+    @State private var store = StoreKitManager.shared
     @State private var showPaywall = false
+    @State private var showManageSubscriptions = false
+    @State private var isRestoring = false
 
     private var profile: UserProfile? { profiles.first }
 
     var body: some View {
         NavigationStack {
-            List {
-                Section(L10n.profileAccount) {
+            ScrollView {
+                VStack(spacing: 20) {
                     if let profile {
-                        LabeledContent(L10n.profileMode, value: profile.trackingMode == "pregnant" ? L10n.profilePregnant : L10n.profilePlanning)
-                        if profile.trackingMode == "pregnant" {
-                            if let due = profile.dueDate {
-                                LabeledContent(L10n.profileDueDate, value: due.formatted(date: .abbreviated, time: .omitted))
-                            }
-                            LabeledContent(L10n.profileWeek, value: "\(PregnancyCalculator.currentWeek(profile: profile))")
-                        }
-                        LabeledContent(L10n.profilePremium, value: profile.isPremium ? L10n.profileBloomlyPlus : L10n.profileFree)
-                    }
-                }
-
-                Section(L10n.profileFeatures) {
-                    if profile?.trackingMode == "pregnant" {
-                        NavigationLink(L10n.profileBumpJournal) { BumpJournalView() }
-                        if let profile, let entry = PregnancyCalculator.weekEntry(for: profile) {
-                            NavigationLink(L10n.profileSharePartner) {
-                                PartnerShareView(
-                                    profile: profile,
-                                    entry: entry,
-                                    week: PregnancyCalculator.currentWeek(profile: profile)
+                        BloomlyGroupedSection(title: L10n.profileAccount) {
+                            BloomlyGroupedLabeledRow(
+                                title: L10n.profileMode,
+                                value: profile.trackingMode == "pregnant" ? L10n.profilePregnant : L10n.profilePlanning
+                            )
+                            if profile.trackingMode == "pregnant" {
+                                BloomlyGroupedDivider()
+                                if let due = profile.dueDate {
+                                    BloomlyGroupedLabeledRow(
+                                        title: L10n.profileDueDate,
+                                        value: due.formatted(date: .abbreviated, time: .omitted)
+                                    )
+                                    BloomlyGroupedDivider()
+                                }
+                                BloomlyGroupedLabeledRow(
+                                    title: L10n.profileWeek,
+                                    value: "\(PregnancyCalculator.currentWeek(profile: profile))"
                                 )
                             }
+                            BloomlyGroupedDivider()
+                            BloomlyGroupedLabeledRow(
+                                title: L10n.profilePremium,
+                                value: profile.isPremium ? L10n.profileBloomlyPlus : L10n.profileFree
+                            )
                         }
                     }
-                    NavigationLink(L10n.profileBabyNames) { BabyNamesView() }
-                    if profile?.isPremium == true {
-                        NavigationLink(L10n.profileAppointments) { AppointmentsView() }
-                        NavigationLink(L10n.profileWeightTracker) { WeightTrackerView() }
-                        NavigationLink(L10n.profileNutrition) { NutritionView() }
-                        NavigationLink(L10n.profileStatistics) { StatisticsView() }
-                    }
-                    if profile?.trackingMode == "planning" {
-                        NavigationLink(L10n.profileCycleTracker) { CycleTrackerView() }
-                    }
-                    if profile?.isPremium != true {
-                        Button(L10n.profileUpgrade) { showPaywall = true }
-                    }
-                }
 
-                Section(L10n.profileSettings) {
-                    if let profile {
-                        PartnerSettingsSection(profile: profile)
-                    }
-                    NavigationLink {
-                        AppearanceSettingsView()
-                    } label: {
-                        HStack {
-                            Label(L10n.settingsAppearance, systemImage: "paintpalette.fill")
-                            Spacer()
-                            Text(L10n.t(themeManager.selectedTheme.nameKey))
-                                .font(.caption)
-                                .foregroundStyle(BloomlyTheme.textSecondary)
+                    BloomlyGroupedSection(title: L10n.profileSubscription) {
+                        BloomlyGroupedButtonRow {
+                            Task { await restorePurchases() }
+                        } label: {
+                            HStack {
+                                Label(L10n.profileRestorePurchases, systemImage: "arrow.clockwise")
+                                Spacer()
+                                if isRestoring {
+                                    ProgressView()
+                                }
+                            }
+                        }
+                        .disabled(isRestoring)
+
+                        BloomlyGroupedDivider()
+
+                        BloomlyGroupedButtonRow {
+                            showManageSubscriptions = true
+                        } label: {
+                            Label(L10n.profileManageSubscription, systemImage: "creditcard")
                         }
                     }
-                    NavigationLink {
-                        LanguageSettingsView()
-                    } label: {
-                        HStack {
-                            Label(L10n.settingsLanguage, systemImage: "globe")
-                            Spacer()
-                            Text("\(languageManager.currentLanguage.flag) \(languageManager.currentLanguage.nativeName)")
-                                .font(.caption)
-                                .foregroundStyle(BloomlyTheme.textSecondary)
-                        }
+
+                    BloomlyGroupedSection(title: L10n.profileFeatures) {
+                        featureLinks
                     }
-                    NavigationLink(L10n.profileDailyReminders) { ReminderSettingsView() }
-                    NavigationLink(L10n.profilePrivacy) { PrivacyView() }
+
+                    BloomlyGroupedSection(title: L10n.profileSettings) {
+                        if let profile {
+                            PartnerSettingsFields(profile: profile)
+                        }
+                        settingsLinks
+                    }
                 }
+                .padding()
             }
-            .bloomlyThemedList()
+            .bloomlyScreenBackground()
             .navigationTitle(L10n.profileTitle)
             .bloomlyThemedNavigation()
+            .bloomlyThemeAware()
             .bloomlyLanguageAware()
             .onChange(of: profile?.partnerName) { _, _ in
                 WidgetDataSync.sync(profile: profile)
@@ -94,7 +93,103 @@ struct ProfileView: View {
             .sheet(isPresented: $showPaywall) {
                 PaywallView(onComplete: {})
             }
+            .manageSubscriptionsSheet(isPresented: $showManageSubscriptions)
         }
+    }
+
+    private func restorePurchases() async {
+        isRestoring = true
+        defer { isRestoring = false }
+        await store.restorePurchases()
+        syncPremiumStatus()
+    }
+
+    private func syncPremiumStatus() {
+        if let profile = profiles.first {
+            profile.isPremium = store.isPremium
+        }
+    }
+
+    @ViewBuilder
+    private var featureLinks: some View {
+        if profile?.trackingMode == "pregnant" {
+            NavigationLink(L10n.profileBumpJournal) { BumpJournalView() }
+                .bloomlyGroupedRow()
+            BloomlyGroupedDivider()
+            if let profile, let entry = PregnancyCalculator.weekEntry(for: profile) {
+                NavigationLink(L10n.profileSharePartner) {
+                    PartnerShareView(
+                        profile: profile,
+                        entry: entry,
+                        week: PregnancyCalculator.currentWeek(profile: profile)
+                    )
+                }
+                .bloomlyGroupedRow()
+                BloomlyGroupedDivider()
+            }
+        }
+        NavigationLink(L10n.profileBabyNames) { BabyNamesView() }
+            .bloomlyGroupedRow()
+        if profile?.isPremium == true {
+            BloomlyGroupedDivider()
+            NavigationLink(L10n.profileAppointments) { AppointmentsView() }
+                .bloomlyGroupedRow()
+            BloomlyGroupedDivider()
+            NavigationLink(L10n.profileWeightTracker) { WeightTrackerView() }
+                .bloomlyGroupedRow()
+            BloomlyGroupedDivider()
+            NavigationLink(L10n.profileNutrition) { NutritionView() }
+                .bloomlyGroupedRow()
+            BloomlyGroupedDivider()
+            NavigationLink(L10n.profileStatistics) { StatisticsView() }
+                .bloomlyGroupedRow()
+        }
+        if profile?.trackingMode == "planning" {
+            BloomlyGroupedDivider()
+            NavigationLink(L10n.profileCycleTracker) { CycleTrackerView() }
+                .bloomlyGroupedRow()
+        }
+        if profile?.isPremium != true {
+            BloomlyGroupedDivider()
+            BloomlyGroupedButtonRow { showPaywall = true } label: {
+                Text(L10n.profileUpgrade)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var settingsLinks: some View {
+        NavigationLink {
+            AppearanceSettingsView()
+        } label: {
+            HStack {
+                Label(L10n.settingsAppearance, systemImage: "paintpalette.fill")
+                Spacer()
+                Text(L10n.t(themeManager.selectedTheme.nameKey))
+                    .font(.caption)
+                    .foregroundStyle(BloomlyTheme.textSecondary)
+            }
+        }
+        .bloomlyGroupedRow()
+        BloomlyGroupedDivider()
+        NavigationLink {
+            LanguageSettingsView()
+        } label: {
+            HStack {
+                Label(L10n.settingsLanguage, systemImage: "globe")
+                Spacer()
+                Text("\(languageManager.currentLanguage.flag) \(languageManager.currentLanguage.nativeName)")
+                    .font(.caption)
+                    .foregroundStyle(BloomlyTheme.textSecondary)
+            }
+        }
+        .bloomlyGroupedRow()
+        BloomlyGroupedDivider()
+        NavigationLink(L10n.profileDailyReminders) { ReminderSettingsView() }
+            .bloomlyGroupedRow()
+        BloomlyGroupedDivider()
+        NavigationLink(L10n.profilePrivacy) { PrivacyView() }
+            .bloomlyGroupedRow()
     }
 }
 
@@ -118,10 +213,12 @@ struct PrivacyView: View {
                     .foregroundStyle(BloomlyTheme.textSecondary)
             }
             .padding()
+            .bloomlyThemedScrollContent()
         }
         .bloomlyScreenBackground()
         .navigationTitle(L10n.profilePrivacy)
         .bloomlyThemedNavigation()
+        .bloomlyThemeAware()
     }
 
     private func bullet(_ text: String) -> some View {
@@ -171,6 +268,7 @@ struct BabyNamesView: View {
                             .foregroundStyle(BloomlyTheme.blushDark)
                     }
                 }
+                .bloomlyListRowBackground()
             }
             .bloomlyThemedList()
         }
@@ -232,21 +330,24 @@ struct AppointmentsView: View {
 
     var body: some View {
         List {
-            Section(L10n.profileUpcoming) {
-                if upcoming.isEmpty {
-                    Text(L10n.profileNoAppointments).foregroundStyle(BloomlyTheme.textSecondary)
+            Group {
+                Section(L10n.profileUpcoming) {
+                    if upcoming.isEmpty {
+                        Text(L10n.profileNoAppointments).foregroundStyle(BloomlyTheme.textSecondary)
+                    }
+                    ForEach(upcoming) { appt in
+                        appointmentRow(appt)
+                    }
+                    .onDelete { indexSet in delete(upcoming, at: indexSet) }
                 }
-                ForEach(upcoming) { appt in
-                    appointmentRow(appt)
+                Section(L10n.profilePast) {
+                    ForEach(past) { appt in
+                        appointmentRow(appt)
+                    }
+                    .onDelete { indexSet in delete(Array(past), at: indexSet) }
                 }
-                .onDelete { indexSet in delete(upcoming, at: indexSet) }
             }
-            Section(L10n.profilePast) {
-                ForEach(past) { appt in
-                    appointmentRow(appt)
-                }
-                .onDelete { indexSet in delete(Array(past), at: indexSet) }
-            }
+            .bloomlyListRowBackground()
         }
         .bloomlyThemedList()
         .navigationTitle(L10n.profileAppointments)
@@ -497,26 +598,29 @@ struct CycleTrackerView: View {
 
     var body: some View {
         List {
-            if let next = CycleCalculator.predictNextPeriod(after: periodLogs, cycleLength: profiles.first?.averageCycleLength ?? 28) {
-                Section(L10n.statsPrediction) {
-                    LabeledContent(L10n.statsNextPeriod, value: next.formatted(date: .abbreviated, time: .omitted))
-                    if let last = periodLogs.first {
-                        let window = CycleCalculator.fertileWindow(from: last.startDate, cycleLength: profiles.first?.averageCycleLength ?? 28)
-                        LabeledContent(L10n.statsFertileWindow, value: "\(window.start.formatted(date: .abbreviated, time: .omitted)) – \(window.end.formatted(date: .abbreviated, time: .omitted))")
-                        LabeledContent(L10n.statsOvulationEstimate, value: window.ovulation.formatted(date: .abbreviated, time: .omitted))
+            Group {
+                if let next = CycleCalculator.predictNextPeriod(after: periodLogs, cycleLength: profiles.first?.averageCycleLength ?? 28) {
+                    Section(L10n.statsPrediction) {
+                        LabeledContent(L10n.statsNextPeriod, value: next.formatted(date: .abbreviated, time: .omitted))
+                        if let last = periodLogs.first {
+                            let window = CycleCalculator.fertileWindow(from: last.startDate, cycleLength: profiles.first?.averageCycleLength ?? 28)
+                            LabeledContent(L10n.statsFertileWindow, value: "\(window.start.formatted(date: .abbreviated, time: .omitted)) – \(window.end.formatted(date: .abbreviated, time: .omitted))")
+                            LabeledContent(L10n.statsOvulationEstimate, value: window.ovulation.formatted(date: .abbreviated, time: .omitted))
+                        }
+                    }
+                }
+                Section(L10n.commonHistory) {
+                    ForEach(periodLogs) { log in
+                        VStack(alignment: .leading) {
+                            Text("\(log.startDate.formatted(date: .abbreviated, time: .omitted)) – \(log.endDate?.formatted(date: .abbreviated, time: .omitted) ?? L10n.commonOngoing)")
+                        }
+                    }
+                    .onDelete { offsets in
+                        for i in offsets { modelContext.delete(periodLogs[i]) }
                     }
                 }
             }
-            Section(L10n.commonHistory) {
-                ForEach(periodLogs) { log in
-                    VStack(alignment: .leading) {
-                        Text("\(log.startDate.formatted(date: .abbreviated, time: .omitted)) – \(log.endDate?.formatted(date: .abbreviated, time: .omitted) ?? L10n.commonOngoing)")
-                    }
-                }
-                .onDelete { offsets in
-                    for i in offsets { modelContext.delete(periodLogs[i]) }
-                }
-            }
+            .bloomlyListRowBackground()
         }
         .bloomlyThemedList()
         .navigationTitle(L10n.profileCycleTracker)

@@ -82,6 +82,9 @@ enum L10n {
     static var profileStatistics: String { t("profile.statistics") }
     static var profileCycleTracker: String { t("profile.cycleTracker") }
     static var profileUpgrade: String { t("profile.upgrade") }
+    static var profileSubscription: String { t("profile.subscription") }
+    static var profileRestorePurchases: String { paywallRestore }
+    static var profileManageSubscription: String { t("profile.manageSubscription") }
     static var profilePartnerSharing: String { t("profile.partnerSharing") }
     static var profileYourName: String { t("profile.yourName") }
     static var profilePartnerName: String { t("profile.partnerName") }

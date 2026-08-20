@@ -65,8 +65,9 @@ struct BloomlyThemedList: ViewModifier {
     func body(content: Content) -> some View {
         let palette = themeManager.palette
         let styled = content
+            .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .listRowBackground(palette.cardBackground)
+            .listSectionSpacing(8)
             .listRowSeparatorTint(palette.textSecondary.opacity(0.25))
             .foregroundStyle(palette.textPrimary)
             .tint(palette.sageDark)
@@ -80,6 +81,113 @@ struct BloomlyThemedList: ViewModifier {
                     palette.backgroundGradient.ignoresSafeArea()
                 }
         }
+    }
+}
+
+/// Apply to List rows or a `Group` wrapping sections. `listRowBackground` on the List itself is ignored.
+struct BloomlyListRowBackground: ViewModifier {
+    @Environment(ThemeManager.self) private var themeManager
+
+    func body(content: Content) -> some View {
+        content
+            .listRowBackground(themeManager.palette.cardBackground)
+    }
+}
+
+struct BloomlyListSectionHeader: View {
+    @Environment(ThemeManager.self) private var themeManager
+    let title: String
+
+    var body: some View {
+        Text(title)
+            .font(.footnote.weight(.semibold))
+            .foregroundStyle(themeManager.palette.textSecondary)
+            .textCase(nil)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 16)
+            .padding(.bottom, 4)
+    }
+}
+
+struct BloomlyGroupedSection<Content: View>: View {
+    @Environment(ThemeManager.self) private var themeManager
+    let title: String
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(themeManager.palette.textSecondary)
+                .textCase(nil)
+                .padding(.horizontal, 4)
+
+            VStack(spacing: 0) {
+                content()
+            }
+            .foregroundStyle(themeManager.palette.textPrimary)
+            .tint(themeManager.palette.sageDark)
+            .background(themeManager.palette.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
+    }
+}
+
+struct BloomlyGroupedLabeledRow: View {
+    @Environment(ThemeManager.self) private var themeManager
+    let title: String
+    let value: String
+
+    var body: some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Text(value)
+                .foregroundStyle(themeManager.palette.textSecondary)
+        }
+        .bloomlyGroupedRow()
+    }
+}
+
+struct BloomlyGroupedButtonRow<Label: View>: View {
+    let action: () -> Void
+    @ViewBuilder var label: () -> Label
+
+    var body: some View {
+        Button(action: action) {
+            label()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .bloomlyGroupedRow()
+    }
+}
+
+struct BloomlyGroupedDivider: View {
+    @Environment(ThemeManager.self) private var themeManager
+
+    var body: some View {
+        Divider()
+            .overlay(themeManager.palette.textSecondary.opacity(0.2))
+            .padding(.leading, 16)
+    }
+}
+
+struct BloomlyGroupedRow<Content: View>: View {
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        content()
+            .bloomlyGroupedRow()
+    }
+}
+
+struct BloomlyThemedScrollContent: ViewModifier {
+    @Environment(ThemeManager.self) private var themeManager
+
+    func body(content: Content) -> some View {
+        content.foregroundStyle(themeManager.palette.textPrimary)
     }
 }
 
@@ -119,11 +227,25 @@ extension View {
         modifier(BloomlyThemedList())
     }
 
+    func bloomlyListRowBackground() -> some View {
+        modifier(BloomlyListRowBackground())
+    }
+
+    func bloomlyThemedScrollContent() -> some View {
+        modifier(BloomlyThemedScrollContent())
+    }
+
     func bloomlyThemedNavigation() -> some View {
         modifier(BloomlyThemedNavigation())
     }
 
     func bloomlyThemeAware() -> some View {
         modifier(ThemeEnvironmentModifier())
+    }
+
+    func bloomlyGroupedRow() -> some View {
+        padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

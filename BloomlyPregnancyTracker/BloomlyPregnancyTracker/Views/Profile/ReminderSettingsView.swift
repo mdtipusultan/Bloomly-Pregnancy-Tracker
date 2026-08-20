@@ -11,54 +11,62 @@ struct ReminderSettingsView: View {
 
     var body: some View {
         List {
-            if notificationsDenied {
-                Section {
-                    Button {
-                        NotificationManager.openNotificationSettings()
-                    } label: {
-                        Label {
-                            Text(L10n.t("reminders.notificationsDisabled"))
-                                .font(.subheadline)
-                                .foregroundStyle(BloomlyTheme.textPrimary)
-                        } icon: {
-                            Image(systemName: "bell.slash.fill")
-                                .foregroundStyle(.orange)
+            Group {
+                if notificationsDenied {
+                    Section {
+                        Button {
+                            NotificationManager.openNotificationSettings()
+                        } label: {
+                            Label {
+                                Text(L10n.t("reminders.notificationsDisabled"))
+                                    .font(.subheadline)
+                                    .foregroundStyle(BloomlyTheme.textPrimary)
+                            } icon: {
+                                Image(systemName: "bell.slash.fill")
+                                    .foregroundStyle(.orange)
+                            }
                         }
                     }
                 }
-            }
 
-            Section {
-                if let profile {
-                    Toggle(L10n.t("reminders.waterReminders"), isOn: waterReminderBinding(for: profile))
-                    Toggle(L10n.t("reminders.mealReminders"), isOn: foodReminderBinding(for: profile))
-                }
-            } footer: {
-                Text(L10n.t("reminders.footer"))
-            }
-
-            Section(L10n.t("reminders.waterSchedule")) {
-                ForEach(NotificationManager.waterReminderSchedule, id: \.self) { time in
-                    Label(time, systemImage: "drop.fill")
-                        .foregroundStyle(BloomlyTheme.sageDark)
-                }
-            }
-
-            Section(L10n.t("reminders.mealSchedule")) {
-                ForEach(NotificationManager.localizedFoodReminderSchedule, id: \.label) { meal in
-                    HStack {
-                        Label(meal.label, systemImage: meal.icon)
-                            .foregroundStyle(BloomlyTheme.blushDark)
-                        Spacer()
-                        Text(meal.time)
-                            .foregroundStyle(BloomlyTheme.textSecondary)
+                Section {
+                    if let profile {
+                        Toggle(L10n.t("reminders.waterReminders"), isOn: waterReminderBinding(for: profile))
+                        Toggle(L10n.t("reminders.mealReminders"), isOn: foodReminderBinding(for: profile))
                     }
+                } footer: {
+                    Text(L10n.t("reminders.footer"))
+                }
+
+                Section {
+                    ForEach(NotificationManager.waterReminderSchedule, id: \.self) { time in
+                        Label(time, systemImage: "drop.fill")
+                            .foregroundStyle(BloomlyTheme.sageDark)
+                    }
+                } header: {
+                    BloomlyListSectionHeader(title: L10n.t("reminders.waterSchedule"))
+                }
+
+                Section {
+                    ForEach(NotificationManager.localizedFoodReminderSchedule, id: \.label) { meal in
+                        HStack {
+                            Label(meal.label, systemImage: meal.icon)
+                                .foregroundStyle(BloomlyTheme.blushDark)
+                            Spacer()
+                            Text(meal.time)
+                                .foregroundStyle(BloomlyTheme.textSecondary)
+                        }
+                    }
+                } header: {
+                    BloomlyListSectionHeader(title: L10n.t("reminders.mealSchedule"))
                 }
             }
+            .bloomlyListRowBackground()
         }
         .bloomlyThemedList()
         .navigationTitle(L10n.profileDailyReminders)
         .bloomlyThemedNavigation()
+        .bloomlyThemeAware()
         .task { await checkNotificationStatus() }
         .onChange(of: scenePhase) { _, newPhase in
             guard newPhase == .active else { return }

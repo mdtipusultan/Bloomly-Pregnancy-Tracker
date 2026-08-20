@@ -19,6 +19,12 @@ struct MainTabView: View {
                 .tabItem { Label(L10n.tabProfile, systemImage: "person.fill") }
         }
         .tint(themeManager.palette.sageDark)
+        .toolbarBackground(themeManager.palette.cream, for: .tabBar)
+        .toolbarBackground(.visible, for: .tabBar)
+        .toolbarColorScheme(
+            themeManager.palette.id == "dark" || themeManager.palette.id == "midnight" ? .dark : .light,
+            for: .tabBar
+        )
         .background {
             themeManager.palette.backgroundGradient
                 .ignoresSafeArea()
@@ -31,5 +37,6 @@ struct MainTabView: View {
             )
         }
         .bloomlyLanguageAware()
+        .bloomlyThemeAware()
     }
 }

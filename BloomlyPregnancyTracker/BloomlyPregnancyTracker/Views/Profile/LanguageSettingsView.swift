@@ -40,6 +40,7 @@ struct LanguageSettingsView: View {
                 Text(L10n.settingsLanguageFooter)
                     .foregroundStyle(BloomlyTheme.textSecondary)
             }
+            .bloomlyListRowBackground()
         }
         .bloomlyThemedList()
         .bloomlyScreenBackground()

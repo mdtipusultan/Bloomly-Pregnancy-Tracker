@@ -2,35 +2,51 @@ import SwiftUI
 import SwiftData
 
 struct ToolsView: View {
+    @Environment(ThemeManager.self) private var themeManager
     @Query private var profiles: [UserProfile]
 
     var body: some View {
         NavigationStack {
-            List {
-                if profiles.first?.isPremium == true {
-                    NavigationLink { KegelTimerView() } label: {
-                        toolRow(L10n.toolsKegelTimer, icon: "timer", subtitle: L10n.toolsKegelSubtitle)
-                    }
-                    NavigationLink { KickCounterView() } label: {
-                        toolRow(L10n.toolsKickCounter, icon: "hand.tap.fill", subtitle: L10n.toolsKickSubtitle)
-                    }
-                    NavigationLink { ContractionTimerView() } label: {
-                        toolRow(L10n.toolsContractionTimer, icon: "waveform.path", subtitle: L10n.toolsContractionSubtitle)
-                    }
-                    NavigationLink { HydrationTrackerView() } label: {
-                        toolRow(L10n.toolsHydration, icon: "drop.fill", subtitle: L10n.toolsHydrationSubtitle)
-                    }
-                    NavigationLink { WeightTrackerView() } label: {
-                        toolRow(L10n.toolsWeightTracker, icon: "scalemass.fill", subtitle: L10n.toolsWeightSubtitle)
-                    }
-                } else {
-                    Section {
+            ScrollView {
+                VStack(spacing: 20) {
+                    if profiles.first?.isPremium == true {
+                        VStack(spacing: 0) {
+                            NavigationLink { KegelTimerView() } label: {
+                                toolRow(L10n.toolsKegelTimer, icon: "timer", subtitle: L10n.toolsKegelSubtitle)
+                            }
+                            .bloomlyGroupedRow()
+                            BloomlyGroupedDivider()
+                            NavigationLink { KickCounterView() } label: {
+                                toolRow(L10n.toolsKickCounter, icon: "hand.tap.fill", subtitle: L10n.toolsKickSubtitle)
+                            }
+                            .bloomlyGroupedRow()
+                            BloomlyGroupedDivider()
+                            NavigationLink { ContractionTimerView() } label: {
+                                toolRow(L10n.toolsContractionTimer, icon: "waveform.path", subtitle: L10n.toolsContractionSubtitle)
+                            }
+                            .bloomlyGroupedRow()
+                            BloomlyGroupedDivider()
+                            NavigationLink { HydrationTrackerView() } label: {
+                                toolRow(L10n.toolsHydration, icon: "drop.fill", subtitle: L10n.toolsHydrationSubtitle)
+                            }
+                            .bloomlyGroupedRow()
+                            BloomlyGroupedDivider()
+                            NavigationLink { WeightTrackerView() } label: {
+                                toolRow(L10n.toolsWeightTracker, icon: "scalemass.fill", subtitle: L10n.toolsWeightSubtitle)
+                            }
+                            .bloomlyGroupedRow()
+                        }
+                        .background(themeManager.palette.cardBackground)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    } else {
                         PremiumGateView(feature: L10n.toolsWellnessGate)
-                            .listRowBackground(Color.clear)
+                            .frame(maxWidth: .infinity)
+                            .bloomlyCard()
                     }
                 }
+                .padding()
             }
-            .bloomlyThemedList()
+            .bloomlyScreenBackground()
             .navigationTitle(L10n.toolsTitle)
             .bloomlyThemedNavigation()
             .bloomlyThemeAware()
@@ -49,7 +65,6 @@ struct ToolsView: View {
                 Text(subtitle).font(.caption).foregroundStyle(BloomlyTheme.textSecondary)
             }
         }
-        .padding(.vertical, 4)
     }
 }
 
@@ -223,6 +238,7 @@ struct ContractionTimerView: View {
                                 .foregroundStyle(BloomlyTheme.textSecondary)
                         }
                     }
+                    .bloomlyListRowBackground()
                 }
                 .bloomlyThemedList()
                 .frame(maxHeight: 250)

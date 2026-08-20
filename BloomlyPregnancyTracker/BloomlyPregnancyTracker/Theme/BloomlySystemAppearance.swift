@@ -52,8 +52,19 @@ enum BloomlySystemAppearance {
     }
 
     private static func applyListSection(palette: BloomlyThemePalette) {
+        let card = UIColor(palette.cardBackground)
+
         UITableView.appearance().backgroundColor = .clear
-        UITableViewCell.appearance().backgroundColor = UIColor(palette.cardBackground)
+        UITableViewCell.appearance().backgroundColor = card
+        UITableViewHeaderFooterView.appearance().tintColor = .clear
+        UITableViewHeaderFooterView.appearance().backgroundColor = .clear
+
+        var groupedHeaderFooter = UIBackgroundConfiguration.listGroupedHeaderFooter()
+        groupedHeaderFooter.backgroundColor = .clear
+        UITableViewHeaderFooterView.appearance().backgroundConfiguration = groupedHeaderFooter
+
+        UICollectionView.appearance().backgroundColor = .clear
+        UICollectionViewListCell.appearance().backgroundColor = card
     }
 }
 
