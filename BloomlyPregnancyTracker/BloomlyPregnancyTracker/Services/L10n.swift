@@ -106,6 +106,16 @@ enum L10n {
     static var toolsKegelSubtitle: String { t("tools.kegelSubtitle") }
     static var toolsKickCounter: String { t("tools.kickCounter") }
     static var toolsKickSubtitle: String { t("tools.kickSubtitle") }
+    static var kickKicks: String { t("tools.kick.kicks") }
+    static var kickTapForKick: String { t("tools.kick.tapForKick") }
+    static var kickSaveSession: String { t("tools.kick.saveSession") }
+    static var kickSessionTime: String { t("tools.kick.sessionTime") }
+    static var kickLastKick: String { t("tools.kick.lastKick") }
+    static var kickAverageInterval: String { t("tools.kick.averageInterval") }
+    static var kickCountGoal: String { t("tools.kick.countGoal") }
+    static var kickEncouragement: String { t("tools.kick.encouragement") }
+    static var kickGoalReached: String { t("tools.kick.goalReached") }
+    static var kickIdleHint: String { t("tools.kick.idleHint") }
     static var toolsContractionTimer: String { t("tools.contractionTimer") }
     static var toolsContractionSubtitle: String { t("tools.contractionSubtitle") }
     static var toolsHydration: String { t("tools.hydration") }
@@ -194,6 +204,7 @@ enum L10n {
     static var commonDate: String { t("common.date") }
     static var commonStart: String { t("common.start") }
     static var commonReset: String { t("common.reset") }
+    static var commonResume: String { t("common.resume") }
     static var commonDone: String { t("common.done") }
     static var commonPause: String { t("common.pause") }
     static var commonGender: String { t("common.gender") }
@@ -223,6 +234,11 @@ enum L10n {
     static func kegelRepOf(_ rep: Int) -> String { t("tools.kegel.repOf %lld", rep) }
     static func contractionDuration(_ time: String) -> String { t("tools.contraction.duration %@", time) }
     static func contractionInterval(_ time: String) -> String { t("tools.contraction.interval %@", time) }
+    static var contractionHint: String { t("tools.contraction.hint") }
+    static var contractionLastDuration: String { t("tools.contraction.lastDuration") }
+    static var contractionAverageInterval: String { t("tools.contraction.averageInterval") }
+    static var hydrationGoalReached: String { t("tools.hydration.goalReached") }
+    static var hydrationTapHint: String { t("tools.hydration.tapHint") }
 
     // Baby size
     private static let babySizeUsesAnArticle: Set<String> = ["apple", "avocado", "eggplant"]
