@@ -13,10 +13,10 @@ struct WidgetSnapshot: Codable {
 
     static let placeholder = WidgetSnapshot(
         week: 12,
-        babySizeText: "Your baby is the size of a plum",
-        sizeImage: "plum",
-        length: "4.9 cm",
-        weight: "24g",
+        babySizeText: "Your baby is the size of a lime",
+        sizeImage: "lime",
+        length: "5.4 cm",
+        weight: "14g",
         daysUntilDue: 196,
         progress: 0.3,
         trackingMode: "pregnant",

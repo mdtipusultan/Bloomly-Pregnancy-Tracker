@@ -1,9 +1,15 @@
 import SwiftUI
 
 struct BabySizeCard: View {
+    enum Layout {
+        case stacked
+        case split
+    }
+
     let entry: WeekGuideEntry
     var week: Int
     var compact: Bool = false
+    var layout: Layout = .stacked
     var showShareButton: Bool = false
     var onShare: (() -> Void)?
 
@@ -14,6 +20,55 @@ struct BabySizeCard: View {
     private var accent: Color { BabySizeCatalog.trimesterAccent(for: week) }
 
     var body: some View {
+        Group {
+            if layout == .split {
+                splitLayout
+            } else {
+                stackedLayout
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .bloomlyCard()
+        .onAppear { animateIn() }
+        .onChange(of: week) { _, _ in animateIn() }
+    }
+
+    private var splitLayout: some View {
+        HStack(alignment: .center, spacing: 16) {
+            BabySizeIcon(sizeImage: entry.sizeImage, fontSize: 68)
+                .scaleEffect(fruitScale)
+                .opacity(fruitOpacity)
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text(entry.localizedBabySize)
+                    .font(.headline)
+                    .foregroundStyle(BloomlyTheme.textPrimary)
+                    .multilineTextAlignment(.leading)
+
+                Text(entry.length)
+                    .font(.subheadline)
+                    .foregroundStyle(BloomlyTheme.textSecondary)
+                Text(entry.weight)
+                    .font(.subheadline)
+                    .foregroundStyle(BloomlyTheme.textSecondary)
+            }
+
+            Spacer(minLength: 0)
+
+            if showShareButton, let onShare {
+                Button(action: onShare) {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.body.weight(.semibold))
+                }
+                .buttonStyle(.bordered)
+                .tint(BloomlyTheme.sageDark)
+                .controlSize(.small)
+                .accessibilityLabel(L10n.babySizeSharePartner)
+            }
+        }
+    }
+
+    private var stackedLayout: some View {
         VStack(spacing: compact ? 10 : 16) {
             ZStack {
                 Circle()
@@ -49,11 +104,6 @@ struct BabySizeCard: View {
                 .tint(BloomlyTheme.sageDark)
             }
         }
-        .frame(maxWidth: .infinity)
-        .padding(compact ? 12 : 16)
-        .bloomlyCard()
-        .onAppear { animateIn() }
-        .onChange(of: week) { _, _ in animateIn() }
     }
 
     private func animateIn() {

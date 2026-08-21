@@ -6,7 +6,10 @@ enum BabySizeCatalog {
     }
 
     static func assetName(for sizeImage: String) -> String {
-        "BabySize_\(sizeImage)"
+        if sizeImage == "beginning" {
+            return "BabySize_poppy_seed"
+        }
+        return "BabySize_\(sizeImage)"
     }
 
     static func shortName(for sizeImage: String) -> String {
@@ -22,6 +25,7 @@ enum BabySizeCatalog {
     }
 
     private static let emojiMap: [String: String] = [
+        "beginning": "🌱",
         "poppy_seed": "🌼",
         "sesame_seed": "🌾",
         "lentil": "🫘",

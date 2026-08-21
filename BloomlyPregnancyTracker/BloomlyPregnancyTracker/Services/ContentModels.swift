@@ -13,7 +13,7 @@ struct WeekGuideEntry: Codable, Identifiable {
 
     var id: Int { week }
 
-    /// Locale-aware baby size line (e.g. "Your baby is the size of a plum").
+    /// Locale-aware baby size line (e.g. "Your baby is the size of a lime").
     var localizedBabySize: String {
         L10n.babySizeComparison(sizeImage: sizeImage)
     }

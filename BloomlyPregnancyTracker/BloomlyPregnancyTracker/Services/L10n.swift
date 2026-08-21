@@ -140,6 +140,25 @@ enum L10n {
     static var homeGlassesOfWater: String { t("home.glassesOfWater") }
     static var homeDailyGoalWater: String { t("home.dailyGoalWater") }
     static var homeHowFeeling: String { t("home.howFeeling") }
+    static var homeGlasses: String { t("home.glasses") }
+    static var homeNotedToday: String { t("home.notedToday") }
+    static var homeUpdatedToday: String { t("home.updatedToday") }
+    static var homeThisWeeksTip: String { t("home.thisWeeksTip") }
+
+    static func homeWeekChip(_ week: Int) -> String {
+        t("home.weekChip %lld", week)
+    }
+
+    static func homeMoodName(_ mood: Int) -> String {
+        switch mood {
+        case 1: return t("home.mood.happy")
+        case 2: return t("home.mood.calm")
+        case 3: return t("home.mood.low")
+        case 4: return t("home.mood.irritable")
+        case 5: return t("home.mood.anxious")
+        default: return "—"
+        }
+    }
 
     // Daily Log
     static var dailyLogTitle: String { t("dailyLog.title") }
@@ -251,6 +270,9 @@ enum L10n {
     }
 
     static func babySizeComparison(sizeImage: String) -> String {
+        if sizeImage == "beginning" {
+            return t("babySize.comparisonBeginning")
+        }
         if sizeImage == "full_term_baby" {
             return t("babySize.comparisonFullTerm")
         }
