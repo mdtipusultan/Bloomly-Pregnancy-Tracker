@@ -9,7 +9,11 @@ struct BabySizeIcon: View {
     }
 
     private var displayScale: CGFloat {
-        sizeImage == "small_pumpkin" ? 0.78 : 1.0
+        switch sizeImage {
+        case "mini_watermelon": return 0.78
+        case "small_pumpkin": return 0.78
+        default: return 1.0
+        }
     }
 
     var body: some View {

@@ -56,7 +56,7 @@ PHOTO_FILES: dict[str, list[str]] = {
     "honeydew_melon": ["Honeydew.jpg", "Honeydew_melon.jpg"],
     "romaine_lettuce": ["Romaine_lettuce.jpg", "Romaine.jpg"],
     "bunch_of_swiss_chard": ["Swiss_chard.jpg", "Chard.jpg"],
-    "mini_watermelon": ["Watermelon.jpg", "Watermelon_fruit.jpg"],
+    "mini_watermelon": ["AGROSEX_DuendeRayada.jpg", "Melon_Sugar_Baby_Matisse-9946.jpg"],
     "pumpkin": ["Pumpkin.jpg", "Pumpkins.jpg"],
     "small_pumpkin": ["Pumpkin.jpg", "Small_pumpkin.jpg"],
     "watermelon": ["Watermelon.jpg", "Watermelon_fruit.jpg"],
